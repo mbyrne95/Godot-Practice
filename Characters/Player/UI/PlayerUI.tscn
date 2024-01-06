@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://66qpte1xrex1"]
+
+[ext_resource type="Script" path="res://Characters/Player/UI/player_ui.gd" id="1_528ii"]
+[ext_resource type="Texture2D" uid="uid://ilsg280wn658" path="res://Art/Free-Skill-32x32-Icons-for-Cyberpunk-Game/1 Icons/7/Skillicon7_02.png" id="2_qcm4s"]
+[ext_resource type="Texture2D" uid="uid://b3m25nk60ngka" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_IU.png" id="3_uu6wi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5827h"]
+atlas = ExtResource("2_qcm4s")
+region = Rect2(6.40572, 7.41875, 19.0534, 17.0264)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xoc3i"]
+atlas = ExtResource("3_uu6wi")
+region = Rect2(32, 9, 24, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j8kc"]
+atlas = ExtResource("3_uu6wi")
+region = Rect2(33, 10, 22, 2)
+
+[node name="PlayerUI" type="CanvasLayer"]
+script = ExtResource("1_528ii")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 2
+offset_left = 16.0
+offset_right = 35.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+pivot_offset = Vector2(0, 17.026)
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="CooldownProgress" type="TextureProgressBar" parent="Control/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+fill_mode = 1
+texture_under = SubResource("AtlasTexture_5827h")
+texture_progress = SubResource("AtlasTexture_5827h")
+tint_under = Color(0.478431, 0.478431, 0.478431, 1)
+
+[node name="PlayerHealthBar" type="TextureProgressBar" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 144.0
+offset_top = 16.0
+offset_right = 168.0
+offset_bottom = 21.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+texture_under = SubResource("AtlasTexture_xoc3i")
+texture_progress = SubResource("AtlasTexture_4j8kc")
+texture_progress_offset = Vector2(1, 1)
+tint_under = Color(0.239216, 0.239216, 0.231373, 1)

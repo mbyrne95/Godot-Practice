@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://wotj45khhyfw"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/generic_enemy_bullet.gd" id="1_61i6a"]
+[ext_resource type="Texture2D" uid="uid://6hiyycqa84sd" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Projectiles.png" id="2_07nxe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1fvt"]
+size = Vector2(3, 6)
+
+[sub_resource type="Gradient" id="Gradient_ll1j4"]
+offsets = PackedFloat32Array(0, 0.231013, 0.719937)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4xrh2"]
+gradient = SubResource("Gradient_ll1j4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_3ofsn"]
+offsets = PackedFloat32Array(0, 0.727848)
+colors = PackedColorArray(0.497474, 0.497474, 0.497474, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4dwbn"]
+gradient = SubResource("Gradient_3ofsn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="generic_enemy_bullet" type="Area2D"]
+script = ExtResource("1_61i6a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("2_07nxe")
+hframes = 6
+vframes = 10
+frame = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_a1fvt")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, 7)
+scale = Vector2(0.1, 0.1)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+color = Color(1, 0.380392, 0.698039, 1)
+energy = 1.2
+texture = SubResource("GradientTexture2D_4xrh2")
+texture_scale = 0.75
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+visible = false
+color = Color(1, 0.380392, 0.698039, 1)
+energy = 1.2
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_4dwbn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

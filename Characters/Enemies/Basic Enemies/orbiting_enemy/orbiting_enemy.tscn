@@ -1,0 +1,127 @@
+[gd_scene load_steps=16 format=3 uid="uid://b3ry5b1ya3msm"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/orbiting_enemy/orbiting_enemy.gd" id="1_volax"]
+[ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_meqrg"]
+[ext_resource type="Texture2D" uid="uid://ysqwjp48t4i6" path="res://Art/My Art/Enemies/spirit_frames/frame0.png" id="3_jjuox"]
+[ext_resource type="Texture2D" uid="uid://b2mwijoyqw36l" path="res://Art/My Art/Enemies/spirit_frames/frame1.png" id="4_d4ffp"]
+[ext_resource type="Texture2D" uid="uid://lnst1ss8gdd5" path="res://Art/My Art/Enemies/spirit_frames/frame5.png" id="5_vwnfe"]
+[ext_resource type="Texture2D" uid="uid://y3xnli7mgyhq" path="res://Art/My Art/Enemies/spirit_frames/frame3.png" id="6_b1w5f"]
+[ext_resource type="Texture2D" uid="uid://djg2j0qi6jk7d" path="res://Art/My Art/Enemies/spirit_frames/frame6.png" id="7_yfd27"]
+[ext_resource type="Texture2D" uid="uid://byjl6tfw05u0b" path="res://Art/My Art/Enemies/spirit_frames/frame4.png" id="8_xmend"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_edt5q"]
+resource_local_to_scene = true
+shader = ExtResource("2_meqrg")
+shader_parameter/white = 0
+shader_parameter/enabled = false
+shader_parameter/white_color = Color(1, 1, 1, 1)
+shader_parameter/tint = Color(1, 0, 0, 0.498039)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fx6jm"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jjuox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_d4ffp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vwnfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_b1w5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yfd27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xmend")
+}],
+"loop": true,
+"name": &"spirit_anim",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8uorf"]
+size = Vector2(3, 5.5)
+
+[sub_resource type="Animation" id="Animation_ij4fb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_tmwpd"]
+resource_name = "hit_red"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dhvs1"]
+_data = {
+"RESET": SubResource("Animation_ij4fb"),
+"hit_red": SubResource("Animation_tmwpd")
+}
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_k47xu"]
+polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5, 0, 2.5, -3.5, 1.5, -3.5, -0.5, -1.5, -2.5)
+
+[node name="orbiting_enemy" type="CharacterBody2D" groups=["enemies"]]
+visibility_layer = 3
+scale = Vector2(2, 2)
+script = ExtResource("1_volax")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_edt5q")
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_fx6jm")
+animation = &"spirit_anim"
+autoplay = "spirit_anim"
+frame_progress = 0.0933607
+speed_scale = 1.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.75, 3.27835e-08)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_8uorf")
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(4, 1.74846e-07)
+
+[node name="HitFlashPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dhvs1")
+}
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
+light_mask = 2
+rotation = 1.5708
+occluder = SubResource("OccluderPolygon2D_k47xu")
+occluder_light_mask = 2

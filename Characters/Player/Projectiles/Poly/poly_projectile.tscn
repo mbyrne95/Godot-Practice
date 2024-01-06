@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://bkowo63p5toi5"]
+
+[ext_resource type="Script" path="res://Characters/player/Projectiles/Poly/poly_projectile.gd" id="1_0qfct"]
+[ext_resource type="Texture2D" uid="uid://6hiyycqa84sd" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Projectiles.png" id="2_yul1q"]
+[ext_resource type="PackedScene" uid="uid://b7p7sx516036m" path="res://Characters/Player/Projectiles/projectile_death_particles.tscn" id="3_eqlxa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rt7vh"]
+size = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_4hvby"]
+offsets = PackedFloat32Array(0, 0.0411392, 0.131329, 0.643987)
+colors = PackedColorArray(1, 1, 1, 1, 0.415142, 0.415142, 0.415142, 1, 0.277528, 0.277528, 0.277528, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vy1fu"]
+gradient = SubResource("Gradient_4hvby")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_qofv0"]
+offsets = PackedFloat32Array(0, 0.370301)
+colors = PackedColorArray(0.368627, 0.831373, 0.847059, 0.278431, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ilygs"]
+gradient = SubResource("Gradient_qofv0")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="poly_projectile" type="Area2D"]
+self_modulate = Color(0.36, 15.82, 15.84, 1)
+light_mask = 3
+visibility_layer = 3
+script = ExtResource("1_0qfct")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_yul1q")
+offset = Vector2(-0.5, -0.5)
+hframes = 6
+vframes = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.19209e-07, 0)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_rt7vh")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.0625, -0.0515625)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+color = Color(0.368627, 0.831373, 0.847059, 1)
+texture = SubResource("GradientTexture2D_vy1fu")
+texture_scale = 0.75
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_ilygs")
+
+[node name="projectile_death" parent="." instance=ExtResource("3_eqlxa")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

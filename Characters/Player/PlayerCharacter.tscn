@@ -1,0 +1,264 @@
+[gd_scene load_steps=22 format=3 uid="uid://c14bi82jh5jwg"]
+
+[ext_resource type="Script" path="res://Characters/Player/Control/player_character.gd" id="1_hehd3"]
+[ext_resource type="Shader" uid="uid://6opn2jo0vkd4" path="res://Characters/Player/Effects/hit_flash_red.tres" id="2_ydp14"]
+[ext_resource type="PackedScene" uid="uid://bhhinekyb0n37" path="res://Characters/Player/blink.tscn" id="3_b7idt"]
+[ext_resource type="PackedScene" uid="uid://66qpte1xrex1" path="res://Characters/Player/UI/PlayerUI.tscn" id="4_fwyhk"]
+[ext_resource type="Material" uid="uid://btf1if7d3u6ol" path="res://Characters/Player/shockwave.tres" id="6_ttsk2"]
+[ext_resource type="Texture2D" uid="uid://bg1imojkg7d7a" path="res://Art/My Art/Player/player_ship_frames.png" id="8_1mvr0"]
+[ext_resource type="PackedScene" uid="uid://dypl8jne40vri" path="res://Characters/Player/Control/weapon.tscn" id="8_62v8f"]
+[ext_resource type="PackedScene" uid="uid://r4lstjs82orv" path="res://Characters/Player/UI/upgrade_data.tscn" id="9_dcpo8"]
+[ext_resource type="PackedScene" uid="uid://bmsgqp56n3fgp" path="res://Characters/Player/Effects/thrust_particles.tscn" id="9_hl57w"]
+[ext_resource type="PackedScene" uid="uid://gl73cm2ehqw1" path="res://Characters/Player/Effects/death_explo_particles.tscn" id="10_lvy28"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjd5y"]
+shader = ExtResource("2_ydp14")
+shader_parameter/white = 1
+shader_parameter/enabled = false
+shader_parameter/white_color = Color(1, 1, 1, 1)
+shader_parameter/tint = Color(1, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gp8ad"]
+atlas = ExtResource("8_1mvr0")
+region = Rect2(0, 2, 30, 6)
+
+[sub_resource type="Animation" id="Animation_b53go"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ship_sprite:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ship_sprite:material:shader_parameter/white")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_3sdn6"]
+resource_name = "flash_red"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ship_sprite:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ship_sprite:material:shader_parameter/white")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 0]
+}
+
+[sub_resource type="Animation" id="Animation_0y3cy"]
+resource_name = "flash_white"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ship_sprite:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ship_sprite:material:shader_parameter/white")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_662u4"]
+_data = {
+"RESET": SubResource("Animation_b53go"),
+"flash_red": SubResource("Animation_3sdn6"),
+"flash_white": SubResource("Animation_0y3cy")
+}
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w2hru"]
+polygon = PackedVector2Array(-4.5, -6, -4.5, 6, 1.5, 6, 4.5, 3, 4.5, -3, 1.5, -6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntm6h"]
+atlas = ExtResource("8_1mvr0")
+region = Rect2(9, 13, 12, 7)
+
+[sub_resource type="Animation" id="Animation_vxdkp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../DeathShockwave2/Shockwave:material:shader_parameter/size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_j0r0u"]
+resource_name = "shockwave"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../DeathShockwave2/Shockwave:material:shader_parameter/size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 0.0441943),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_taq78"]
+_data = {
+"RESET": SubResource("Animation_vxdkp"),
+"shockwave": SubResource("Animation_j0r0u")
+}
+
+[node name="PlayerCharacter" type="CharacterBody2D" groups=["players"]]
+collision_layer = 3
+script = ExtResource("1_hehd3")
+
+[node name="ship_sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_pjd5y")
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_gp8ad")
+hframes = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+polygon = PackedVector2Array(-4, -3, -4, 1, -2, 3, 2, 3, 4, 1, 4, -3)
+
+[node name="muzzle_left" type="Marker2D" parent="."]
+position = Vector2(2.25, 5.25)
+gizmo_extents = 4.0
+
+[node name="muzzle_right" type="Marker2D" parent="."]
+position = Vector2(2.25, -5.25)
+gizmo_extents = 4.0
+
+[node name="thruster particles" type="Node2D" parent="."]
+rotation = -1.5708
+
+[node name="thrust_left" parent="thruster particles" instance=ExtResource("9_hl57w")]
+position = Vector2(-4.5, -5)
+emitting = false
+
+[node name="thrust_right" parent="thruster particles" instance=ExtResource("9_hl57w")]
+position = Vector2(4.5, -5)
+emitting = false
+
+[node name="Blink" parent="." instance=ExtResource("3_b7idt")]
+
+[node name="PlayerUI" parent="." instance=ExtResource("4_fwyhk")]
+
+[node name="HitFlashPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_662u4")
+}
+
+[node name="DeathShockwave" type="CanvasLayer" parent="."]
+
+[node name="LevelUI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="level_panel" type="Panel" parent="LevelUI"]
+unique_name_in_owner = true
+process_mode = 2
+offset_top = -320.0
+offset_right = 180.0
+
+[node name="label_level" type="Label" parent="LevelUI/level_panel"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 17.0
+offset_right = 121.0
+offset_bottom = 43.0
+text = "level up"
+
+[node name="upgrade_options" type="VBoxContainer" parent="LevelUI/level_panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 10.0
+offset_top = 45.0
+offset_right = 170.0
+offset_bottom = 95.0001
+
+[node name="Weapon" parent="." instance=ExtResource("8_62v8f")]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_w2hru")
+
+[node name="armor_plate" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(2.25, 0)
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_ntm6h")
+
+[node name="upgrade_data" parent="." instance=ExtResource("9_dcpo8")]
+
+[node name="death_explo" parent="." instance=ExtResource("10_lvy28")]
+
+[node name="DeathShockwave2" type="Node" parent="."]
+
+[node name="ShockwaveAnim" type="AnimationPlayer" parent="DeathShockwave2"]
+unique_name_in_owner = true
+root_node = NodePath("../../DeathShockwave")
+libraries = {
+"": SubResource("AnimationLibrary_taq78")
+}
+
+[node name="Shockwave" type="ColorRect" parent="DeathShockwave2"]
+unique_name_in_owner = true
+material = ExtResource("6_ttsk2")
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+
+[editable path="Blink"]

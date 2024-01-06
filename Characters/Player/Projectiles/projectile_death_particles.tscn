@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://b7p7sx516036m"]
+
+[ext_resource type="Texture2D" uid="uid://bvr4muynvepme" path="res://Art/My Art/Player/generic_player_projectile.png" id="1_cfhwh"]
+
+[sub_resource type="Gradient" id="Gradient_p0i13"]
+offsets = PackedFloat32Array(0.271484, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_b6xkn"]
+gradient = SubResource("Gradient_p0i13")
+
+[sub_resource type="Curve" id="Curve_sq5oo"]
+max_value = 100.0
+_data = [Vector2(0, 24.2105), 97.0656, 97.0656, 0, 0, Vector2(0.992634, 100), 282.261, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gmxj4"]
+curve = SubResource("Curve_sq5oo")
+
+[sub_resource type="Curve" id="Curve_l7k5s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_it2lo"]
+curve = SubResource("Curve_l7k5s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ij3x2"]
+particle_flag_disable_z = true
+direction = Vector3(1, -1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 74.21
+initial_velocity_max = 74.21
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_curve = SubResource("CurveTexture_gmxj4")
+scale_curve = SubResource("CurveTexture_it2lo")
+color_ramp = SubResource("GradientTexture1D_b6xkn")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ufgvl"]
+atlas = ExtResource("1_cfhwh")
+region = Rect2(15, 15, 1, 1)
+
+[node name="projectile_death" type="GPUParticles2D"]
+modulate = Color(0.827451, 0.945098, 0.94902, 0.619608)
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_ij3x2")
+texture = SubResource("AtlasTexture_ufgvl")
+lifetime = 0.2
+one_shot = true
+speed_scale = 0.5
+explosiveness = 0.97
+randomness = 0.2

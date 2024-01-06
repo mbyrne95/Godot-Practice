@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://buwof4xex5iq2"]
+
+[ext_resource type="Texture2D" uid="uid://c72ch6nhjaoy2" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Miscellaneous.png" id="1_r3t17"]
+
+[sub_resource type="Curve" id="Curve_sefaj"]
+_data = [Vector2(0, 0.368421), 0.0, 0.0, 0, 0, Vector2(0.499222, 0.673684), 1.69211, 1.69211, 0, 0, Vector2(1, 0.989474), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3cnbw"]
+curve = SubResource("Curve_sefaj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0gks6"]
+lifetime_randomness = 0.1
+emission_shape = 3
+emission_box_extents = Vector3(20, 1, 1)
+particle_flag_disable_z = true
+gravity = Vector3(0, -50, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+radial_accel_min = -2.0
+radial_accel_max = 2.0
+scale_curve = SubResource("CurveTexture_3cnbw")
+hue_variation_min = -0.02
+hue_variation_max = 0.02
+turbulence_enabled = true
+turbulence_noise_scale = 0.0
+turbulence_noise_speed = Vector3(0, -20, 0)
+turbulence_influence_min = 0.08
+turbulence_influence_max = 0.12
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcf4r"]
+atlas = ExtResource("1_r3t17")
+region = Rect2(45, 37, 6, 6)
+
+[node name="basic bubbles" type="GPUParticles2D"]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_0gks6")
+texture = SubResource("AtlasTexture_dcf4r")
+lifetime = 30.0

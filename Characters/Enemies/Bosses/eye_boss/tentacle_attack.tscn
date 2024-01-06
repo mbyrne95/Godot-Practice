@@ -1,0 +1,175 @@
+[gd_scene load_steps=13 format=3 uid="uid://bvu7jlimy7kuk"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/Bosses/eye_boss/tentacle_attack.gd" id="1_vpned"]
+[ext_resource type="Texture2D" uid="uid://kcf6buvxxp7l" path="res://Art/My Art/Enemies/eye_tentacles.png" id="2_hn8mr"]
+[ext_resource type="Texture2D" uid="uid://bm1jpswpn2473" path="res://Art/Free-Skill-32x32-Icons-for-Cyberpunk-Game/1 Icons/1/Skillicon1_10.png" id="3_isbay"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jaou4"]
+atlas = ExtResource("2_hn8mr")
+region = Rect2(6, 12, 54, 307)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yjdvp"]
+height = 76.4995
+
+[sub_resource type="Animation" id="Animation_wcmlp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Warning:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Warning:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vfevo"]
+resource_name = "warning flash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Warning:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Warning:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.5, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cbix4"]
+_data = {
+"RESET": SubResource("Animation_wcmlp"),
+"warning flash": SubResource("Animation_vfevo")
+}
+
+[sub_resource type="Animation" id="Animation_8045b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 154)]
+}
+
+[sub_resource type="Animation" id="Animation_gthj4"]
+resource_name = "arm_thrust"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.1, 2.6, 3.2),
+"transitions": PackedFloat32Array(1, 1, 1.51572, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -307), Vector2(0, -307), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ki832"]
+resource_name = "arm_thrust_sprite_only"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.12, 3, 3.3),
+"transitions": PackedFloat32Array(1, 1, 0.732043, 1, 1),
+"update": 0,
+"values": [Vector2(0, 154), Vector2(0, 154), Vector2(0, -153), Vector2(0, -153), Vector2(0, 154)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nrxdp"]
+_data = {
+"RESET": SubResource("Animation_8045b"),
+"arm_thrust": SubResource("Animation_gthj4"),
+"arm_thrust_sprite_only": SubResource("Animation_ki832")
+}
+
+[node name="tentacle attack" type="Area2D"]
+script = ExtResource("1_vpned")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(0, 154)
+texture = SubResource("AtlasTexture_jaou4")
+
+[node name="Marker2D" type="Marker2D" parent="Sprite2D"]
+position = Vector2(19, -154)
+
+[node name="Marker2D2" type="Marker2D" parent="Sprite2D"]
+position = Vector2(-12, -155)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, -268.885)
+rotation = 0.1309
+shape = SubResource("CapsuleShape2D_yjdvp")
+
+[node name="Warning" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -320)
+texture = ExtResource("3_isbay")
+offset = Vector2(7.5, 16)
+
+[node name="Warning Player" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cbix4")
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nrxdp")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

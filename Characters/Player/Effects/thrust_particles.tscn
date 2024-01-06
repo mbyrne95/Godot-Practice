@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://bmsgqp56n3fgp"]
+
+[sub_resource type="Gradient" id="Gradient_1fr0v"]
+offsets = PackedFloat32Array(0, 0.105469, 0.226563, 0.421875, 1)
+colors = PackedColorArray(0.999382, 0.983434, 0.975079, 1, 0.990759, 0.736288, 0.596611, 1, 0.904995, 0.400647, 0.26766, 1, 0.015625, 0.015625, 0.015625, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6caip"]
+gradient = SubResource("Gradient_1fr0v")
+
+[sub_resource type="Curve" id="Curve_ma4mf"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 195.789), 0.0, -1100.82, 0, 0, Vector2(0.500921, -23.1579), -68.103, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nld8a"]
+curve = SubResource("Curve_ma4mf")
+
+[sub_resource type="Curve" id="Curve_ir3hq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.325967, 1), 0.0, 0.0, 0, 0, Vector2(0.707182, 0.0210526), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3m38b"]
+curve = SubResource("Curve_ir3hq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qrx22"]
+lifetime_randomness = 0.05
+emission_shape = 3
+emission_box_extents = Vector3(1.5, 0, 0)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 15.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 25.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_min = 2.92
+linear_accel_max = 2.92
+linear_accel_curve = SubResource("CurveTexture_nld8a")
+scale_curve = SubResource("CurveTexture_3m38b")
+color_ramp = SubResource("GradientTexture1D_6caip")
+hue_variation_max = 0.05
+
+[sub_resource type="Gradient" id="Gradient_oksfv"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1o0fu"]
+gradient = SubResource("Gradient_oksfv")
+width = 2
+height = 2
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+amount = 23
+process_material = SubResource("ParticleProcessMaterial_qrx22")
+texture = SubResource("GradientTexture2D_1o0fu")

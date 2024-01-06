@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5lc21bg4vn2j"]
+
+[ext_resource type="Script" path="res://Characters/Player/UI/upgrade_db.gd" id="1_asxwf"]
+
+[node name="upgrade_db" type="Node"]
+script = ExtResource("1_asxwf")
