@@ -1,6 +1,6 @@
-extends Area2D
-
 class_name player_projectileclass
+
+extends Area2D
 
 var SPEED
 var DAMAGE

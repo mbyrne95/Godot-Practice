@@ -22,7 +22,10 @@ func _ready():
 	player = get_tree().get_first_node_in_group("players")
 
 func _process(_delta):
-	player_position = player.global_position
+	if (player == null):
+		pass
+	else:
+		player_position = player.global_position
 
 func _physics_process(_delta):
 	$AnimatedSprite2D.global_rotation = 0

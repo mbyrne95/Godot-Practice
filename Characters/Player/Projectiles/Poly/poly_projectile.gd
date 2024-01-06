@@ -28,7 +28,7 @@ func proptosis_logic(distance_from_player):
 	var current_scale = SIZE_MULTIPLIER * percent_remaining
 	#print(current_scale)
 	current_damage = DAMAGE * (current_scale * 0.9)
-	print(current_damage)
+	#print(current_damage)
 	sprite.scale = Vector2(current_scale, current_scale)
 	glow.scale = Vector2(current_scale, current_scale)
 	collision.scale = Vector2(current_scale, current_scale)

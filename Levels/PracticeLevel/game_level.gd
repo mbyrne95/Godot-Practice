@@ -62,7 +62,7 @@ func _ready():
 	self.wave_complete_signal.connect(wave_spawn_logic)
 	var wave_0 = [ 
 		[
-			enemy_list[2].instantiate(),
+			enemy_list[1].instantiate(),
 		],
 		[
 			spawn_left,

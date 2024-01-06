@@ -94,6 +94,8 @@ polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5,
 [node name="orbiting_enemy" type="CharacterBody2D" groups=["enemies"]]
 visibility_layer = 3
 scale = Vector2(2, 2)
+collision_layer = 80
+collision_mask = 2
 script = ExtResource("1_volax")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

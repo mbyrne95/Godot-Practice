@@ -44,10 +44,16 @@ const UPGRADES = {
 		"detail": "Short range mega tears",
 		"type": "dmg"
 	},
+	"twentytwenty": {
+		"icon": ICON_PATH + "Skillicon1_22.png",
+		"displayname": "20/20",
+		"detail": "Double shot, damage down.",
+		"type": "dmg"
+	},
 	"broke_the_game": {
 		"icon": ICON_PATH + "Skillicon1_09.png",
 		"displayname": "Broken game!",
 		"detail": "You aren't supposed to see this :0",
 		"type": "broke_the_game"
-	},
+	}
 }

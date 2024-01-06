@@ -47,13 +47,14 @@ enum State {
 
 var dodge_time = 0.2
 var is_dodging : bool = false
-@onready var collision_shape = $CollisionPolygon2D
+@onready var collision_shape = $"Collision Shape"
 var current_state = State.idle
 @onready var hit_flash_player = $HitFlashPlayer
 @onready var ship_sprite = $ship_sprite
 @onready var thrust_left = $"thruster particles/thrust_left"
 @onready var thrust_right = $"thruster particles/thrust_right"
 @onready var death_explo_particles = $death_explo
+@onready var hurtbox = $Hurtbox
 
 #blink initialization stuff
 @onready var blink = $Blink
@@ -295,6 +296,9 @@ func match_item_upgrade(upgrade):
 			weapon.crit_chance += 0.15
 		"proptosis":
 			weapon.proptosis = true
+		"twentytwenty":
+			weapon.twentytwenty = true
+			weapon.damage_multiplier -= 0.2
 
 ###TAKING DAMAGE
 ################

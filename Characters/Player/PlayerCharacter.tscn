@@ -157,7 +157,8 @@ _data = {
 }
 
 [node name="PlayerCharacter" type="CharacterBody2D" groups=["players"]]
-collision_layer = 3
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_hehd3")
 
 [node name="ship_sprite" type="Sprite2D" parent="."]
@@ -167,8 +168,7 @@ scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_gp8ad")
 hframes = 3
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
+[node name="Collision Shape" type="CollisionPolygon2D" parent="."]
 rotation = -1.5708
 scale = Vector2(1.5, 1.5)
 polygon = PackedVector2Array(-4, -3, -4, 1, -2, 3, 2, 3, 4, 1, 4, -3)
@@ -231,6 +231,7 @@ offset_bottom = 95.0001
 [node name="Weapon" parent="." instance=ExtResource("8_62v8f")]
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource("OccluderPolygon2D_w2hru")
 
 [node name="armor_plate" type="Sprite2D" parent="."]
@@ -260,5 +261,14 @@ offset_left = -100.0
 offset_top = -100.0
 offset_right = 100.0
 offset_bottom = 100.0
+
+[node name="Hurtbox" type="Area2D" parent="." groups=["player_hurtbox"]]
+collision_layer = 8
+collision_mask = 0
+
+[node name="Collision Shape" type="CollisionPolygon2D" parent="Hurtbox"]
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+polygon = PackedVector2Array(-4, -3, -4, 1, -2, 3, 2, 3, 4, 1, 4, -3)
 
 [editable path="Blink"]

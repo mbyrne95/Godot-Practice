@@ -24,6 +24,8 @@ fill_from = Vector2(0.5, 0.5)
 self_modulate = Color(0.36, 15.82, 15.84, 1)
 light_mask = 3
 visibility_layer = 3
+collision_layer = 128
+collision_mask = 64
 script = ExtResource("1_tn16u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

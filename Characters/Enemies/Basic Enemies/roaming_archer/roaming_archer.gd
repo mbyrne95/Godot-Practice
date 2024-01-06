@@ -14,11 +14,11 @@ var time_after_shooting = 1
 @onready var walk_destination = $anchor/walk_destination
 
 func _ready():
+	self.add_to_group("enemies")
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
 	viewport_size_x = get_viewport_rect().size.x
 	viewport_size_y = get_viewport_rect().size.y
-	self.add_to_group("enemies")
 	projectile_scene = preload("res://Characters/Enemies/Projectiles/round_enemy_bullet.tscn")
 	SPEED = 50
 	
