@@ -10,7 +10,7 @@ func _ready():
 	self.position = Vector2(0, 320)
 	#Globs.wave_is_free.connect(set_children_active)
 
-func _process(delta):
+func _physics_process(delta):
 	#print(position)
 	if (!position_approx()):
 		position.y -= SPEED * delta

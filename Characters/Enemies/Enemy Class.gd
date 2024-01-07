@@ -10,6 +10,7 @@ class_name enemy_baseclass
 @onready var projectile_scene
 @onready var hit_flash_player
 @onready var target_position
+var contact_damage = 0
 var allowed_to_move = false
 
 @export var SPEED = 200
@@ -75,3 +76,7 @@ func take_damage(amount : int):
 
 func _connect_allowed_to_move():
 	allowed_to_move = true
+
+func _on_hitbox_area_entered(area):
+	if (area.is_in_group("player_hurtbox")):
+		area.get_parent().take_damage(contact_damage)

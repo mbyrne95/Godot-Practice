@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bsxep18xom2xk"]
+[gd_scene load_steps=12 format=3 uid="uid://bsxep18xom2xk"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/dashing_enemy/dashing_enemy.gd" id="1_t7mhi"]
 [ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_6s47r"]
@@ -112,8 +112,6 @@ _data = {
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_k47xu"]
 polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5, 0, 2.5, -3.5, 1.5, -3.5, -0.5, -1.5, -2.5)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_oetrt"]
-
 [node name="dashing_enemy" type="CharacterBody2D" groups=["enemies"]]
 visibility_layer = 3
 scale = Vector2(2, 2)
@@ -144,10 +142,12 @@ rotation = 1.5708
 occluder = SubResource("OccluderPolygon2D_k47xu")
 occluder_light_mask = 2
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-collision_layer = 0
-collision_mask = 0
-mass = 3.0
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource("CircleShape2D_oetrt")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_8uorf")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

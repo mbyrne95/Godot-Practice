@@ -5,15 +5,14 @@ var matroyshka = preload("res://Characters/Enemies/Basic Enemies/matroyshka_enem
 var number_of_splits = 2
 var number_of_offspring= 2
 var has_split = false
-var contact_damage = 20
+
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
 @onready var light_occluder = $LightOccluder2D
 
 func _ready():
-	#rotation_degrees = 90
 	self.add_to_group("enemies")
-	#enemy_container.add_child(self)
+	contact_damage = 20
 	SPEED = 50
 	current_health = HEALTH
 	muzzle = $Muzzle
@@ -34,12 +33,9 @@ func take_damage(amount : int):
 func matroyshka_logic():
 	if (number_of_splits > 0):
 		number_of_splits = number_of_splits - 1
-		#print(number_of_splits)
-		#await get_tree().create_timer(0.5).timeout
 		for i in range(number_of_offspring):
 			var new_doll = matroyshka.instantiate()
 			get_parent().add_child(new_doll)
-			#enemy_container.add_child(new_doll)
 			new_doll.position = position + Vector2(i*2,i*2)
 			new_doll.scale = scale * 0.8
 			new_doll.HEALTH = HEALTH / 2.0
@@ -49,7 +45,6 @@ func matroyshka_logic():
 
 	queue_free()
 
-func _on_hitbox_area_entered(area):
-	print(area)
-	if (area.is_in_group("player_hurtbox")):
-		area.get_parent().take_damage(contact_damage)
+#func _on_hitbox_area_entered(area):
+#	if (area.is_in_group("player_hurtbox")):
+#		area.get_parent().take_damage(contact_damage)

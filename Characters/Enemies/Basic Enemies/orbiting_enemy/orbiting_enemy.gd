@@ -11,7 +11,6 @@ var can_move = true
 func _ready():
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
-	#enemy_container.add_child(self)
 	SPEED = 100
 	HEALTH = 100
 	move_delay = 2
@@ -35,19 +34,6 @@ func _process(_delta):
 			movement()
 		else:
 			shoot_logic()
-
-#func _physics_process(_delta):
-#	if allowed_to_move:
-#		$AnimatedSprite2D.global_rotation = 0
-#		if (player == null):
-#			pass
-#		if can_move:
-#			if (position.distance_to(player_position) <= radius):
-#				is_orbiting = true
-#			movement()
-#		else:
-#			shoot_logic()
-	
 	
 func shoot_logic():
 	if !shoot_on_cd:

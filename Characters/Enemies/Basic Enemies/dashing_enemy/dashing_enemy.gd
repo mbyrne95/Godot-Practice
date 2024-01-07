@@ -1,51 +1,76 @@
 extends enemy_baseclass
 
-var can_dash = false
+var can_dash = true
 var player_position_initialized = false
 var offset = 10
-var viewport_size_x
-var viewport_size_y
-var out_of_bounds = true
+var time_between_dashes = 1
+var start_cd = false
+var check_for_bounds = true
 var has_entered_arena = false
 var player_position
-@onready var rigid_body = $RigidBody2D
+#@onready var rigid_body = $RigidBody2D
+var target_acquired = false
+
 
 func _ready():
+	contact_damage = 20
+	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
 	projectile_scene = preload("res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/generic_enemy_bullet.tscn")
-	height = get_tree().get_first_node_in_group("spawn_points").get_node_or_null("height")
-	viewport_size_x = get_viewport_rect().size.x
-	viewport_size_y = get_viewport_rect().size.y
+
 
 func _physics_process(_delta):
-	if ((global_position.x < offset) || 
-	(global_position.x > viewport_size_x - offset) ||
-	(global_position.y < offset) || 
-	(global_position.y > viewport_size_y - offset)):
-		out_of_bounds = true
-		follow_player_movement()
-		if (has_entered_arena):
-			can_dash = true
-	else:
-		has_entered_arena = true
-		out_of_bounds = false
+	if allowed_to_move:
+		look_at(player.global_position)
+		if check_for_bounds:
+			out_of_bounds()
+		
+		if !target_acquired:
+			target_acquired = true
+			get_target_position()
+			
+		dash_at_player()
+		
+		move_and_slide()
+		
+
+		
+		if start_cd:
+			start_cd = false
+			logic()
 
 func get_target_position():
-	target_position = (global_position - player.global_position).normalized()
+	#await get_tree().create_timer(time_between_dashes).timeout
+	target_position = (player.global_position - global_position).normalized()
+	
+	
 
-#func dash_at_player(delta):
-#	if can_dash && !out_of_bounds:
-##		if !player_position_initialized:
-##			get_player_position()
-##			player_position_initialized = true
-#		velocity = Vector2(SPEED,SPEED)
-#		print(velocity)
-#
-#func rigidbody_dash():
-#	if can_dash:
-#		can_dash = false
+func dash_at_player():
+	if can_dash:
+		#print(target_position)
 #		if !player_position_initialized:
+#			get_player_position()
 #			player_position_initialized = true
-#		rigid_body.apply_impulse(Vector2(SPEED,SPEED))
+		velocity = target_position * SPEED
+		#print(velocity)
+
+func logic():
+	check_for_bounds = false
+	can_dash = false
+	velocity = Vector2.ZERO
+	await get_tree().create_timer(time_between_dashes).timeout
+	can_dash = true
+	target_acquired = false
+	await get_tree().create_timer(0.05).timeout
+	check_for_bounds = true
+		
+func out_of_bounds():
+	if ((global_position.x <= 11 && global_position.x >= 9)  || 
+	(global_position.x <= 171 && global_position.x >= 169) || 
+	(global_position.y <= 11 && global_position.y >= 9) || 
+	 (global_position.y <= 311 && global_position.y >= 309)):
+		start_cd = true
+	else: 
+		pass
