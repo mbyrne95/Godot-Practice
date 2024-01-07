@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq1ruxpes16qs"]
+[gd_scene load_steps=5 format=3 uid="uid://bq1ruxpes16qs"]
 
 [ext_resource type="Script" path="res://Levels/PracticeLevel/Practice Enemy Wave/wave_logic.gd" id="1_8eyft"]
 [ext_resource type="PackedScene" uid="uid://djiyxdqs12xfj" path="res://Characters/Enemies/Basic Enemies/roaming_archer/roaming_archer.tscn" id="2_kvp28"]
 [ext_resource type="PackedScene" uid="uid://bsxep18xom2xk" path="res://Characters/Enemies/Basic Enemies/dashing_enemy/dashing_enemy.tscn" id="3_hponf"]
+[ext_resource type="PackedScene" uid="uid://dugwa7ehhp3s4" path="res://Characters/Enemies/Basic Enemies/matroyshka_enemy/matroyshka_container.tscn" id="4_pfyln"]
 
 [node name="practice_wave" type="Node2D"]
 script = ExtResource("1_8eyft")
@@ -13,3 +14,6 @@ rotation = -1.5708
 
 [node name="dashing_enemy" parent="." instance=ExtResource("3_hponf")]
 position = Vector2(126, 265)
+
+[node name="matroyshka_container" parent="." instance=ExtResource("4_pfyln")]
+position = Vector2(81, 278)

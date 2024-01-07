@@ -33,10 +33,6 @@ func _physics_process(_delta):
 			
 		dash_at_player()
 		
-		move_and_slide()
-		
-
-		
 		if start_cd:
 			start_cd = false
 			logic()
@@ -54,16 +50,18 @@ func dash_at_player():
 #			get_player_position()
 #			player_position_initialized = true
 		velocity = target_position * SPEED
+		move_and_slide()
 		#print(velocity)
 
 func logic():
+	velocity = Vector2.ZERO
+	move_and_slide()
 	check_for_bounds = false
 	can_dash = false
-	velocity = Vector2.ZERO
 	await get_tree().create_timer(time_between_dashes).timeout
 	can_dash = true
 	target_acquired = false
-	await get_tree().create_timer(0.05).timeout
+	await get_tree().create_timer(0.02).timeout
 	check_for_bounds = true
 		
 func out_of_bounds():

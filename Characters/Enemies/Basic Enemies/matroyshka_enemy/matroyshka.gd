@@ -3,12 +3,15 @@ extends enemy_baseclass
 var current_health
 var matroyshka = preload("res://Characters/Enemies/Basic Enemies/matroyshka_enemy/matroyshka.tscn")
 var number_of_splits = 2
-var number_of_offspring= 2
+var number_of_offspring= 3
 var has_split = false
 
+@onready var parent = get_parent()
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
 @onready var light_occluder = $LightOccluder2D
+
+signal has_died(given_position, number_of_splits, given_scale, given_health, given_speed)
 
 func _ready():
 	self.add_to_group("enemies")
@@ -19,7 +22,9 @@ func _ready():
 	hit_flash_player = $HitFlashPlayer
 	
 func _process(_delta):
+	#print(global_position)
 	if allowed_to_move:
+		
 		follow_player_movement()
 
 func take_damage(amount : int):
@@ -28,23 +33,4 @@ func take_damage(amount : int):
 	current_health -= amount
 	
 	if (current_health <= 0):
-		call_deferred("matroyshka_logic")
-
-func matroyshka_logic():
-	if (number_of_splits > 0):
-		number_of_splits = number_of_splits - 1
-		for i in range(number_of_offspring):
-			var new_doll = matroyshka.instantiate()
-			get_parent().add_child(new_doll)
-			new_doll.position = position + Vector2(i*2,i*2)
-			new_doll.scale = scale * 0.8
-			new_doll.HEALTH = HEALTH / 2.0
-			new_doll.number_of_splits = number_of_splits
-			new_doll.SPEED = SPEED * 1.2
-			new_doll.allowed_to_move = true
-
-	queue_free()
-
-#func _on_hitbox_area_entered(area):
-#	if (area.is_in_group("player_hurtbox")):
-#		area.get_parent().take_damage(contact_damage)
+		parent.call_deferred("spawn_children", self, global_position, number_of_splits, scale, HEALTH, SPEED)
