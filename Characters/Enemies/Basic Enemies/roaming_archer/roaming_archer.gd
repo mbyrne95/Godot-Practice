@@ -14,6 +14,7 @@ var time_after_shooting = 1
 @onready var walk_destination = $anchor/walk_destination
 
 func _ready():
+	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
@@ -22,15 +23,16 @@ func _ready():
 	projectile_scene = preload("res://Characters/Enemies/Projectiles/round_enemy_bullet.tscn")
 	SPEED = 50
 	
-func _physics_process(delta):
-	#if outside of the arbitrary bounds we're settings
-	look_at(player.global_position)
-	if ((global_position.x < offset) || 
-	(global_position.x > viewport_size_x - offset) ||
-	(global_position.y < offset) || 
-	(global_position.y > viewport_size_y - offset)):
-			follow_player_movement()
-	else:
+func _process(delta):
+	if allowed_to_move:
+		#if outside of the arbitrary bounds we're settings
+		look_at(player.global_position)
+#		if ((global_position.x < offset) || 
+#		(global_position.x > viewport_size_x - offset) ||
+#		(global_position.y < offset) || 
+#		(global_position.y > viewport_size_y - offset)):
+#				follow_player_movement()
+#		else:
 		if !initialized_target_loc:
 			get_target_destination()
 			initialized_target_loc = true
@@ -39,7 +41,7 @@ func _physics_process(delta):
 			movement_logic(delta)
 		if can_shoot:
 			archer_shoot()
-				
+			
 func movement_logic(delta):
 	#print(target_destination)
 	if !position_approx():

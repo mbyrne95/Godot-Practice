@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq1ruxpes16qs"]
+
+[ext_resource type="Script" path="res://Levels/PracticeLevel/Practice Enemy Wave/wave_logic.gd" id="1_8eyft"]
+[ext_resource type="PackedScene" uid="uid://djiyxdqs12xfj" path="res://Characters/Enemies/Basic Enemies/roaming_archer/roaming_archer.tscn" id="2_kvp28"]
+[ext_resource type="PackedScene" uid="uid://b3ry5b1ya3msm" path="res://Characters/Enemies/Basic Enemies/orbiting_enemy/orbiting_enemy.tscn" id="3_klxqy"]
+[ext_resource type="PackedScene" uid="uid://dugwa7ehhp3s4" path="res://Characters/Enemies/Basic Enemies/matroyshka_enemy/matroyshka_container.tscn" id="4_jbex1"]
+
+[node name="practice_wave" type="Node2D"]
+script = ExtResource("1_8eyft")
+
+[node name="roaming_archer" parent="." instance=ExtResource("2_kvp28")]
+position = Vector2(40, 263)
+rotation = -1.5708
+
+[node name="orbiting_enemy" parent="." instance=ExtResource("3_klxqy")]
+position = Vector2(55, 299)
+rotation = -1.5708
+
+[node name="matroyshka_container" parent="." instance=ExtResource("4_jbex1")]
+position = Vector2(146, 268)

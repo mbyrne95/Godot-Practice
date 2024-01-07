@@ -49,7 +49,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.0
 shader_parameter/vignette_opacity = 0.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q4ycd"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qiv6t"]
 resource_local_to_scene = true
 blend_mode = 1
 
@@ -60,7 +60,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1e4sn"]
 curve = SubResource("Curve_6oof4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f3cg5"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mh8ku"]
 resource_local_to_scene = true
 lifetime_randomness = 0.25
 emission_shape = 3
@@ -85,7 +85,7 @@ turbulence_influence_max = 0.15
 offsets = PackedFloat32Array(0, 0.0775316, 0.0996835, 0.802215)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196, 0.299127, 0.299127, 0.299127, 0.146631, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mpsbt"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vxv6n"]
 resource_local_to_scene = true
 gradient = SubResource("Gradient_0ewwu")
 width = 32
@@ -154,28 +154,6 @@ self_modulate = Color(1, 1, 1, 0.15)
 position = Vector2(90, 320)
 texture = ExtResource("8_haidh")
 
-[node name="Spawn Points" type="Node2D" parent="." groups=["spawn_points"]]
-
-[node name="height" type="Marker2D" parent="Spawn Points"]
-position = Vector2(96, 256)
-
-[node name="laser_height" type="Marker2D" parent="Spawn Points"]
-position = Vector2(96, 288)
-
-[node name="boss_height" type="Marker2D" parent="Spawn Points"]
-position = Vector2(90, 320)
-
-[node name="left" type="Marker2D" parent="Spawn Points"]
-position = Vector2(32, 352)
-
-[node name="right" type="Marker2D" parent="Spawn Points"]
-visible = false
-position = Vector2(152, 352)
-
-[node name="mid" type="Marker2D" parent="Spawn Points"]
-visible = false
-position = Vector2(96, 352)
-
 [node name="EnemyContainer" type="Node2D" parent="." groups=["enemy_container"]]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -195,10 +173,10 @@ position = Vector2(160, 320)
 
 [node name="floating_lights" parent="CanvasLayer/particles" instance=ExtResource("6_gymfy")]
 self_modulate = Color(5, 5, 1.11, 1)
-material = SubResource("CanvasItemMaterial_q4ycd")
+material = SubResource("CanvasItemMaterial_qiv6t")
 position = Vector2(15, 320)
-process_material = SubResource("ParticleProcessMaterial_f3cg5")
-texture = SubResource("GradientTexture2D_mpsbt")
+process_material = SubResource("ParticleProcessMaterial_mh8ku")
+texture = SubResource("GradientTexture2D_vxv6n")
 
 [node name="PlayerOrbitalTransform" type="Node2D" parent="." groups=["player_orbital_transform"]]
 script = ExtResource("12_xvjfn")

@@ -10,6 +10,7 @@ class_name enemy_baseclass
 @onready var projectile_scene
 @onready var hit_flash_player
 @onready var target_position
+var allowed_to_move = false
 
 @export var SPEED = 200
 @export var HEALTH = 100
@@ -71,3 +72,6 @@ func take_damage(amount : int):
 	HEALTH -= amount
 	if (HEALTH <= 0):
 		queue_free()
+
+func _connect_allowed_to_move():
+	allowed_to_move = true

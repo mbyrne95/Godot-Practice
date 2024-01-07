@@ -19,9 +19,9 @@ func _ready():
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
 	
-func _physics_process(_delta):
-	#print(HEALTH)
-	follow_player_movement()
+func _process(_delta):
+	if allowed_to_move:
+		follow_player_movement()
 
 func take_damage(amount : int):
 	#print(amount)
@@ -45,6 +45,7 @@ func matroyshka_logic():
 			new_doll.HEALTH = HEALTH / 2.0
 			new_doll.number_of_splits = number_of_splits
 			new_doll.SPEED = SPEED * 1.2
+			new_doll.allowed_to_move = true
 
 	queue_free()
 

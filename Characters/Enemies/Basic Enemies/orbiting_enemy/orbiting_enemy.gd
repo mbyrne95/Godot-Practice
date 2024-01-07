@@ -9,6 +9,7 @@ var is_orbiting = false
 var can_move = true
 
 func _ready():
+	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
 	#enemy_container.add_child(self)
 	SPEED = 100
@@ -22,21 +23,30 @@ func _ready():
 	player = get_tree().get_first_node_in_group("players")
 
 func _process(_delta):
-	if (player == null):
-		pass
-	else:
-		player_position = player.global_position
+	if allowed_to_move:
+		$AnimatedSprite2D.global_rotation = 0
+		if (player == null):
+			pass
+		else:
+			player_position = player.global_position
+		if can_move:
+			if (position.distance_to(player_position) <= radius):
+				is_orbiting = true
+			movement()
+		else:
+			shoot_logic()
 
-func _physics_process(_delta):
-	$AnimatedSprite2D.global_rotation = 0
-	if (player == null):
-		pass
-	if can_move:
-		if (position.distance_to(player_position) <= radius):
-			is_orbiting = true
-		movement()
-	else:
-		shoot_logic()
+#func _physics_process(_delta):
+#	if allowed_to_move:
+#		$AnimatedSprite2D.global_rotation = 0
+#		if (player == null):
+#			pass
+#		if can_move:
+#			if (position.distance_to(player_position) <= radius):
+#				is_orbiting = true
+#			movement()
+#		else:
+#			shoot_logic()
 	
 	
 func shoot_logic():
