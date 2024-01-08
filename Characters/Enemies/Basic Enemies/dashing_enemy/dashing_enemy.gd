@@ -24,8 +24,8 @@ func _ready():
 func _physics_process(_delta):
 	if allowed_to_move:
 		look_at(player.global_position)
-		if check_for_bounds:
-			out_of_bounds()
+#		if check_for_bounds:
+#			out_of_bounds()
 		
 		if !target_acquired:
 			target_acquired = true
@@ -64,11 +64,17 @@ func logic():
 	await get_tree().create_timer(0.02).timeout
 	check_for_bounds = true
 		
-func out_of_bounds():
-	if ((global_position.x <= 11 && global_position.x >= 9)  || 
-	(global_position.x <= 171 && global_position.x >= 169) || 
-	(global_position.y <= 11 && global_position.y >= 9) || 
-	 (global_position.y <= 311 && global_position.y >= 309)):
-		start_cd = true
-	else: 
-		pass
+#func out_of_bounds():
+#	if ((global_position.x <= 11 && global_position.x >= 9)  || 
+#	(global_position.x <= 171 && global_position.x >= 169) || 
+#	(global_position.y <= 11 && global_position.y >= 9) || 
+#	 (global_position.y <= 311 && global_position.y >= 309)):
+#		start_cd = true
+#	else: 
+#		pass
+
+func _on_hitbox_body_entered(body):
+	if allowed_to_move:
+		if body.is_in_group("level_bounds"):
+			Globs.camera_shake.emit(0.3, 4.5)
+			logic()

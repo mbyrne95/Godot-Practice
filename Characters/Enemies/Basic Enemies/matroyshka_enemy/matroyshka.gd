@@ -1,7 +1,6 @@
 extends enemy_baseclass
 
 var current_health
-var matroyshka = preload("res://Characters/Enemies/Basic Enemies/matroyshka_enemy/matroyshka.tscn")
 var number_of_splits = 2
 var number_of_offspring= 3
 var has_split = false
@@ -34,3 +33,5 @@ func take_damage(amount : int):
 	
 	if (current_health <= 0):
 		parent.call_deferred("spawn_children", self, global_position, number_of_splits, scale, HEALTH, SPEED)
+		if(number_of_splits == 0):
+			queue_free()

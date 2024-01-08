@@ -26,13 +26,9 @@ func _physics_process(delta):
 
 func set_children_active():
 	children_active = true
+	Globs.parallax_motion_stop.emit()
 	await get_tree().create_timer(time_before_move).timeout
 	Globs.children_allowed_to_move.emit()
-#	in_position = false
-#	await get_tree().create_timer(time_before_move).timeout
-#	for i in self.get_children():
-#		i.allowed_to_move = true
-		#get_tree().get_first_node_in_group("enemy_container").add_child(i)
 
 func position_approx():
 	# in range x

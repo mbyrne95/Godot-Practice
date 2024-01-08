@@ -116,8 +116,8 @@ polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5,
 [node name="matroyshka" type="CharacterBody2D" groups=["enemies"]]
 visibility_layer = 3
 scale = Vector2(2, 2)
-collision_layer = 80
-collision_mask = 2147483648
+collision_layer = 2147483728
+collision_mask = 2147483649
 script = ExtResource("1_w7sjm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

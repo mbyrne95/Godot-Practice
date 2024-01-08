@@ -46,6 +46,8 @@ func _physics_process(_delta):
 	pass
 
 func follow_player_movement():
+	if player == null:
+		pass
 	look_at(player.position)
 	target_position = (player.global_position - global_position).normalized()
 	velocity = target_position * SPEED
@@ -78,5 +80,6 @@ func _connect_allowed_to_move():
 	allowed_to_move = true
 
 func _on_hitbox_area_entered(area):
-	if (area.is_in_group("player_hurtbox")):
-		area.get_parent().take_damage(contact_damage)
+	if allowed_to_move:
+		if area.is_in_group("player_hurtbox"):
+			area.get_parent().take_damage(contact_damage)

@@ -85,6 +85,7 @@ debug={
 2d_physics/layer_7="Enemy Hurtbox"
 2d_physics/layer_8="Player Projectile"
 2d_physics/layer_9="Enemy Projectile"
+2d_physics/layer_32="Matroyshka"
 
 [rendering]
 

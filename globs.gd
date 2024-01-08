@@ -9,3 +9,5 @@ signal level_player
 
 signal wave_complete()
 signal children_allowed_to_move()
+
+signal parallax_motion_stop()
