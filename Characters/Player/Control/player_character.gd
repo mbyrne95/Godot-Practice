@@ -64,6 +64,8 @@ signal blinkProgress(progress)
 @onready var weapon = $Weapon
 @onready var upgrade_data = $upgrade_data
 
+var is_damageable = true
+
 #initialize input value to zero
 var input = Vector2.ZERO
 
@@ -166,8 +168,9 @@ func dash_logic(velSnapshot : Vector2, direction : Vector2):
 	
 	#start dashing
 	is_dodging = true
-	collision_shape.disabled = true
+	#hurtbox.monitorable = false
 	hit_flash_player.play("flash_white")
+	is_damageable = false
 
 	#this will appropriately work in both directions, since x can be negative
 	velocity.x += dash_speed * SPEED * direction.x
@@ -176,10 +179,11 @@ func dash_logic(velSnapshot : Vector2, direction : Vector2):
 	#keep our velocity like that until time is over
 	
 	#end dash
-	collision_shape.disabled = false
+	#hurtbox.monitorable = true
 	hit_flash_player.play("flash_white")
 	velocity = velSnapshot
 	is_dodging = false
+	is_damageable = true
 	blink.start_cooldown(BLINK_CD)
 
 #func dodge_logic(total_time : float):
@@ -299,6 +303,9 @@ func match_item_upgrade(upgrade):
 		"twentytwenty":
 			weapon.twentytwenty = true
 			weapon.damage_multiplier -= 0.2
+		"soymilk":
+			weapon.damage_multiplier -= 0.75
+			weapon.shoot_cd = 0.05
 
 ###TAKING DAMAGE
 ################
@@ -325,9 +332,11 @@ func take_damage(amount : int):
 
 func dmg_iframes():
 	is_recently_dmg = true
-	collision_shape.disabled = true
+	is_damageable = false
+	#hurtbox.monitorable = false
 	await get_tree().create_timer(iframes).timeout
-	collision_shape.disabled = false
+	#hurtbox.monitorable = true
+	is_damageable = true
 	is_recently_dmg = false
 
 func frame_freeze(timeScale, duration):

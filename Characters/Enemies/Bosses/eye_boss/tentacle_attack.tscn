@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://bvu7jlimy7kuk"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Bosses/eye_boss/tentacle_attack.gd" id="1_vpned"]
-[ext_resource type="Texture2D" uid="uid://kcf6buvxxp7l" path="res://Art/My Art/Enemies/eye_tentacles.png" id="2_hn8mr"]
+[ext_resource type="Texture2D" uid="uid://kcf6buvxxp7l" path="res://Art/My Art/Enemies/boss practice/eye_tentacles.png" id="2_hn8mr"]
 [ext_resource type="Texture2D" uid="uid://bm1jpswpn2473" path="res://Art/Free-Skill-32x32-Icons-for-Cyberpunk-Game/1 Icons/1/Skillicon1_10.png" id="3_isbay"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jaou4"]
@@ -138,6 +138,8 @@ _data = {
 }
 
 [node name="tentacle attack" type="Area2D"]
+collision_layer = 32
+collision_mask = 8
 script = ExtResource("1_vpned")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -172,4 +174,5 @@ libraries = {
 "": SubResource("AnimationLibrary_nrxdp")
 }
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

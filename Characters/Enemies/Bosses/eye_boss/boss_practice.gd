@@ -22,6 +22,7 @@ var attack_list = [
  
 func _ready():
 	self.add_to_group("enemies")
+	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	#enemy_container.add_child(self)
 	hit_flash_player = $hit_flash_player
 	HEALTH = 1000.0
@@ -33,7 +34,7 @@ func _ready():
 	#print(MAX_HEALTH)
 	is_attacking = false
 	player = get_tree().get_first_node_in_group("players")
-	height = get_tree().get_first_node_in_group("spawn_points").get_node_or_null("boss_height")
+	#height = get_tree().get_first_node_in_group("spawn_points").get_node_or_null("boss_height")
 	
 	var step = 2 * PI / rotate_spawn_count
 	for i in range(rotate_spawn_count):
@@ -44,43 +45,43 @@ func _ready():
 		rotator.add_child(spawn_point)
 	
 func _process(delta):
+	print(HEALTH)
 	var new_rotation = rotator.rotation_degrees + rotate_speed * delta
 	rotator.rotation_degrees = fmod(new_rotation, 360)
 	
 func _physics_process(_delta):
 	#print(HEALTH / MAX_HEALTH)
-	if(position.y > height.position.y):
-		move_to_height(_delta)
-	if(player == null):
-		pass
-	else:
-		#top end
-		if (HEALTH/MAX_HEALTH >= 0.66) && !is_attacking:
-			#print("top")
-			var x = randi_range(0,1)
-			#var x = 0
-			if x == 0:
-				rotate_shoot_init(4,2)
-			else:
-				tentacle_attack(2, 2, 2)
-		elif (HEALTH/MAX_HEALTH < 0.66) && (HEALTH/MAX_HEALTH >= 0.33)  && !is_attacking:
-			#print("mid")
-			var x = randi_range(0,1)
-			#var x = 0
-			if x == 0:
-				rotate_shoot_init(5,1)
-			else:
-				tentacle_attack(3, 3, 1)
-		elif (HEALTH/MAX_HEALTH < 0.33)  && !is_attacking:
-			#print("low")
-			var x = randi_range(0,1)
-			#var x = 0
-			if x == 0:
-				rotate_shoot_init(6,0.5)
-			else:
-				tentacle_attack(4,4,0.5)
-	if is_rotate_shooting:
-		rotate_shoot()		
+	if allowed_to_move:
+		if(player == null):
+			pass
+		else:
+			#top end
+			if (HEALTH/MAX_HEALTH >= 0.66) && !is_attacking:
+				#print("top")
+				var x = randi_range(0,1)
+				#var x = 0
+				if x == 0:
+					rotate_shoot_init(4,2)
+				else:
+					tentacle_attack(2, 2, 2)
+			elif (HEALTH/MAX_HEALTH < 0.66) && (HEALTH/MAX_HEALTH >= 0.33)  && !is_attacking:
+				#print("mid")
+				var x = randi_range(0,1)
+				#var x = 0
+				if x == 0:
+					rotate_shoot_init(5,1)
+				else:
+					tentacle_attack(3, 3, 1)
+			elif (HEALTH/MAX_HEALTH < 0.33)  && !is_attacking:
+				#print("low")
+				var x = randi_range(0,1)
+				#var x = 0
+				if x == 0:
+					rotate_shoot_init(6,0.5)
+				else:
+					tentacle_attack(4,4,0.5)
+		if is_rotate_shooting:
+			rotate_shoot()		
 	
 func rotate_shoot():
 	if !shoot_on_cd:

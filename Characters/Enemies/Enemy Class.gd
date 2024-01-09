@@ -70,7 +70,7 @@ func horizontal_only_movement():
 	move_and_slide()
 	
 func take_damage(amount : int):
-	#print(amount)
+	print(amount)
 	hit_flash_player.play("hit_red")
 	HEALTH -= amount
 	if (HEALTH <= 0):
@@ -82,4 +82,5 @@ func _connect_allowed_to_move():
 func _on_hitbox_area_entered(area):
 	if allowed_to_move:
 		if area.is_in_group("player_hurtbox"):
-			area.get_parent().take_damage(contact_damage)
+			if player.is_damageable:
+				player.take_damage(contact_damage)

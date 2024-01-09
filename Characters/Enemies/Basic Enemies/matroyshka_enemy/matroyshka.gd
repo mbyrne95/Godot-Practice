@@ -13,6 +13,7 @@ var has_split = false
 signal has_died(given_position, number_of_splits, given_scale, given_health, given_speed)
 
 func _ready():
+	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
 	contact_damage = 20
 	SPEED = 50

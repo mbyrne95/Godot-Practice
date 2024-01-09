@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://66qpte1xrex1" path="res://Characters/Player/UI/PlayerUI.tscn" id="4_fwyhk"]
 [ext_resource type="Material" uid="uid://btf1if7d3u6ol" path="res://Characters/Player/shockwave.tres" id="6_ttsk2"]
 [ext_resource type="Texture2D" uid="uid://bg1imojkg7d7a" path="res://Art/My Art/Player/player_ship_frames.png" id="8_1mvr0"]
+[ext_resource type="OccluderPolygon2D" uid="uid://dwte47qyoeucp" path="res://Characters/Player/LightOccluder.tres" id="8_3haxs"]
 [ext_resource type="PackedScene" uid="uid://dypl8jne40vri" path="res://Characters/Player/Control/weapon.tscn" id="8_62v8f"]
 [ext_resource type="PackedScene" uid="uid://r4lstjs82orv" path="res://Characters/Player/UI/upgrade_data.tscn" id="9_dcpo8"]
 [ext_resource type="PackedScene" uid="uid://bmsgqp56n3fgp" path="res://Characters/Player/Effects/thrust_particles.tscn" id="9_hl57w"]
@@ -112,9 +113,6 @@ _data = {
 "flash_white": SubResource("Animation_0y3cy")
 }
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w2hru"]
-polygon = PackedVector2Array(-4.5, -6, -4.5, 6, 1.5, 6, 4.5, 3, 4.5, -3, 1.5, -6)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ntm6h"]
 atlas = ExtResource("8_1mvr0")
 region = Rect2(9, 13, 12, 7)
@@ -161,6 +159,7 @@ collision_layer = 2
 script = ExtResource("1_hehd3")
 
 [node name="ship_sprite" type="Sprite2D" parent="."]
+light_mask = 2
 material = SubResource("ShaderMaterial_pjd5y")
 rotation = -1.5708
 scale = Vector2(1.5, 1.5)
@@ -229,8 +228,8 @@ offset_bottom = 95.0001
 [node name="Weapon" parent="." instance=ExtResource("8_62v8f")]
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-visible = false
-occluder = SubResource("OccluderPolygon2D_w2hru")
+z_index = -2
+occluder = ExtResource("8_3haxs")
 
 [node name="armor_plate" type="Sprite2D" parent="."]
 visible = false

@@ -37,7 +37,7 @@ func spawn_children(given_enemy, given_position, number_of_splits, given_scale, 
 			add_child(new_enemy)
 			new_enemy.contact_damage = 20
 			new_enemy.scale = given_scale * 0.8
-			new_enemy.HEALTH = given_health / 2.0
+			new_enemy.HEALTH = given_health / 2.5
 			new_enemy.number_of_splits = number_of_splits - 1
 			new_enemy.SPEED = given_speed * 1.2
 			new_enemy.allowed_to_move = true

@@ -50,6 +50,12 @@ const UPGRADES = {
 		"detail": "Double shot, damage down.",
 		"type": "dmg"
 	},
+	"soymilk": {
+		"icon": ICON_PATH + "Skillicon1_22.png",
+		"displayname": "Rapidfire Cannon",
+		"detail": "Attack speed way up, damage way down.",
+		"type": "dmg"
+	},
 	"broke_the_game": {
 		"icon": ICON_PATH + "Skillicon1_09.png",
 		"displayname": "Broken game!",

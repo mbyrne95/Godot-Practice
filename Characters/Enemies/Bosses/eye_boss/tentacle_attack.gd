@@ -22,6 +22,11 @@ func _ready():
 func _process(_delta):
 	pass
 	
-func _on_body_entered(body):
-	if body.is_in_group("players"):
-		body.take_damage(damage)
+#func _on_body_entered(body):
+#	if body.is_in_group("players"):
+#		body.take_damage(damage)
+
+func _on_area_entered(area):
+	if area.is_in_group("player_hurtbox"):
+		if area.get_parent().is_damageable:
+			area.get_parent().take_damage(damage)

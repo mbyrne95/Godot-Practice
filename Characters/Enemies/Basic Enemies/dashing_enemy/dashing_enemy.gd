@@ -10,7 +10,7 @@ var has_entered_arena = false
 var player_position
 #@onready var rigid_body = $RigidBody2D
 var target_acquired = false
-
+var shockwave = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.tscn")
 
 func _ready():
 	contact_damage = 20
@@ -54,6 +54,7 @@ func dash_at_player():
 		#print(velocity)
 
 func logic():
+	shockwave_init()
 	velocity = Vector2.ZERO
 	move_and_slide()
 	check_for_bounds = false
@@ -73,6 +74,14 @@ func logic():
 #	else: 
 #		pass
 
+func shockwave_init():
+	var x = shockwave.instantiate()
+	x.global_position = global_position
+	projectile_container.call_deferred("add_child", x)
+	x.get_node_or_null("ColorRect").scale = Vector2(0.4, 0.4)
+	x.get_node_or_null("AnimationPlayer").speed_scale = 4
+	x.scale = Vector2(0.4, 0.4)
+	
 func _on_hitbox_body_entered(body):
 	if allowed_to_move:
 		if body.is_in_group("level_bounds"):
