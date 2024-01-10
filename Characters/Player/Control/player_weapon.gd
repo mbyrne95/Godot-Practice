@@ -2,6 +2,7 @@ extends Node
 
 var basic_projectile = preload("res://Characters/Player/Projectiles/generic_projectile.tscn")
 var proptosis_projectile = preload("res://Characters/Player/Projectiles/Poly/poly_projectile.tscn")
+var ipecac_projectile = preload("res://Characters/Player/Projectiles/ipecac/ipecac.tscn")
 var projectile_scene
 
 @onready var muz_left = $"../muzzle_left"
@@ -22,6 +23,7 @@ var size_multiplier = 1.0
 
 var proptosis = false
 var twentytwenty = false
+var ipecac = false
 #var poly_projectile = preload("res://Characters/player/poly_projectile.tscn")
 
 @onready var projectile_container = get_tree().get_first_node_in_group("projectile_container")
@@ -39,8 +41,9 @@ func shoot():
 	var projectile
 	
 	if proptosis:
-		size_multiplier = 3
 		projectile_scene = proptosis_projectile	
+	elif ipecac:
+		projectile_scene = ipecac_projectile
 	else:
 		projectile_scene = basic_projectile
 	
@@ -75,7 +78,7 @@ func projectile_init(projectile):
 	projectile.DAMAGE = projectile_damage * damage_multiplier
 	projectile.SPEED = projectile_speed
 	projectile.BULLET_RANGE = bullet_range
-	projectile.SIZE_MULTIPLIER = size_multiplier
+	projectile.scale = Vector2(size_multiplier,size_multiplier)
 	
 	#handle crit here?
 	var x = randf_range(0, 1)

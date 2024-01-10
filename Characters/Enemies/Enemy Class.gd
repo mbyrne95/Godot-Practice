@@ -74,6 +74,7 @@ func take_damage(amount : int):
 	hit_flash_player.play("hit_red")
 	HEALTH -= amount
 	if (HEALTH <= 0):
+		Globs.child_of_wave_died.emit()
 		queue_free()
 
 func _connect_allowed_to_move():

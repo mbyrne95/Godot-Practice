@@ -13,7 +13,7 @@ var target_acquired = false
 var shockwave = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.tscn")
 
 func _ready():
-	contact_damage = 20
+	contact_damage = 30
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
 	muzzle = $Muzzle
@@ -32,10 +32,6 @@ func _physics_process(_delta):
 			get_target_position()
 			
 		dash_at_player()
-		
-		if start_cd:
-			start_cd = false
-			logic()
 
 func get_target_position():
 	#await get_tree().create_timer(time_between_dashes).timeout
@@ -64,23 +60,15 @@ func logic():
 	target_acquired = false
 	await get_tree().create_timer(0.02).timeout
 	check_for_bounds = true
-		
-#func out_of_bounds():
-#	if ((global_position.x <= 11 && global_position.x >= 9)  || 
-#	(global_position.x <= 171 && global_position.x >= 169) || 
-#	(global_position.y <= 11 && global_position.y >= 9) || 
-#	 (global_position.y <= 311 && global_position.y >= 309)):
-#		start_cd = true
-#	else: 
-#		pass
 
 func shockwave_init():
 	var x = shockwave.instantiate()
 	x.global_position = global_position
 	projectile_container.call_deferred("add_child", x)
-	x.get_node_or_null("ColorRect").scale = Vector2(0.4, 0.4)
-	x.get_node_or_null("AnimationPlayer").speed_scale = 4
+	#x.get_node_or_null("ColorRect").scale = Vector2(0.4, 0.4)
+	x.timescale = 4
 	x.scale = Vector2(0.4, 0.4)
+	x.damage = contact_damage
 	
 func _on_hitbox_body_entered(body):
 	if allowed_to_move:

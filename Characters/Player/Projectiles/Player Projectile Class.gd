@@ -10,7 +10,6 @@ var current_damage
 @onready var collision
 @onready var emitter
 var BULLET_RANGE
-var SIZE_MULTIPLIER
 var is_dead = false
 
 func _physics_process(delta):
@@ -43,3 +42,9 @@ func _on_body_entered(body):
 	if body.is_in_group("enemies"):
 		call_deferred("start_death")
 		body.take_damage(current_damage)
+	elif body.is_in_group("level_bounds"):
+		call_deferred("start_death")
+
+#func _on_area_entered(area):
+#	if area.is_in_group("level_bounds"):
+#		call_deferred("start_death")

@@ -11,12 +11,12 @@ region = Rect2(15, 15, 2, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rt7vh"]
 size = Vector2(2, 2)
 
-[sub_resource type="Gradient" id="Gradient_qofv0"]
+[sub_resource type="Gradient" id="Gradient_pudhs"]
 offsets = PackedFloat32Array(0, 0.370301)
 colors = PackedColorArray(0.368627, 0.831373, 0.847059, 0.278431, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ilygs"]
-gradient = SubResource("Gradient_qofv0")
+gradient = SubResource("Gradient_pudhs")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -25,7 +25,7 @@ self_modulate = Color(0.36, 15.82, 15.84, 1)
 light_mask = 3
 visibility_layer = 3
 collision_layer = 128
-collision_mask = 64
+collision_mask = 65
 script = ExtResource("1_tn16u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

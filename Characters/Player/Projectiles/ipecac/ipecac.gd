@@ -1,5 +1,7 @@
 extends player_projectileclass
 
+@onready var ipecac_aoe = preload("res://Characters/Player/Projectiles/ipecac/ipecac_aoe.tscn")
+
 func _ready():
 	sprite = $Sprite2D
 	glow = $Sprite2D2
@@ -16,36 +18,40 @@ func _physics_process(delta):
 	if (distance_from_player < BULLET_RANGE):
 		var motion = Vector2(cos(self.global_rotation), sin(self.global_rotation)) * SPEED
 		position += motion * delta
-		
-		proptosis_logic(distance_from_player)
 			
 	else:
 		if !is_dead:
-			call_deferred("start_death")
+			call_deferred("start_explo")
 			
-func proptosis_logic(distance_from_player):
-	var percent_remaining = abs(BULLET_RANGE - distance_from_player) / BULLET_RANGE
-	var current_scale = scale * percent_remaining
-	#print(current_scale)
-	current_damage = DAMAGE * (current_scale * 0.9)
-	#print(current_damage)
-	sprite.scale = Vector2(current_scale, current_scale)
-	glow.scale = Vector2(current_scale, current_scale)
-	collision.scale = Vector2(current_scale, current_scale)
-	
-func start_death():
+func start_explo():
 	is_dead = true
-	emitter.emitting = true
+	
+	var projectile = ipecac_aoe.instantiate()
+	projectile.damage = DAMAGE
+	projectile.scale = Vector2(0.2,0.2)
+	projectile.timescale = 6
+	#print(self.global_position)
+	add_child(projectile)
+	projectile.global_position = self.global_position
+
+	#projectile.outer_color = Vector4(0.3,0.51,0.36,1)
+	#projectile.inner_color = Vector4(0.65,0.78,0.67,1)
+	
+	
 	collision.disabled = true
 	sprite.visible = false
 	glow.visible = false
-	await get_tree().create_timer(emitter.lifetime).timeout
-	queue_free()
 	
-func _on_visible_on_screen_notifier_2d_screen_exited():
+	await get_tree().create_timer(5).timeout
 	queue_free()
 
 func _on_body_entered(body):
 	if body.is_in_group("enemies"):
-		call_deferred("start_death")
 		body.take_damage(current_damage)
+		call_deferred("start_explo")
+	elif body.is_in_group("level_bounds"):
+		call_deferred("start_explo")
+
+#func _on_area_entered(area):
+#	if area.is_in_group("level_bounds"):
+#		call_deferred("start_explo")

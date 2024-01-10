@@ -1,13 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://i4lfr1lyrvrv"]
+[gd_scene load_steps=10 format=3 uid="uid://64rdr3s0efjp"]
 
-[ext_resource type="Script" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice.gd" id="1_a6cth"]
-[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice.gdshader" id="2_1530r"]
-[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice_inner.gdshader" id="2_jvr5m"]
+[ext_resource type="Script" path="res://Characters/Player/Projectiles/ipecac/ipecac_aoe.gd" id="1_dvcti"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice.gdshader" id="2_l55qb"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice_inner.gdshader" id="3_uwqnx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tgflm"]
 resource_local_to_scene = true
-shader = ExtResource("2_1530r")
-shader_parameter/color = Vector4(1, 0, 0, 1)
+shader = ExtResource("2_l55qb")
+shader_parameter/color = Vector4(0.25, 0.8, 0.5, 1)
 shader_parameter/diameter = 0.04
 shader_parameter/thickness = 0.05
 shader_parameter/frequency = 0.0
@@ -15,8 +15,8 @@ shader_parameter/phase = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ea5rk"]
 resource_local_to_scene = true
-shader = ExtResource("2_jvr5m")
-shader_parameter/color = Vector4(0.9, 0.7, 0.9, 1)
+shader = ExtResource("3_uwqnx")
+shader_parameter/color = Vector4(0.3, 0.9, 0.5, 1)
 shader_parameter/diameter = 0.0
 shader_parameter/thickness = 0.4
 shader_parameter/frequency = 0.0
@@ -197,7 +197,7 @@ _data = {
 }
 
 [node name="aoe_practice" type="Node2D"]
-script = ExtResource("1_a6cth")
+script = ExtResource("1_dvcti")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 top_level = true

@@ -8,7 +8,7 @@ extends Node2D
 @export var depths_speed = 0.5
 
 
-var parallax_motion = false
+var parallax_motion = true
 
 var current_wave
 

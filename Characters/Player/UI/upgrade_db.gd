@@ -56,6 +56,18 @@ const UPGRADES = {
 		"detail": "Attack speed way up, damage way down.",
 		"type": "dmg"
 	},
+	"aura": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "sunfire cape",
+		"detail": "dmg aura",
+		"type": "dmg"
+	},
+	"ipecac": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Ipecac",
+		"detail": "Explosive Shots",
+		"type": "dmg"
+	},
 	"broke_the_game": {
 		"icon": ICON_PATH + "Skillicon1_09.png",
 		"displayname": "Broken game!",

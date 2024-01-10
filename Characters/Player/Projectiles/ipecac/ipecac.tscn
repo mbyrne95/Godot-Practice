@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxhsk2mp2er"]
+
+[ext_resource type="Script" path="res://Characters/Player/Projectiles/ipecac/ipecac.gd" id="1_mxiaj"]
+[ext_resource type="Texture2D" uid="uid://bvr4muynvepme" path="res://Art/My Art/Player/generic_player_projectile.png" id="2_rly2n"]
+[ext_resource type="PackedScene" uid="uid://b7p7sx516036m" path="res://Characters/Player/Projectiles/projectile_death_particles.tscn" id="3_rui63"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4q7u"]
+atlas = ExtResource("2_rly2n")
+region = Rect2(15, 15, 2, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8p26"]
+size = Vector2(2, 2)
+
+[sub_resource type="Gradient" id="Gradient_qofv0"]
+offsets = PackedFloat32Array(0, 0.370301)
+colors = PackedColorArray(0.487209, 0.843438, 0.565738, 0.278431, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8g3c0"]
+gradient = SubResource("Gradient_qofv0")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="ipecac" type="Area2D"]
+collision_layer = 128
+collision_mask = 65
+script = ExtResource("1_mxiaj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_a4q7u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.98023e-08, 0)
+shape = SubResource("RectangleShape2D_s8p26")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.0625, -0.0515625)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_8g3c0")
+
+[node name="projectile_death" parent="." instance=ExtResource("3_rui63")]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

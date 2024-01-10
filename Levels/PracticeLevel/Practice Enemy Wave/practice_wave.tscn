@@ -1,10 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq1ruxpes16qs"]
+[gd_scene load_steps=5 format=3 uid="uid://bq1ruxpes16qs"]
 
 [ext_resource type="Script" path="res://Levels/PracticeLevel/Practice Enemy Wave/wave_logic.gd" id="1_8eyft"]
 [ext_resource type="PackedScene" uid="uid://bsxep18xom2xk" path="res://Characters/Enemies/Basic Enemies/dashing_enemy/dashing_enemy.tscn" id="2_ow32x"]
+[ext_resource type="Script" path="res://Characters/Player/PlayerOrbitalTransform.gd" id="3_jnxo0"]
+[ext_resource type="PackedScene" uid="uid://b3ry5b1ya3msm" path="res://Characters/Enemies/Basic Enemies/orbiting_enemy/orbiting_enemy.tscn" id="4_2vumo"]
 
 [node name="practice_wave" type="Node2D"]
 script = ExtResource("1_8eyft")
 
 [node name="dashing_enemy" parent="." instance=ExtResource("2_ow32x")]
 position = Vector2(86, 277)
+
+[node name="PlayerOrbitalTransform" type="Node2D" parent="." groups=["player_orbital_transform"]]
+script = ExtResource("3_jnxo0")
+
+[node name="orbiting_enemy" parent="." instance=ExtResource("4_2vumo")]
+position = Vector2(36, 258)

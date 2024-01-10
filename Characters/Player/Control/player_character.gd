@@ -63,6 +63,7 @@ signal blinkProgress(progress)
 
 @onready var weapon = $Weapon
 @onready var upgrade_data = $upgrade_data
+var aura = preload("res://Characters/Player/Projectiles/aura/player_aura.tscn")
 
 var is_damageable = true
 
@@ -300,12 +301,21 @@ func match_item_upgrade(upgrade):
 			weapon.crit_chance += 0.15
 		"proptosis":
 			weapon.proptosis = true
+			weapon.size_multiplier += 2
 		"twentytwenty":
 			weapon.twentytwenty = true
 			weapon.damage_multiplier -= 0.2
 		"soymilk":
 			weapon.damage_multiplier -= 0.75
 			weapon.shoot_cd = 0.05
+		"aura":
+			var new_aura = aura.instantiate()
+			add_child(new_aura)
+		"ipecac":
+			weapon.ipecac = true
+			weapon.size_multiplier += 0.4
+			weapon.projectile_damage += 40
+			
 
 ###TAKING DAMAGE
 ################
