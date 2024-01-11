@@ -10,14 +10,13 @@ class_name enemy_baseclass
 @onready var projectile_scene
 @onready var hit_flash_player
 @onready var target_position
+var sprite
 var contact_damage = 0
 var allowed_to_move = false
 
 @export var SPEED = 200
 @export var HEALTH = 100
-@export var move_delay = 2
 
-@export var SHOOT_OFFSET = 20
 @export var SHOOT_CD = 0.3
 var shoot_on_cd : = false
 
@@ -69,13 +68,24 @@ func horizontal_only_movement():
 	velocity = target_position * SPEED
 	move_and_slide()
 	
+func vertical_only_movement():
+	if(player == null):
+		return
+	var player_position = player.position
+	target_position = (player_position - position).normalized()
+	target_position = Vector2(0, target_position.y)
+	velocity = target_position * SPEED
+	move_and_slide()
+	
 func take_damage(amount : int):
-	print(amount)
-	hit_flash_player.play("hit_red")
+	#print(amount)
 	HEALTH -= amount
+	sprite.material.set_shader_parameter("enabled", true)
 	if (HEALTH <= 0):
 		Globs.child_of_wave_died.emit()
 		queue_free()
+	await get_tree().create_timer(0.1).timeout
+	sprite.material.set_shader_parameter("enabled", false)
 
 func _connect_allowed_to_move():
 	allowed_to_move = true

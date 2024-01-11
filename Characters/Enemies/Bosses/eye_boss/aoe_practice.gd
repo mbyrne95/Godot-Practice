@@ -14,8 +14,6 @@ var outer
 var inner
 var timescale = 1
 
-
-
 func _ready():
 	inner = $ColorRect2
 	outer = $ColorRect

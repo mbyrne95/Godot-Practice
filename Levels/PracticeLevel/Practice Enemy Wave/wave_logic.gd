@@ -6,18 +6,24 @@ var in_position = false
 var children_active = false
 
 var orbital_empty = false
-var num_children = 2
+var num_children = 0
 
 var enemies_in_children = []
 
 func _ready():
 	Globs.child_of_wave_died.connect(reduce_num_children)
 	self.position = Vector2(0, 320)
+	
+	for i in get_children():
+		if !i.is_in_group("player_orbital_transform"):
+			num_children += 1
+		else:
+			for j in i.get_children():
+				num_children += 1
 	#Globs.wave_is_free.connect(set_children_active)
 
 func _physics_process(delta):
 	#print(position)
-	
 	if (!position_approx()):
 		position.y -= SPEED * delta
 	else:

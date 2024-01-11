@@ -7,8 +7,12 @@ var enemies_on_screen = []
 var ri_dist
 var ro_dist 
 
+var player
+
 func _ready():
-	print(global_position)
+	#print(ri.global_position)
+	player = get_tree().get_first_node_in_group("players")
+	#print(global_position)
 	has_started = false
 	outer = $ColorRect
 	inner = $ColorRect2
@@ -16,12 +20,12 @@ func _ready():
 	#ring_scale = scale 
 	outer_color = Vector4(1,0,0,1)
 	#outer.material.set_shader_param("Color",outer_color)
-	outer.global_position = global_position - Vector2(160,160)
+	outer.position = global_position - Vector2(160,160)
 	outer.scale = scale
 	
 	inner_color = Vector4(0.9,0.7,0.9,1)
 	#inner.material.set_shader_param("Color",inner_color)
-	inner.global_position = global_position - Vector2(160,160)
+	inner.position = global_position - Vector2(160,160)
 	inner.scale = scale
 	
 	#print(inner.position)
@@ -29,17 +33,23 @@ func _ready():
 	anim_player.speed_scale = timescale
 
 func _physics_process(_delta):
-	#get rings distance at start of frame
+
+	#var player_position = player.global_position
+	var player_dist = position.distance_to(player.global_position)
+#	print("player global = ", player.global_position)
+#	print("self global = ", position)
+	
+		#get rings distance at start of frame
 	ri_dist = global_position.distance_to(ri.global_position)
 	ro_dist = global_position.distance_to(ro.global_position)
-
-	var player_position = get_tree().get_first_node_in_group("players").global_position
-	var player_dist = global_position.distance_to(player_position) 
-
+	
+	#print(ri_dist)
+	
 	#player is in ring
 	if (player_dist < ro_dist && player_dist > ri_dist):
-		if get_tree().get_first_node_in_group("players").is_damageable:
-			get_tree().get_first_node_in_group("players").take_damage(damage)
+		#print("player should take damage")
+		if player.is_damageable:
+			player.take_damage(damage)
 
 	#check if any enemies in the enemy container
 	enemy_container = get_tree().get_first_node_in_group("enemy_container")
@@ -65,7 +75,7 @@ func dmg_children(enemy_array):
 			if i.get_child_count() != 0:
 				for j in i.get_children():
 					var enemy_position = j.global_position
-					var enemy_dist = global_position.distance_to(enemy_position)
+					var enemy_dist = position.distance_to(enemy_position)
 			
 					if (enemy_dist < ro_dist && enemy_dist > ri_dist):
 						j.take_damage(damage)
@@ -74,7 +84,7 @@ func dmg_children(enemy_array):
 		elif i.is_in_group("enemies"):
 			#var enemy = i
 			var enemy_position = i.global_position
-			var enemy_dist = global_position.distance_to(enemy_position)
+			var enemy_dist = position.distance_to(enemy_position)
 			
 			if (enemy_dist < ro_dist && enemy_dist > ri_dist):
 				i.take_damage(damage)

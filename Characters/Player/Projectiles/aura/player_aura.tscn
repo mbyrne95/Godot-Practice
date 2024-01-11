@@ -6,8 +6,8 @@
 radius = 51.0098
 
 [sub_resource type="Gradient" id="Gradient_nfo8o"]
-offsets = PackedFloat32Array(0.659774, 0.719925)
-colors = PackedColorArray(0.745098, 0.34902, 0, 0.65098, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0.657895, 0.725564)
+colors = PackedColorArray(0.745098, 0.34902, 0, 0.0823529, 0.745098, 0.34902, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_v6hew"]
 gradient = SubResource("Gradient_nfo8o")
@@ -22,6 +22,7 @@ collision_layer = 0
 collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CircleShape2D_hh1jp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

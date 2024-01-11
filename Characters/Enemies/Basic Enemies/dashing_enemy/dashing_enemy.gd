@@ -13,6 +13,7 @@ var target_acquired = false
 var shockwave = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.tscn")
 
 func _ready():
+	sprite = $Sprite2D
 	contact_damage = 30
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
@@ -23,15 +24,16 @@ func _ready():
 
 func _physics_process(_delta):
 	if allowed_to_move:
-		look_at(player.global_position)
-#		if check_for_bounds:
-#			out_of_bounds()
-		
-		if !target_acquired:
-			target_acquired = true
-			get_target_position()
+		if player != null:
+			look_at(player.global_position)
+	#		if check_for_bounds:
+	#			out_of_bounds()
 			
-		dash_at_player()
+			if !target_acquired:
+				target_acquired = true
+				get_target_position()
+				
+			dash_at_player()
 
 func get_target_position():
 	#await get_tree().create_timer(time_between_dashes).timeout

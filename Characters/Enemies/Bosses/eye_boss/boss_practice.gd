@@ -19,13 +19,15 @@ var attack_list = [
 	0, #corresponds to rotate shoot
 	1, #corresponds to ... 
 ]
+
+signal healthChanged(percent_hp)
  
 func _ready():
 	self.add_to_group("enemies")
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	#enemy_container.add_child(self)
 	hit_flash_player = $hit_flash_player
-	HEALTH = 1000.0
+	HEALTH = 10000.0
 	MAX_HEALTH = HEALTH
 	SPEED = 20
 	muzzle = %EyeMuzzle
@@ -138,3 +140,11 @@ func rotateToTarget(target, delta):
 	var direction = (target.global_position - eye_follow.global_position)
 	var angleTo = eye_follow.global_transform.x.angle_to(direction)
 	eye_follow.rotate(sign(angleTo) * min(delta * eye_follow_speed, abs(angleTo)))
+
+func take_damage(amount : int):
+	hit_flash_player.play("hit_red")
+	HEALTH -= amount
+	healthChanged.emit(HEALTH / MAX_HEALTH)
+	if (HEALTH <= 0):
+		Globs.child_of_wave_died.emit()
+		queue_free()

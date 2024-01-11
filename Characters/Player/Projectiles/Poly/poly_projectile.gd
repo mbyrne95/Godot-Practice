@@ -26,12 +26,12 @@ func _physics_process(delta):
 func proptosis_logic(distance_from_player):
 	var percent_remaining = abs(BULLET_RANGE - distance_from_player) / BULLET_RANGE
 	var current_scale = scale * percent_remaining
-	#print(current_scale)
-	current_damage = DAMAGE * (current_scale * 0.9)
+	print(current_scale)
+	current_damage = DAMAGE * (current_scale.x * 0.9)
 	#print(current_damage)
-	sprite.scale = Vector2(current_scale, current_scale)
-	glow.scale = Vector2(current_scale, current_scale)
-	collision.scale = Vector2(current_scale, current_scale)
+	sprite.scale = current_scale
+	glow.scale = current_scale
+	collision.scale = current_scale
 	
 func start_death():
 	is_dead = true

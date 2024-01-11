@@ -7,7 +7,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tgflm"]
 resource_local_to_scene = true
 shader = ExtResource("2_l55qb")
-shader_parameter/color = Vector4(0.25, 0.8, 0.5, 1)
+shader_parameter/color = Vector4(0.22, 0.58, 0.43, 1)
 shader_parameter/diameter = 0.04
 shader_parameter/thickness = 0.05
 shader_parameter/frequency = 0.0
@@ -16,7 +16,7 @@ shader_parameter/phase = 0.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ea5rk"]
 resource_local_to_scene = true
 shader = ExtResource("3_uwqnx")
-shader_parameter/color = Vector4(0.3, 0.9, 0.5, 1)
+shader_parameter/color = Vector4(0.6, 0.9, 0.31, 1)
 shader_parameter/diameter = 0.0
 shader_parameter/thickness = 0.4
 shader_parameter/frequency = 0.0
@@ -200,6 +200,7 @@ _data = {
 script = ExtResource("1_dvcti")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0.215686, 0.580392, 0.431373, 1)
 top_level = true
 material = SubResource("ShaderMaterial_tgflm")
 use_parent_material = true

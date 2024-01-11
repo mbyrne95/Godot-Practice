@@ -28,15 +28,11 @@ func start_explo():
 	
 	var projectile = ipecac_aoe.instantiate()
 	projectile.damage = DAMAGE
-	projectile.scale = Vector2(0.2,0.2)
-	projectile.timescale = 6
+	projectile.scale = Vector2(0.15,0.15)
+	projectile.timescale = 12
 	#print(self.global_position)
 	add_child(projectile)
-	projectile.global_position = self.global_position
-
-	#projectile.outer_color = Vector4(0.3,0.51,0.36,1)
-	#projectile.inner_color = Vector4(0.65,0.78,0.67,1)
-	
+	projectile.position = global_position
 	
 	collision.disabled = true
 	sprite.visible = false

@@ -1,19 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://dgcer7ec27djg"]
+[gd_scene load_steps=12 format=3 uid="uid://bptebg3reglrb"]
 
-[ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/basic_enemy.gd" id="1_3v2xd"]
-[ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_xh6sm"]
-[ext_resource type="Texture2D" uid="uid://b1mfnb0q0ua6" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="3_mdh23"]
+[ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/vertical_variant/basic_enemy_vertical.gd" id="1_5vyx1"]
+[ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_h7ch0"]
+[ext_resource type="Texture2D" uid="uid://b1mfnb0q0ua6" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="3_bu5yb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4fc60"]
 resource_local_to_scene = true
-shader = ExtResource("2_xh6sm")
+shader = ExtResource("2_h7ch0")
 shader_parameter/white = 1
 shader_parameter/enabled = false
 shader_parameter/white_color = Color(1, 1, 1, 1)
 shader_parameter/tint = Color(1, 0, 0, 0.596078)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_30knb"]
-atlas = ExtResource("3_mdh23")
+atlas = ExtResource("3_bu5yb")
 region = Rect2(40, 1, 7, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8uorf"]
@@ -112,22 +112,24 @@ _data = {
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_k47xu"]
 polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5, 0, 2.5, -3.5, 1.5, -3.5, -0.5, -1.5, -2.5)
 
-[node name="basic_enemy" type="CharacterBody2D" groups=["enemies"]]
+[node name="basic_enemy_left_wall" type="CharacterBody2D" groups=["enemies"]]
 visibility_layer = 3
 scale = Vector2(2, 2)
 collision_layer = 80
 collision_mask = 0
-script = ExtResource("1_3v2xd")
+script = ExtResource("1_5vyx1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4fc60")
+rotation = 1.5708
 texture = SubResource("AtlasTexture_30knb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
 shape = SubResource("RectangleShape2D_8uorf")
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(4, 0)
 
 [node name="HitFlashPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -136,5 +138,6 @@ libraries = {
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 light_mask = 2
+rotation = 1.5708
 occluder = SubResource("OccluderPolygon2D_k47xu")
 occluder_light_mask = 2

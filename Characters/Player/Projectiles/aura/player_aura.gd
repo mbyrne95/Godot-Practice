@@ -1,9 +1,9 @@
 extends Node2D
 
 var enemies_in_range = []
-var damage = 5
+var damage = 10
 var has_ticked = false
-var tick_cd = 1
+var tick_cd = 0.75
 
 func _process(_delta):
 	if !has_ticked:

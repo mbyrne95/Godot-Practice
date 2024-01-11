@@ -295,7 +295,7 @@ func match_item_upgrade(upgrade):
 		"test_health":
 			MAX_HEALTH += 20
 		"armor_plate_1":
-			dmg_ratio = 0.95
+			dmg_ratio -= 0.1
 			armor_plate.visible = true
 		"crit_chance_1":
 			weapon.crit_chance += 0.15
@@ -304,10 +304,12 @@ func match_item_upgrade(upgrade):
 			weapon.size_multiplier += 2
 		"twentytwenty":
 			weapon.twentytwenty = true
-			weapon.damage_multiplier -= 0.2
+			if (weapon.damage_multiplier > 0.8):
+				weapon.damage_multiplier = 0.8
 		"soymilk":
-			weapon.damage_multiplier -= 0.75
-			weapon.shoot_cd = 0.05
+			if (weapon.damage_multiplier > 0.25):
+				weapon.damage_multiplier = 0.25
+			weapon.shoot_cd -= 0.2
 		"aura":
 			var new_aura = aura.instantiate()
 			add_child(new_aura)
@@ -315,22 +317,19 @@ func match_item_upgrade(upgrade):
 			weapon.ipecac = true
 			weapon.size_multiplier += 0.4
 			weapon.projectile_damage += 40
+			weapon.shoot_cd += 1.5
 			
 
 ###TAKING DAMAGE
 ################
-func take_damage(amount : int):
+func take_damage(amount : float):
 	if(!is_recently_dmg):
 		if ((current_health - amount) <= 0):
 			healthChanged.emit(0)
 			call_deferred("death")
 		else:
-			if (cameraShake):
-				Globs.camera_shake.emit(0.65, 1.8)
-			call_deferred("dmg_iframes")
-			frame_freeze(0.05, 0.85)
-			hit_flash_player.play("flash_red")
 			current_health -= dmg_ratio * amount
+			
 			var percentHP = float(current_health) / float(MAX_HEALTH)
 			#change sprite to more damaged based on %health
 			if (percentHP <= high_health_ratio && percentHP > low_health_ratio):
@@ -339,6 +338,16 @@ func take_damage(amount : int):
 				ship_sprite.frame = 2
 				
 			healthChanged.emit(percentHP)
+
+			if (cameraShake):
+				Globs.camera_shake.emit(0.65, (amount/MAX_HEALTH) * 8)
+				
+			call_deferred("dmg_iframes")
+			frame_freeze(0.05, 0.85)
+			ship_sprite.material.set_shader_parameter("enabled", true)
+
+			await get_tree().create_timer(0.1).timeout
+			ship_sprite.material.set_shader_parameter("enabled", false)
 
 func dmg_iframes():
 	is_recently_dmg = true
