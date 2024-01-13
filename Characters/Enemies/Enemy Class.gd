@@ -46,7 +46,7 @@ func _physics_process(_delta):
 
 func follow_player_movement():
 	if player == null:
-		pass
+		return
 	look_at(player.position)
 	target_position = (player.global_position - global_position).normalized()
 	velocity = target_position * SPEED

@@ -26,7 +26,7 @@ func _physics_process(delta):
 func proptosis_logic(distance_from_player):
 	var percent_remaining = abs(BULLET_RANGE - distance_from_player) / BULLET_RANGE
 	var current_scale = scale * percent_remaining
-	print(current_scale)
+	#print(current_scale)
 	current_damage = DAMAGE * (current_scale.x * 0.9)
 	#print(current_damage)
 	sprite.scale = current_scale

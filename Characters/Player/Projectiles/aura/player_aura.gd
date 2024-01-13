@@ -12,7 +12,7 @@ func _process(_delta):
 func tick_rate():
 	has_ticked = true
 	if enemies_in_range == null:
-		pass
+		return
 		
 	for i in enemies_in_range:
 		i.take_damage(damage)

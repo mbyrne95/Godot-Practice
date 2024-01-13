@@ -89,13 +89,11 @@ float border (vec2 uv){
 }
 
 // Adds a vignette shadow to the edges of the image
-/*
 float vignette(vec2 uv){
 	uv *= 1.0 - uv.xy;
 	float vignette = uv.x * uv.y * 15.0;
 	return pow(vignette, vignette_intensity * vignette_opacity);
 }
-*/
 
 void fragment()
 {

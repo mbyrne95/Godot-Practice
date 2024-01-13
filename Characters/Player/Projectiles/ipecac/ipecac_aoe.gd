@@ -7,8 +7,6 @@ var enemies_on_screen = []
 var ri_dist
 var ro_dist 
 
-var player
-
 func _ready():
 	#print(ri.global_position)
 	player = get_tree().get_first_node_in_group("players")

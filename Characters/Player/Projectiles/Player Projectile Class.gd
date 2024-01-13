@@ -11,6 +11,7 @@ var current_damage
 @onready var emitter
 var BULLET_RANGE
 var is_dead = false
+var player
 
 func _physics_process(delta):
 	var player_position = get_tree().get_first_node_in_group("players").position

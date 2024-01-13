@@ -29,13 +29,13 @@ var ipecac = false
 @onready var projectile_container = get_tree().get_first_node_in_group("projectile_container")
 
 func _process(_delta):
-	#print(projectile_damage)
-	if Input.is_action_pressed("shoot"):
-		if !shoot_on_cd:
-			shoot_on_cd = true
-			shoot()
-			await get_tree().create_timer(shoot_cd).timeout
-			shoot_on_cd = false
+	if get_parent().can_move:
+		if Input.is_action_pressed("shoot"):
+			if !shoot_on_cd:
+				shoot_on_cd = true
+				shoot()
+				await get_tree().create_timer(shoot_cd).timeout
+				shoot_on_cd = false
 
 func shoot():
 	var projectile

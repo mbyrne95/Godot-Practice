@@ -55,7 +55,7 @@ func _physics_process(_delta):
 	#print(HEALTH / MAX_HEALTH)
 	if allowed_to_move:
 		if(player == null):
-			pass
+			return
 		else:
 			#top end
 			if (HEALTH/MAX_HEALTH >= 0.66) && !is_attacking:

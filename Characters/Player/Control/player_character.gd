@@ -7,7 +7,7 @@ extends CharacterBody2D
 @export var ACCELERATION = 20
 @export var FRICTION = 5
 @export var rotation_speed = 5
-var can_move = true
+var can_move = false
 @export_subgroup("Blink")
 @export var BLINK_CD = 5
 
@@ -73,18 +73,20 @@ var input = Vector2.ZERO
 var mouse_direction
 
 func _ready():
+	Globs.player_can_move.connect(_can_move)
 	Globs.level_player.connect(level_up)
 	mouse_direction = (get_global_mouse_position() - global_position)
 
 func _process(_delta):
 	#shooting and ui is handled in respective nodes
-	if Input.is_action_just_pressed("debug"):
-		level_up()
+	if can_move:
+		if Input.is_action_just_pressed("debug"):
+			level_up()
 
 func _physics_process(delta):
 	#print(get_global_mouse_position())
-	input = get_input()
 	if can_move:
+		input = get_input()
 		player_movement(delta)
 
 		#var target = get_global_mouse_position()
@@ -246,7 +248,6 @@ func level_up():
 		
 	#panel needs to have process > mode: when paused
 
-
 #this applies update for the character, clears containers and resets vis
 func upgrade_character(upgrade):
 	match_item_upgrade(upgrade)
@@ -367,13 +368,18 @@ func death():
 	can_move = false
 	#var scaled_position = Vector2((global_position.x/get_viewport_rect().size.x), (global_position.y/get_viewport_rect().size.y))
 	#shockwave.material.set_shader_parameter("center", scaled_position)
-	shockwave.global_position = global_position
+	shockwave.position = global_position
 	shockwave.visible = true
 	thrust_left.emitting = false
 	thrust_right.emitting = false
 	Globs.camera_death_zoom.emit(global_position)
 	await get_tree().create_timer(2).timeout
-	shockwaveAnim.play("shockwave")
+	#shockwaveAnim.play("shockwave")
+	
+	var tween = create_tween()
+	tween.tween_method(material_size, 0.0, 1.0, 0.5)
+	
+	
 	death_explo_particles.emitting = true
 	collision_shape.disabled = true
 	ship_sprite.visible = false
@@ -382,3 +388,9 @@ func death():
 	#$LightOccluder2D.visible = false
 	await get_tree().create_timer(1).timeout
 	queue_free()
+
+func _can_move():
+	can_move = true
+
+func material_size(size : float):
+	shockwave.material.set_shader_parameter("size", size)

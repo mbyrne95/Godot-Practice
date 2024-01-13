@@ -13,8 +13,10 @@ var inner_color
 var outer
 var inner
 var timescale = 1
+var player
 
 func _ready():
+	player = get_tree().get_first_node_in_group("players")
 	inner = $ColorRect2
 	outer = $ColorRect
 	#ring_scale = scale 
@@ -31,6 +33,9 @@ func _ready():
 	anim_player.speed_scale = timescale
 
 func _physics_process(_delta):		
+	if player == null:
+		return
+		
 	var player_position = get_tree().get_first_node_in_group("players").global_position
 	var dist = global_position.distance_to(player_position) 
 	var ri_dist = global_position.distance_to(ri.global_position)

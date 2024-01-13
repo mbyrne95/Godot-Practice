@@ -47,7 +47,9 @@ func dash_at_player():
 #		if !player_position_initialized:
 #			get_player_position()
 #			player_position_initialized = true
-		velocity = target_position * SPEED
+		var tween = create_tween()
+		tween.tween_property(self, "velocity", target_position * SPEED, 0.05).set_trans(Tween.TRANS_CUBIC)
+		#velocity = target_position * SPEED
 		move_and_slide()
 		#print(velocity)
 

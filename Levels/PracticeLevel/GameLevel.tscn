@@ -46,7 +46,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.0
 shader_parameter/vignette_opacity = 0.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_brujl"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_710qn"]
 resource_local_to_scene = true
 blend_mode = 1
 
@@ -57,7 +57,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1e4sn"]
 curve = SubResource("Curve_6oof4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8jg3g"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jw5ag"]
 resource_local_to_scene = true
 lifetime_randomness = 0.25
 emission_shape = 3
@@ -82,7 +82,7 @@ turbulence_influence_max = 0.15
 offsets = PackedFloat32Array(0, 0.0775316, 0.0996835, 0.802215)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196, 0.299127, 0.299127, 0.299127, 0.146631, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_klumo"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e6rlo"]
 resource_local_to_scene = true
 gradient = SubResource("Gradient_0ewwu")
 width = 32
@@ -92,13 +92,13 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kg1rj"]
-size = Vector2(180, 24)
+size = Vector2(180, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wme3t"]
 size = Vector2(180, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3moj"]
-size = Vector2(6, 276)
+size = Vector2(7, 295.25)
 
 [node name="GameLevel" type="Node2D"]
 script = ExtResource("1_fx8fp")
@@ -180,21 +180,22 @@ position = Vector2(160, 320)
 [node name="floating_lights" parent="CanvasLayer/particles" instance=ExtResource("6_gymfy")]
 self_modulate = Color(5, 5, 1.11, 1)
 light_mask = 1
-material = SubResource("CanvasItemMaterial_brujl")
+material = SubResource("CanvasItemMaterial_710qn")
 position = Vector2(15, 320)
-process_material = SubResource("ParticleProcessMaterial_8jg3g")
-texture = SubResource("GradientTexture2D_klumo")
+process_material = SubResource("ParticleProcessMaterial_jw5ag")
+texture = SubResource("GradientTexture2D_e6rlo")
 
 [node name="ProjectileContainer" type="Node2D" parent="." groups=["projectile_container"]]
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("12_slqvt")]
-position = Vector2(89, 46)
+position = Vector2(90, -9.995)
+rotation = 1.5708
 
 [node name="Level Bounds" type="StaticBody2D" parent="." groups=["level_bounds"]]
 collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level Bounds"]
-position = Vector2(90, 12)
+position = Vector2(90, 5)
 shape = SubResource("RectangleShape2D_kg1rj")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Level Bounds"]
@@ -202,11 +203,11 @@ position = Vector2(90, 310)
 shape = SubResource("RectangleShape2D_wme3t")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Level Bounds"]
-position = Vector2(3, 162)
+position = Vector2(3.5, 156.75)
 shape = SubResource("RectangleShape2D_x3moj")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Level Bounds"]
-position = Vector2(177, 162)
+position = Vector2(177.5, 158)
 shape = SubResource("RectangleShape2D_x3moj")
 
 [connection signal="timeout" from="Camera2D/ShakeTimer" to="Camera2D" method="_on_timer_timeout"]

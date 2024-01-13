@@ -2,7 +2,9 @@ extends player_projectileclass
 
 @onready var ipecac_aoe = preload("res://Characters/Player/Projectiles/ipecac/ipecac_aoe.tscn")
 
+
 func _ready():
+	player = get_tree().get_first_node_in_group("players")
 	sprite = $Sprite2D
 	glow = $Sprite2D2
 	collision = $CollisionShape2D
@@ -10,7 +12,10 @@ func _ready():
 	current_damage = DAMAGE
 
 func _physics_process(delta):
-	var player_position = get_tree().get_first_node_in_group("players").position
+	if player == null:
+		return
+		
+	var player_position = player.position
 	var distance_x = player_position.x - position.x
 	var distance_y = player_position.y - position.y
 	var distance_from_player = sqrt((distance_x * distance_x) + (distance_y * distance_y))

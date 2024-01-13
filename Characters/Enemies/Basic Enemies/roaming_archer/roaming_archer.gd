@@ -16,6 +16,7 @@ var time_after_shooting = 1
 func _ready():
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
+	sprite = $Sprite2D
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
 	viewport_size_x = get_viewport_rect().size.x
@@ -61,14 +62,14 @@ func archer_shoot():
 	walk = true
 		
 func get_target_destination():
-	anchor.rotation = randf_range(0, 360)
+	anchor.rotation_degrees = randf_range(0, 360)
 	
 	#reroll the anchor rotation until the walk destination is in range
 	while ((walk_destination.global_position.x < offset) || 
 	(walk_destination.global_position.x > viewport_size_x - offset) ||
 	(walk_destination.global_position.y < offset) || 
 	(walk_destination.global_position.y > viewport_size_y - offset)):
-		anchor.rotation = randf_range(0, 360)
+		anchor.rotation_degrees = randf_range(0, 360)
 		
 	#snapshot the target destination
 	target_destination = Vector2(walk_destination.global_position.x, walk_destination.global_position.y)
