@@ -11,9 +11,10 @@ class_name enemy_baseclass
 @onready var hit_flash_player
 @onready var target_position
 var sprite
-var contact_damage = 0
+
 var allowed_to_move = false
 
+@export var contact_damage = 0
 @export var SPEED = 200
 @export var HEALTH = 100
 

@@ -1,14 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://c03r3yqogfy8t"]
+[gd_scene load_steps=11 format=3 uid="uid://c03r3yqogfy8t"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Projectiles/round_enemy_bullet.gd" id="1_tqvxx"]
-[ext_resource type="Texture2D" uid="uid://6hiyycqa84sd" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Projectiles.png" id="2_dbwxa"]
+[ext_resource type="Texture2D" uid="uid://bvr4muynvepme" path="res://Art/My Art/Player/generic_player_projectile.png" id="2_7n7bh"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7hy5e"]
-atlas = ExtResource("2_dbwxa")
-region = Rect2(25, 9, 6, 6)
+[sub_resource type="AtlasTexture" id="AtlasTexture_is6ms"]
+atlas = ExtResource("2_7n7bh")
+region = Rect2(15, 15, 2, 2)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1peui"]
-radius = 3.04138
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ac0k3"]
+size = Vector2(1, 1)
 
 [sub_resource type="Gradient" id="Gradient_ll1j4"]
 offsets = PackedFloat32Array(0, 0.231013, 0.719937)
@@ -28,21 +28,30 @@ gradient = SubResource("Gradient_3ofsn")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_h3dnn"]
+offsets = PackedFloat32Array(0, 0.351504)
+colors = PackedColorArray(1, 0, 0, 0.247059, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cmyqg"]
+gradient = SubResource("Gradient_h3dnn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
 [node name="round_enemy_bullet" type="Area2D"]
 collision_layer = 256
 collision_mask = 8
 script = ExtResource("1_tqvxx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)
-texture = SubResource("AtlasTexture_7hy5e")
+texture = SubResource("AtlasTexture_is6ms")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)
-shape = SubResource("CircleShape2D_1peui")
+shape = SubResource("RectangleShape2D_ac0k3")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0, 7)
+position = Vector2(0, 2)
 scale = Vector2(0.1, 0.1)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
@@ -60,6 +69,9 @@ energy = 1.2
 shadow_enabled = true
 shadow_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_4dwbn")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_cmyqg")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

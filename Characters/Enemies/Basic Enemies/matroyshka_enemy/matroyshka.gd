@@ -6,13 +6,13 @@ var number_of_offspring= 3
 var has_split = false
 
 @onready var parent = get_parent()
-@onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
 @onready var light_occluder = $LightOccluder2D
 
 signal has_died(given_position, number_of_splits, given_scale, given_health, given_speed)
 
 func _ready():
+	sprite = $Sprite2D
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	self.add_to_group("enemies")
 	contact_damage = 20

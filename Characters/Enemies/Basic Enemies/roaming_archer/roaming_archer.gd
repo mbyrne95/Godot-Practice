@@ -7,9 +7,9 @@ var walk = true
 var can_shoot = false
 var target_destination
 var initialized_target_loc = false
-var shots_in_volley = 5
-var time_between_shots = 0.1
-var time_after_shooting = 1
+@export var shots_in_volley = 5
+@export var time_between_shots = 0.2
+@export var time_after_shooting = 1.0
 @onready var anchor = $anchor
 @onready var walk_destination = $anchor/walk_destination
 
@@ -27,6 +27,9 @@ func _ready():
 func _process(delta):
 	if allowed_to_move:
 		#if outside of the arbitrary bounds we're settings
+		if player == null:
+			return
+
 		look_at(player.global_position)
 
 		if !initialized_target_loc:

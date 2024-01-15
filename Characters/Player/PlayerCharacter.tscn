@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://Characters/Player/Control/player_character.gd" id="1_hehd3"]
 [ext_resource type="Shader" uid="uid://6opn2jo0vkd4" path="res://Characters/Player/Effects/hit_flash_red.tres" id="2_ydp14"]
+[ext_resource type="Texture2D" uid="uid://6js54l2o7fr2" path="res://Art/My Art/Player/player_ship_rework.png" id="3_2g0bf"]
 [ext_resource type="PackedScene" uid="uid://bhhinekyb0n37" path="res://Characters/Player/blink.tscn" id="3_b7idt"]
 [ext_resource type="PackedScene" uid="uid://66qpte1xrex1" path="res://Characters/Player/UI/PlayerUI.tscn" id="4_fwyhk"]
 [ext_resource type="Material" uid="uid://btf1if7d3u6ol" path="res://Characters/Player/shockwave.tres" id="6_ttsk2"]
-[ext_resource type="Texture2D" uid="uid://bg1imojkg7d7a" path="res://Art/My Art/Player/player_ship_frames.png" id="8_1mvr0"]
 [ext_resource type="OccluderPolygon2D" uid="uid://dwte47qyoeucp" path="res://Characters/Player/LightOccluder.tres" id="8_3haxs"]
 [ext_resource type="PackedScene" uid="uid://dypl8jne40vri" path="res://Characters/Player/Control/weapon.tscn" id="8_62v8f"]
 [ext_resource type="PackedScene" uid="uid://r4lstjs82orv" path="res://Characters/Player/UI/upgrade_data.tscn" id="9_dcpo8"]
@@ -20,8 +20,8 @@ shader_parameter/white_color = Color(1, 1, 1, 1)
 shader_parameter/tint = Color(1, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gp8ad"]
-atlas = ExtResource("8_1mvr0")
-region = Rect2(0, 2, 30, 6)
+atlas = ExtResource("3_2g0bf")
+region = Rect2(0, 0, 48, 16)
 
 [sub_resource type="Animation" id="Animation_b53go"]
 length = 0.001
@@ -114,8 +114,8 @@ _data = {
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ntm6h"]
-atlas = ExtResource("8_1mvr0")
-region = Rect2(9, 13, 12, 7)
+atlas = ExtResource("3_2g0bf")
+region = Rect2(0, 17, 48, 14)
 
 [sub_resource type="Animation" id="Animation_vxdkp"]
 length = 0.001
@@ -162,7 +162,6 @@ script = ExtResource("1_hehd3")
 light_mask = 2
 material = SubResource("ShaderMaterial_pjd5y")
 rotation = -1.5708
-scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_gp8ad")
 hframes = 3
 
@@ -170,25 +169,23 @@ hframes = 3
 visible = false
 rotation = -1.5708
 scale = Vector2(1.5, 1.5)
-polygon = PackedVector2Array(-4, -3, -4, 1, -2, 3, 2, 3, 4, 1, 4, -3)
+polygon = PackedVector2Array(4, -1.33332, 3.99999, 2.00001, 3.33332, 3.33335, 2.66665, 4.00001, -2.66668, 3.99999, -3.33335, 3.33332, -4.00001, 1.99999, -4, -1.33335, -3.33332, -2.66668, -2.66665, -3.33334, -1.33332, -4, 1.33335, -4, 2.66668, -3.33332, 3.33334, -2.66665)
 
 [node name="muzzle_left" type="Marker2D" parent="."]
-position = Vector2(2.25, 5.25)
+visible = false
+position = Vector2(6.25, 3)
 gizmo_extents = 4.0
 
 [node name="muzzle_right" type="Marker2D" parent="."]
-position = Vector2(2.25, -5.25)
+visible = false
+position = Vector2(6.25, -3)
 gizmo_extents = 4.0
 
 [node name="thruster particles" type="Node2D" parent="."]
 rotation = -1.5708
 
-[node name="thrust_left" parent="thruster particles" instance=ExtResource("9_hl57w")]
-position = Vector2(-4.5, -5)
-emitting = false
-
-[node name="thrust_right" parent="thruster particles" instance=ExtResource("9_hl57w")]
-position = Vector2(4.5, -5)
+[node name="thrust" parent="thruster particles" instance=ExtResource("9_hl57w")]
+position = Vector2(0, -6.25)
 emitting = false
 
 [node name="Blink" parent="." instance=ExtResource("3_b7idt")]
@@ -228,15 +225,14 @@ offset_bottom = 95.0001
 [node name="Weapon" parent="." instance=ExtResource("8_62v8f")]
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 z_index = -2
 occluder = ExtResource("8_3haxs")
 
 [node name="armor_plate" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(2.25, 0)
 rotation = -1.5708
-scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_ntm6h")
+hframes = 3
 
 [node name="upgrade_data" parent="." instance=ExtResource("9_dcpo8")]
 

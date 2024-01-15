@@ -3,14 +3,16 @@ extends enemy_baseclass
 var can_dash = true
 var player_position_initialized = false
 var offset = 10
-var time_between_dashes = 1
+@export var time_between_dashes = 1
 var start_cd = false
 var check_for_bounds = true
 var has_entered_arena = false
-var player_position
+var direction
 #@onready var rigid_body = $RigidBody2D
 var target_acquired = false
 var shockwave = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.tscn")
+var shockwave_timeout = 0.05
+var shockwave_ready = true
 
 func _ready():
 	sprite = $Sprite2D
@@ -19,51 +21,42 @@ func _ready():
 	self.add_to_group("enemies")
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
-	projectile_scene = preload("res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/generic_enemy_bullet.tscn")
-
 
 func _physics_process(_delta):
 	if allowed_to_move:
 		if player != null:
-			look_at(player.global_position)
-	#		if check_for_bounds:
-	#			out_of_bounds()
-			
-			if !target_acquired:
-				target_acquired = true
-				get_target_position()
-				
-			dash_at_player()
-
-func get_target_position():
-	#await get_tree().create_timer(time_between_dashes).timeout
-	target_position = (player.global_position - global_position).normalized()
-	
-	
+			if can_dash:	
+				dash_at_player()
+			move_and_slide()
 
 func dash_at_player():
-	if can_dash:
-		#print(target_position)
-#		if !player_position_initialized:
-#			get_player_position()
-#			player_position_initialized = true
-		var tween = create_tween()
-		tween.tween_property(self, "velocity", target_position * SPEED, 0.05).set_trans(Tween.TRANS_CUBIC)
-		#velocity = target_position * SPEED
-		move_and_slide()
-		#print(velocity)
+	can_dash = false
+	target_position = (player.global_position - global_position).normalized()
+	var dir = player.global_position - global_position
+	if ((player.global_position.x - global_position.x) < 0) && ((player.global_position.y - global_position.y) < 0):
+		scale = Vector2(-1,-1)
+	elif ((player.global_position.x - global_position.x) >= 0) && ((player.global_position.y - global_position.y) < 0):
+		scale = Vector2(1,-1)
+	elif ((player.global_position.x - global_position.x) < 0) && ((player.global_position.y - global_position.y) >= 0):
+		scale = Vector2(-1,1)
+	else:
+		scale = Vector2(1,1)
+	var angle_to = transform.x.angle_to(dir)
+	rotate(sign(angle_to))
+	#var tween = create_tween()
+	#tween.tween_property(self, "velocity", target_position * SPEED, 0.05).set_trans(Tween.TRANS_CUBIC)
+	velocity = target_position * SPEED
+
+	#print(velocity)
 
 func logic():
-	shockwave_init()
-	velocity = Vector2.ZERO
-	move_and_slide()
-	check_for_bounds = false
-	can_dash = false
-	await get_tree().create_timer(time_between_dashes).timeout
-	can_dash = true
-	target_acquired = false
-	await get_tree().create_timer(0.02).timeout
-	check_for_bounds = true
+	if shockwave_ready:
+		shockwave_init()
+		velocity = Vector2.ZERO
+
+		await get_tree().create_timer(time_between_dashes).timeout
+		can_dash = true
+		await get_tree().create_timer(0.02).timeout
 
 func shockwave_init():
 	var x = shockwave.instantiate()
@@ -73,9 +66,13 @@ func shockwave_init():
 	x.timescale = 4
 	x.scale = Vector2(0.4, 0.4)
 	x.damage = contact_damage
-	
-func _on_hitbox_body_entered(body):
+
+func _on_hurtbox_body_entered(body):
+	#print("entered")
 	if allowed_to_move:
 		if body.is_in_group("level_bounds"):
 			Globs.camera_shake.emit(0.3, 4.5)
 			logic()
+			shockwave_ready = false
+			await get_tree().create_timer(shockwave_timeout).timeout
+			shockwave_ready = true

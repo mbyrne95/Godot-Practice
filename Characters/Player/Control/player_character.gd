@@ -51,8 +51,7 @@ var is_dodging : bool = false
 var current_state = State.idle
 @onready var hit_flash_player = $HitFlashPlayer
 @onready var ship_sprite = $ship_sprite
-@onready var thrust_left = $"thruster particles/thrust_left"
-@onready var thrust_right = $"thruster particles/thrust_right"
+@onready var thrust = $"thruster particles/thrust"
 @onready var death_explo_particles = $death_explo
 @onready var hurtbox = $Hurtbox
 
@@ -120,12 +119,10 @@ func player_movement(_delta):
 				dash_logic(velSnapshot, input)
 			
 	if (!is_dodging && input != Vector2.ZERO):
-		thrust_left.emitting = true
-		thrust_right.emitting = true
+		thrust.emitting = true
 		accelerate(input)
 	elif(!is_dodging && input == Vector2.ZERO):
-		thrust_left.emitting = false
-		thrust_right.emitting = false
+		thrust.emitting = false
 		apply_friction()
 	move_and_slide()
 	#if Input.is_action_just_pressed("dash"):
@@ -276,6 +273,13 @@ func get_random_item():
 		#pass on the debug
 		elif UPGRADE_DB.UPGRADES[i]["type"] == "broke_the_game":
 			pass
+		#check for prerequisites
+		elif UPGRADE_DB.UPGRADES[i]["prerequisite"].size() > 0:
+			for j in UPGRADE_DB.UPGRADES[i]["prerequisite"]:
+				if not j in collected_upgrades:
+					pass
+				else:
+					db_list.append(i)
 		else:
 			db_list.append(i)
 	#found compatible+available items
@@ -296,8 +300,15 @@ func match_item_upgrade(upgrade):
 		"test_health":
 			MAX_HEALTH += 20
 		"armor_plate_1":
-			dmg_ratio -= 0.1
+			dmg_ratio -= 0.08
 			armor_plate.visible = true
+			armor_plate.frame = 0
+		"armor_plate_2":
+			dmg_ratio -= 0.1
+			armor_plate.frame = 1
+		"armor_plate_3":
+			dmg_ratio -= 0.12
+			armor_plate.frame = 2
 		"crit_chance_1":
 			weapon.crit_chance += 0.15
 		"proptosis":
@@ -368,17 +379,15 @@ func death():
 	can_move = false
 	#var scaled_position = Vector2((global_position.x/get_viewport_rect().size.x), (global_position.y/get_viewport_rect().size.y))
 	#shockwave.material.set_shader_parameter("center", scaled_position)
-	shockwave.position = global_position
-	shockwave.visible = true
-	thrust_left.emitting = false
-	thrust_right.emitting = false
+
+	thrust.emitting = false
 	Globs.camera_death_zoom.emit(global_position)
 	await get_tree().create_timer(2).timeout
 	#shockwaveAnim.play("shockwave")
-	
+	shockwave.position = global_position
+	shockwave.visible = true
 	var tween = create_tween()
 	tween.tween_method(material_size, 0.0, 1.0, 0.5)
-	
 	
 	death_explo_particles.emitting = true
 	collision_shape.disabled = true

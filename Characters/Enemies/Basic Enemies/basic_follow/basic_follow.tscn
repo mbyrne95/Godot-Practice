@@ -1,24 +1,24 @@
-[gd_scene load_steps=13 format=3 uid="uid://bsxep18xom2xk"]
+[gd_scene load_steps=12 format=3 uid="uid://xpk35gpgv4vp"]
 
-[ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/dashing_enemy/dashing_enemy.gd" id="1_t7mhi"]
-[ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_6s47r"]
-[ext_resource type="Texture2D" uid="uid://dg38wo1gfqix" path="res://Art/My Art/Enemies/swordfish/swordfish2.png" id="3_brkwb"]
+[ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/basic_follow/basic_follow.gd" id="1_dbqyj"]
+[ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_os1ia"]
+[ext_resource type="Texture2D" uid="uid://b1mfnb0q0ua6" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="3_4kubm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4fc60"]
 resource_local_to_scene = true
-shader = ExtResource("2_6s47r")
+shader = ExtResource("2_os1ia")
 shader_parameter/white = 1
 shader_parameter/enabled = false
 shader_parameter/white_color = Color(1, 1, 1, 1)
 shader_parameter/tint = Color(1, 0, 0, 0.596078)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sigig"]
-atlas = ExtResource("3_brkwb")
-region = Rect2(1, 1, 30, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_30knb"]
+atlas = ExtResource("3_4kubm")
+region = Rect2(40, 1, 7, 7)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x7j52"]
-radius = 5.0
-height = 24.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b0456"]
+radius = 2.53
+height = 7.7
 
 [sub_resource type="Animation" id="Animation_ij4fb"]
 length = 0.001
@@ -110,28 +110,23 @@ _data = {
 "hit_red": SubResource("Animation_vmiqx")
 }
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_5k2e2"]
-polygon = PackedVector2Array(-6.00001, -2.99998, -5.00001, -2.99998, -5, -0.999982, -4, -0.999986, -4, 1.00001, -3, 1.00001, -2.99999, 2.00001, -1.99999, 2.00001, -1.99998, 5.00001, -0.999982, 5, -0.999978, 6, 2.17199e-05, 6, 2.53399e-05, 7, 1.00003, 7, 1.00003, 8, 2.89599e-05, 8, 3.25799e-05, 9, -0.999967, 9, -0.999964, 10, 1.00004, 10, 1.00004, 11, 3.98199e-05, 11, 4.34399e-05, 12, -0.999957, 12, -0.999953, 13, -2.99995, 13, -2.99995, 15, -0.999946, 15, -0.999949, 14, 5.06799e-05, 14, 4.70599e-05, 13, 3.00005, 13, 3.00005, 14, 5.00005, 14, 5.00004, 12, 4.00004, 12, 4.00004, 11, 3.00004, 11, 3.00004, 9.99999, 2.00004, 9.99999, 2.00003, 8.99999, 3.00003, 8.99999, 3.00003, 6.99999, 2.00003, 6.99999, 2.00002, 5.99999, 3.00002, 5.99999, 3.00002, 4.99999, 5.00002, 4.99998, 5.00001, 2.99998, 4.00001, 2.99999, 3.99999, -3.00001, 5.99999, -3.00002, 5.99999, -4.00002, 4.99999, -4.00002, 4.99998, -5.00002, 3.99998, -5.00001, 3.99997, -7.00001, 2.99997, -7.00001, 2.99997, -9.00001, 1.99997, -9.00001, 1.99995, -15, 0.999946, -15, 0.999964, -10, -3.61999e-05, -10, -2.89599e-05, -8, -1.00003, -8, -1.00003, -7, -2.00003, -6.99999, -2.00002, -5.99999, -4.00002, -5.99999, -4.00002, -4.99999, -5.00002, -4.99998, -5.00001, -3.99998, -6.00001, -3.99998)
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_k47xu"]
+polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5, 0, 2.5, -3.5, 1.5, -3.5, -0.5, -1.5, -2.5)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qsyij"]
-radius = 2.0
-height = 12.0
-
-[node name="dashing_enemy" type="CharacterBody2D" groups=["enemies"]]
+[node name="basic_follow" type="CharacterBody2D" groups=["enemies"]]
 visibility_layer = 3
-collision_layer = 80
-collision_mask = 0
-script = ExtResource("1_t7mhi")
+scale = Vector2(2, 2)
+collision_layer = 2147483728
+collision_mask = 2147483649
+script = ExtResource("1_dbqyj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4fc60")
-texture = SubResource("AtlasTexture_sigig")
-flip_h = true
+rotation = 1.5708
+texture = SubResource("AtlasTexture_30knb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 0)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_x7j52")
+shape = SubResource("CapsuleShape2D_b0456")
 
 [node name="Muzzle" type="Marker2D" parent="."]
 position = Vector2(4, 0)
@@ -144,25 +139,17 @@ libraries = {
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 light_mask = 2
 rotation = 1.5708
-occluder = SubResource("OccluderPolygon2D_5k2e2")
+occluder = SubResource("OccluderPolygon2D_k47xu")
 occluder_light_mask = 2
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 32
-collision_mask = 9
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(10, 1)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_qsyij")
+shape = SubResource("CapsuleShape2D_b0456")
 
-[node name="Hurtbox" type="Area2D" parent="."]
-collision_layer = 0
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(-3, 0)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_x7j52")
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
-[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
