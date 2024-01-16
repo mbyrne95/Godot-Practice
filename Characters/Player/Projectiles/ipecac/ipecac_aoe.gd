@@ -77,6 +77,14 @@ func dmg_children(enemy_array):
 			
 					if (enemy_dist < ro_dist && enemy_dist > ri_dist):
 						j.take_damage(damage)
+		if i.is_in_group("matroyshka_container"):
+			if i.get_child_count() != 0:
+				for j in i.get_children():
+					var enemy_position = j.global_position
+					var enemy_dist = position.distance_to(enemy_position)
+			
+					if (enemy_dist < ro_dist && enemy_dist > ri_dist):
+						j.take_damage(damage)
 						
 		#otherwise, just step through normal enemies	
 		elif i.is_in_group("enemies"):

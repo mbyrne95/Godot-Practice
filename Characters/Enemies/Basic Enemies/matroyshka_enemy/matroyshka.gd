@@ -29,10 +29,12 @@ func _process(_delta):
 
 func take_damage(amount : int):
 	#print(amount)
-	hit_flash_player.play("hit_red")
+	sprite.material.set_shader_parameter("enabled", true)
 	current_health -= amount
-	
 	if (current_health <= 0):
-		parent.call_deferred("spawn_children", self, global_position, number_of_splits, scale, HEALTH, SPEED)
 		if(number_of_splits == 0):
 			queue_free()
+		parent.call_deferred("spawn_children", self, global_position, number_of_splits, scale, HEALTH, SPEED)
+	
+	await get_tree().create_timer(0.1).timeout
+	sprite.material.set_shader_parameter("enabled", false)

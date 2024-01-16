@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/matroyshka_enemy/matroyshka_container.gd" id="1_n5kaw"]
 
-[node name="matroyshka_container" type="Node2D"]
+[node name="matroyshka_container" type="Node2D" groups=["matroyshka_container"]]
 script = ExtResource("1_n5kaw")

@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://jnvce55sx8a4"]
+[gd_scene load_steps=13 format=3 uid="uid://jnvce55sx8a4"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/matroyshka_enemy/matroyshka.gd" id="1_w7sjm"]
 [ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_wxv3x"]
-[ext_resource type="Texture2D" uid="uid://b1mfnb0q0ua6" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="3_de5h4"]
+[ext_resource type="Texture2D" uid="uid://bkhyd11q8v16q" path="res://Art/My Art/Enemies/krill/krill.png" id="3_nbcg0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4fc60"]
 resource_local_to_scene = true
@@ -12,13 +12,13 @@ shader_parameter/enabled = false
 shader_parameter/white_color = Color(1, 1, 1, 1)
 shader_parameter/tint = Color(1, 0, 0, 0.596078)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_30knb"]
-atlas = ExtResource("3_de5h4")
-region = Rect2(40, 1, 7, 7)
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7rfp"]
+atlas = ExtResource("3_nbcg0")
+region = Rect2(0, 4, 15, 11)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b0456"]
-radius = 2.53
-height = 7.7
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7emal"]
+radius = 5.5
+height = 16.0
 
 [sub_resource type="Animation" id="Animation_ij4fb"]
 length = 0.001
@@ -110,25 +110,29 @@ _data = {
 "hit_red": SubResource("Animation_vmiqx")
 }
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_k47xu"]
-polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5, 0, 2.5, -3.5, 1.5, -3.5, -0.5, -1.5, -2.5)
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_no52b"]
+polygon = PackedVector2Array(-5.50001, -3.49998, -5.49999, 2.50002, -4.49999, 2.50002, -4.49998, 5.50002, -3.49998, 5.50001, -3.49998, 6.50001, -0.499976, 6.5, -0.499973, 7.5, 2.50003, 7.49999, 2.50002, 6.49999, 3.50002, 6.49999, 3.50002, 5.49999, 4.50002, 5.49998, 4.50002, 4.49998, 5.50002, 4.49998, 5.50001, 2.49998, 3.50001, 2.49999, 3.50001, 3.49999, 2.50001, 3.49999, 2.50002, 4.49999, 1.50002, 4.49999, 1.50002, 5.49999, 0.50002, 5.5, 0.500016, 4.5, -0.499984, 4.5, -0.499987, 3.5, -1.49999, 3.50001, -1.5, -0.499995, -2.5, -0.499991, -2.50001, -2.49999, -2.50002, -4.49999, -3.50002, -4.49999, -3.50002, -5.49999, -4.50002, -5.49998, -4.50001, -3.49998)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b0456"]
+radius = 5.5
+height = 16.0
 
 [node name="matroyshka" type="CharacterBody2D" groups=["enemies"]]
 visibility_layer = 3
-scale = Vector2(2, 2)
 collision_layer = 2147483728
 collision_mask = 2147483649
 script = ExtResource("1_w7sjm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4fc60")
-rotation = 1.5708
-texture = SubResource("AtlasTexture_30knb")
+texture = SubResource("AtlasTexture_f7rfp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_b0456")
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_7emal")
 
 [node name="Muzzle" type="Marker2D" parent="."]
+visible = false
 position = Vector2(4, 0)
 
 [node name="HitFlashPlayer" type="AnimationPlayer" parent="."]
@@ -139,7 +143,7 @@ libraries = {
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 light_mask = 2
 rotation = 1.5708
-occluder = SubResource("OccluderPolygon2D_k47xu")
+occluder = SubResource("OccluderPolygon2D_no52b")
 occluder_light_mask = 2
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -147,6 +151,7 @@ collision_layer = 32
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_b0456")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

@@ -24,6 +24,7 @@ func _process(_delta):
 
 	if no_more_splits:
 		if self.get_child_count() == 0:
+			Globs.child_of_wave_died.emit()
 			queue_free()
 
 func _connect_allowed_to_move():
@@ -31,7 +32,7 @@ func _connect_allowed_to_move():
 	
 func spawn_children(given_enemy, given_position, number_of_splits, given_scale, given_health, given_speed):
 	if (number_of_splits > 0):
-		var offset = Vector2(3,3)
+		var offset = Vector2(5,5)
 		for i in number_of_offspring:
 			var new_enemy = matroyshka.instantiate()
 			add_child(new_enemy)

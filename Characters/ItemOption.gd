@@ -13,7 +13,7 @@ signal selected_upgrade(upgrade)
 func _ready():
 	connect("selected_upgrade",Callable(player,"upgrade_character"))
 	if (item == null):
-		item = "broke_the_game"
+		item = "broken_game"
 	item_name.text = UPGRADE_DB.UPGRADES[item]["displayname"]
 	description.text = UPGRADE_DB.UPGRADES[item]["detail"]
 	item_icon.texture = load(UPGRADE_DB.UPGRADES[item]["icon"])

@@ -176,7 +176,7 @@ anchor_right = 0.889
 anchor_bottom = 0.256
 offset_right = -0.0200043
 offset_bottom = -1.92001
-color = Color(0.34902, 0.34902, 0.34902, 1)
+color = Color(0.34902, 0.337255, 0.321569, 1)
 script = ExtResource("1_0tsnb")
 
 [node name="ColorRect" type="ColorRect" parent="."]

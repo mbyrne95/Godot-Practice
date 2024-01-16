@@ -57,12 +57,11 @@ var current_state = State.idle
 
 #blink initialization stuff
 @onready var blink = $Blink
-signal blinkReady()
-signal blinkProgress(progress)
 
 @onready var weapon = $Weapon
 @onready var upgrade_data = $upgrade_data
 var aura = preload("res://Characters/Player/Projectiles/aura/player_aura.tscn")
+signal aura_upgrade()
 
 var is_damageable = true
 
@@ -230,9 +229,25 @@ func level_up():
 	await get_tree().create_timer(0.2).timeout
 	while options < options_max:
 		var option_choice = item_options.instantiate()
-		option_choice.item = get_random_item()
+		
+		# roll for item rarity here
+		var r = randf_range(0,1)
+		var rarity
+		#common
+		if r < 0.4:
+			rarity = 0
+		elif r >= 0.4 && r < 0.7:
+			rarity = 1
+			option_choice.color = Color("3f3f74")
+		else:
+			rarity = 2
+			option_choice.color = Color("76428a")
+			
+		option_choice.item = get_random_item(rarity)
+		
 		await get_tree().create_timer(0.4).timeout
 		upgrade_options_container.add_child(option_choice)
+		
 		var x = randi_range(0,2)
 		match x:
 			0:
@@ -258,7 +273,7 @@ func upgrade_character(upgrade):
 	
 	get_tree().paused = false
 	
-func get_random_item():
+func get_random_item(rarity):
 	var db_list = []
 	for i in UPGRADE_DB.UPGRADES:
 		#check if we've already collected
@@ -272,6 +287,8 @@ func get_random_item():
 			pass
 		#pass on the debug
 		elif UPGRADE_DB.UPGRADES[i]["type"] == "broke_the_game":
+			pass
+		elif UPGRADE_DB.UPGRADES[i]["rarity"] != rarity:
 			pass
 		#check for prerequisites
 		elif UPGRADE_DB.UPGRADES[i]["prerequisite"].size() > 0:
@@ -311,6 +328,10 @@ func match_item_upgrade(upgrade):
 			armor_plate.frame = 2
 		"crit_chance_1":
 			weapon.crit_chance += 0.15
+		"crit_chance_2":
+			weapon.crit_chance += 0.20
+		"crit_chance_3":
+			weapon.crit_chance += 0.30
 		"proptosis":
 			weapon.proptosis = true
 			weapon.size_multiplier += 2
@@ -322,9 +343,11 @@ func match_item_upgrade(upgrade):
 			if (weapon.damage_multiplier > 0.25):
 				weapon.damage_multiplier = 0.25
 			weapon.shoot_cd -= 0.2
-		"aura":
+		"aura_1":
 			var new_aura = aura.instantiate()
 			add_child(new_aura)
+		"aura_2":
+			aura_upgrade.emit()
 		"ipecac":
 			weapon.ipecac = true
 			weapon.size_multiplier += 0.4

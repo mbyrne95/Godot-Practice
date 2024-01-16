@@ -14,6 +14,8 @@ var shockwave = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.t
 var shockwave_timeout = 0.05
 var shockwave_ready = true
 
+@onready var oob_timer = $Timer
+
 func _ready():
 	sprite = $Sprite2D
 	contact_damage = 30
@@ -21,7 +23,8 @@ func _ready():
 	self.add_to_group("enemies")
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
-
+	SPEED = 300
+		
 func _physics_process(_delta):
 	if allowed_to_move:
 		if player != null:
@@ -32,28 +35,20 @@ func _physics_process(_delta):
 func dash_at_player():
 	can_dash = false
 	target_position = (player.global_position - global_position).normalized()
-	var dir = player.global_position - global_position
-	if ((player.global_position.x - global_position.x) < 0) && ((player.global_position.y - global_position.y) < 0):
-		scale = Vector2(-1,-1)
-	elif ((player.global_position.x - global_position.x) >= 0) && ((player.global_position.y - global_position.y) < 0):
-		scale = Vector2(1,-1)
-	elif ((player.global_position.x - global_position.x) < 0) && ((player.global_position.y - global_position.y) >= 0):
+	if (target_position.x < 0):
 		scale = Vector2(-1,1)
 	else:
 		scale = Vector2(1,1)
-	var angle_to = transform.x.angle_to(dir)
-	rotate(sign(angle_to))
-	#var tween = create_tween()
-	#tween.tween_property(self, "velocity", target_position * SPEED, 0.05).set_trans(Tween.TRANS_CUBIC)
-	velocity = target_position * SPEED
+	var angle_to = transform.x.angle_to(target_position)
+	rotation_degrees = sin(angle_to)
+	var tween = create_tween()
+	tween.tween_property(self, "velocity", target_position * SPEED, 0.3).set_trans(Tween.TRANS_CUBIC)
 
-	#print(velocity)
 
 func logic():
 	if shockwave_ready:
 		shockwave_init()
 		velocity = Vector2.ZERO
-
 		await get_tree().create_timer(time_between_dashes).timeout
 		can_dash = true
 		await get_tree().create_timer(0.02).timeout
@@ -71,8 +66,22 @@ func _on_hurtbox_body_entered(body):
 	#print("entered")
 	if allowed_to_move:
 		if body.is_in_group("level_bounds"):
+			oob_timer.start()
 			Globs.camera_shake.emit(0.3, 4.5)
 			logic()
 			shockwave_ready = false
 			await get_tree().create_timer(shockwave_timeout).timeout
 			shockwave_ready = true
+
+func _on_hurtbox_body_exited(body):
+	if allowed_to_move:
+		if body.is_in_group("level_bounds"):
+			oob_timer.stop()
+
+
+func _on_timer_timeout():
+	oob_timer.start()
+	Globs.camera_shake.emit(0.3, 4.5)
+	velocity = Vector2.ZERO
+	shockwave_ready = true
+	logic()
