@@ -124,8 +124,8 @@ const UPGRADES = {
 	},
 	"aura_3": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
-		"displayname": "sunfire cape",
-		"detail": "dmg aura",
+		"displayname": "Shock Plating++",
+		"detail": "Aura applies jolt, damaging affected enemies over time",
 		"prerequisite": ["aura_2"],
 		"rarity": 2,
 		"type": "dmg"

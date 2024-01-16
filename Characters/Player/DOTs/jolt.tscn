@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c73kq0byemnwn"]
+
+[ext_resource type="Script" path="res://Characters/Player/DOTs/Jolt_DOT.gd" id="1_vdnfc"]
+[ext_resource type="Texture2D" uid="uid://dqs4nt0131y77" path="res://Art/My Art/Icons/DOT/jolt.png" id="2_l7yk2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpy8r"]
+atlas = ExtResource("2_l7yk2")
+region = Rect2(5, 3, 6, 9)
+
+[node name="Jolt" type="Node2D" groups=["jolt_DOT"]]
+script = ExtResource("1_vdnfc")
+
+[node name="lifespan" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_tpy8r")
+offset = Vector2(0, -10)
+
+[connection signal="timeout" from="lifespan" to="." method="_on_lifespan_timeout"]

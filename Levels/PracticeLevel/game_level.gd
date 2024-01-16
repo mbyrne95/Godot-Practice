@@ -71,10 +71,10 @@ func wave_is_complete():
 		parallax_motion = true
 		await get_tree().create_timer(2).timeout
 		can_spawn_new_wave = true
-		
+
 		if (current_wave == 2 || current_wave == 4):
 			Globs.level_player.emit()
-			
+
 	#end of stage process		
 	else:
 		can_spawn_new_wave = false

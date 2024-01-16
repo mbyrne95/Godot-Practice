@@ -130,11 +130,13 @@ texture = SubResource("AtlasTexture_sigig")
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-3, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_x7j52")
 
 [node name="Muzzle" type="Marker2D" parent="."]
+visible = false
 position = Vector2(4, 0)
 
 [node name="HitFlashPlayer" type="AnimationPlayer" parent="."]
@@ -143,12 +145,14 @@ libraries = {
 }
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 light_mask = 2
 rotation = 1.5708
 occluder = SubResource("OccluderPolygon2D_5k2e2")
 occluder_light_mask = 2
 
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 32
 collision_mask = 9
 
@@ -158,6 +162,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_qsyij")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]

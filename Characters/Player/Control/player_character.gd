@@ -62,6 +62,7 @@ var current_state = State.idle
 @onready var upgrade_data = $upgrade_data
 var aura = preload("res://Characters/Player/Projectiles/aura/player_aura.tscn")
 signal aura_upgrade()
+signal aura_jolt()
 
 var is_damageable = true
 
@@ -348,6 +349,8 @@ func match_item_upgrade(upgrade):
 			add_child(new_aura)
 		"aura_2":
 			aura_upgrade.emit()
+		"aura_3":
+			aura_jolt.emit()
 		"ipecac":
 			weapon.ipecac = true
 			weapon.size_multiplier += 0.4

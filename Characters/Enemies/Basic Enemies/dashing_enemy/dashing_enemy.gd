@@ -44,7 +44,6 @@ func dash_at_player():
 	var tween = create_tween()
 	tween.tween_property(self, "velocity", target_position * SPEED, 0.3).set_trans(Tween.TRANS_CUBIC)
 
-
 func logic():
 	if shockwave_ready:
 		shockwave_init()
@@ -77,7 +76,6 @@ func _on_hurtbox_body_exited(body):
 	if allowed_to_move:
 		if body.is_in_group("level_bounds"):
 			oob_timer.stop()
-
 
 func _on_timer_timeout():
 	oob_timer.start()

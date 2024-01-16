@@ -79,14 +79,14 @@ func vertical_only_movement():
 	move_and_slide()
 	
 func take_damage(amount : int):
-	#print(amount)
-	HEALTH -= amount
-	sprite.material.set_shader_parameter("enabled", true)
-	if (HEALTH <= 0):
-		Globs.child_of_wave_died.emit()
-		queue_free()
-	await get_tree().create_timer(0.1).timeout
-	sprite.material.set_shader_parameter("enabled", false)
+	if allowed_to_move:
+		HEALTH -= amount
+		sprite.material.set_shader_parameter("enabled", true)
+		if (HEALTH <= 0):
+			Globs.child_of_wave_died.emit()
+			queue_free()
+		await get_tree().create_timer(0.1).timeout
+		sprite.material.set_shader_parameter("enabled", false)
 
 func _connect_allowed_to_move():
 	allowed_to_move = true
