@@ -1,7 +1,7 @@
 extends player_projectileclass
 
 @onready var ipecac_aoe = preload("res://Characters/Player/Projectiles/ipecac/ipecac_aoe.tscn")
-
+@onready var poison_dot = preload("res://Characters/Player/DOTs/poison.tscn")
 
 func _ready():
 	player = get_tree().get_first_node_in_group("players")
@@ -49,7 +49,15 @@ func start_explo():
 func _on_body_entered(body):
 	if body.is_in_group("enemies"):
 		body.take_damage(current_damage)
+		var poisoned = false
+		for i in body.get_children():
+			if i.is_in_group("poison_DOT"):
+				poisoned = true
+		if !poisoned:
+			var poison = poison_dot.instantiate()
+			body.add_child(poison)
 		call_deferred("start_explo")
+		
 	elif body.is_in_group("level_bounds"):
 		call_deferred("start_explo")
 

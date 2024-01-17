@@ -21,6 +21,8 @@ var allowed_to_move = false
 @export var SHOOT_CD = 0.3
 var shoot_on_cd : = false
 
+signal enemy_took_damage(amount)
+
 func _ready():
 	pass
 	#enemy_container.add_child(self)
@@ -85,8 +87,20 @@ func take_damage(amount : int):
 		if (HEALTH <= 0):
 			Globs.child_of_wave_died.emit()
 			queue_free()
+			
+		enemy_took_damage.emit(amount)
+		
 		await get_tree().create_timer(0.1).timeout
+		
 		sprite.material.set_shader_parameter("enabled", false)
+
+func get_status_effects():
+	var num_status_effects = 0
+	if get_child_count() != 0:
+		for i in get_children():
+			if i.is_in_group("status_effect"):
+				num_status_effects += 1
+	return num_status_effects
 
 func _connect_allowed_to_move():
 	allowed_to_move = true

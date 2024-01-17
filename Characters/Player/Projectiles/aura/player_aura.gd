@@ -38,7 +38,6 @@ func tick_rate():
 				if j.is_in_group("jolt_DOT"):
 					i_has_jolt = true
 			if !i_has_jolt:
-				print("added jolt")
 				var jolt = jolt_dot.instantiate()
 				i.add_child(jolt)
 	await get_tree().create_timer(tick_cd).timeout

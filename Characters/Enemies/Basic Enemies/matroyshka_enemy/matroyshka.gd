@@ -31,10 +31,11 @@ func take_damage(amount : int):
 	if allowed_to_move:
 		sprite.material.set_shader_parameter("enabled", true)
 		current_health -= amount
+		enemy_took_damage.emit(amount)
 		if (current_health <= 0):
 			if(number_of_splits == 0):
 				queue_free()
-			parent.call_deferred("spawn_children", self, global_position, number_of_splits, scale, HEALTH, SPEED)
+			parent.call_deferred("spawn_children", self, global_position, number_of_splits, number_of_offspring, scale, HEALTH, SPEED)
 		
 		await get_tree().create_timer(0.1).timeout
 		sprite.material.set_shader_parameter("enabled", false)

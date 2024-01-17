@@ -3,6 +3,7 @@ extends aoe_dmg
 @onready var enemy_container
 var enemies_on_screen = []
 @onready var orbital_container
+@onready var poison_dot = preload("res://Characters/Player/DOTs/poison.tscn")
 
 var ri_dist
 var ro_dist 
@@ -77,6 +78,14 @@ func dmg_children(enemy_array):
 			
 					if (enemy_dist < ro_dist && enemy_dist > ri_dist):
 						j.take_damage(damage)
+						var poisoned = false
+						for x in j.get_children():
+							if x.is_in_group("poison_DOT"):
+								poisoned = true
+						if !poisoned:
+							var poison = poison_dot.instantiate()
+							j.add_child(poison)
+						
 		if i.is_in_group("matroyshka_container"):
 			if i.get_child_count() != 0:
 				for j in i.get_children():
@@ -85,6 +94,13 @@ func dmg_children(enemy_array):
 			
 					if (enemy_dist < ro_dist && enemy_dist > ri_dist):
 						j.take_damage(damage)
+						var poisoned = false
+						for x in j.get_children():
+							if x.is_in_group("poison_DOT"):
+								poisoned = true
+						if !poisoned:
+							var poison = poison_dot.instantiate()
+							j.add_child(poison)
 						
 		#otherwise, just step through normal enemies	
 		elif i.is_in_group("enemies"):
@@ -94,3 +110,10 @@ func dmg_children(enemy_array):
 			
 			if (enemy_dist < ro_dist && enemy_dist > ri_dist):
 				i.take_damage(damage)
+				var poisoned = false
+				for x in i.get_children():
+					if x.is_in_group("poison_DOT"):
+						poisoned = true
+				if !poisoned:
+					var poison = poison_dot.instantiate()
+					i.add_child(poison)

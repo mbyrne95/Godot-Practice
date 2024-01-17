@@ -116,7 +116,7 @@ polygon = PackedVector2Array(0, -2.5, 1.5, -2.5, 2.5, -1.5, 3.5, -0.5, 3.5, 1.5,
 visibility_layer = 3
 scale = Vector2(2, 2)
 collision_layer = 80
-collision_mask = 0
+collision_mask = 16
 script = ExtResource("1_3v2xd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

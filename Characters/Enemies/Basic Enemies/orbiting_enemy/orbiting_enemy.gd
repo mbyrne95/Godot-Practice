@@ -13,8 +13,6 @@ func _ready():
 	self.add_to_group("enemies")
 	SPEED = 100
 	HEALTH = 100
-	move_delay = 2
-	SHOOT_OFFSET = 20
 	SHOOT_CD = 0.3
 	muzzle = $Muzzle
 	hit_flash_player = $HitFlashPlayer
