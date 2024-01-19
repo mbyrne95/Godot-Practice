@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://jnvce55sx8a4"]
+[gd_scene load_steps=14 format=3 uid="uid://jnvce55sx8a4"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/matroyshka_enemy/matroyshka.gd" id="1_w7sjm"]
 [ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_wxv3x"]
 [ext_resource type="Texture2D" uid="uid://bkhyd11q8v16q" path="res://Art/My Art/Enemies/krill/krill.png" id="3_nbcg0"]
+[ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="4_0qbgw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4fc60"]
 resource_local_to_scene = true
@@ -153,5 +154,8 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_b0456")
+
+[node name="Control" parent="." instance=ExtResource("4_0qbgw")]
+anchors_preset = 0
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

@@ -15,17 +15,19 @@ var icon
 
 var parent_num_status_effects
 
+var texture_rect
+var parent_debuff_box
+
 func _ready():
+	texture_rect = $TextureRect
 	parent = get_parent()
 	parent.enemy_took_damage.connect(_jolt_dmg)
 	lifespan_timer.start()
+	parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
+	texture_rect.reparent(parent_debuff_box)
 
 func _process(_delta):
-	parent_num_status_effects = parent.get_status_effects()
-	if parent_num_status_effects <= 1 :
-		position.x = 0
-	elif parent_num_status_effects > 1:
-		position.x = -4
+	pass
 
 func _jolt_dmg(amount):
 	if can_do_volt_dmg:
@@ -40,6 +42,7 @@ func _jolt_dmg(amount):
 		can_do_volt_dmg = true
 
 func _on_lifespan_timeout():
+	texture_rect.reparent(self)
 	queue_free()
 
 func _on_area_2d_body_entered(body):
@@ -81,3 +84,7 @@ func draw_lightning(x):
 	await get_tree().create_timer(0.05).timeout
 	#lightning_bolt.scale.x = 1
 	lightning_bolt.visible = false
+
+func restart_timer():
+	lifespan_timer.stop()
+	lifespan_timer.start()

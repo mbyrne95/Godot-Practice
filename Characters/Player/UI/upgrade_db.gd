@@ -138,6 +138,14 @@ const UPGRADES = {
 		"rarity": 2,
 		"type": "dmg"
 	},
+	"scorch_shot": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Firemind",
+		"detail": "Bullets apply scorch",
+		"prerequisite": [],
+		"rarity": 2,
+		"type": "dmg"
+	},
 	"broken_game": {
 		"icon": ICON_PATH + "Skillicon1_09.png",
 		"displayname": "Broken game!",

@@ -13,6 +13,9 @@ var BULLET_RANGE
 var is_dead = false
 var player
 
+var scorch_shot = false
+var scorch_dot = preload("res://Characters/Player/DOTs/scorch.tscn")
+
 func _physics_process(delta):
 	var player_position = get_tree().get_first_node_in_group("players").position
 	var distance_x = player_position.x - position.x
@@ -43,6 +46,18 @@ func _on_body_entered(body):
 	if body.is_in_group("enemies"):
 		call_deferred("start_death")
 		body.take_damage(current_damage)
+		
+		if scorch_shot:
+			var has_scorch = false
+			for i in body.get_children():
+				if i.is_in_group("scorch_DOT"):
+					has_scorch = true
+					i.num_stacks += 1
+					i.restart_timer()
+			if !has_scorch:
+				var x = scorch_dot.instantiate()
+				body.add_child(x)
+				
 	elif body.is_in_group("level_bounds"):
 		call_deferred("start_death")
 

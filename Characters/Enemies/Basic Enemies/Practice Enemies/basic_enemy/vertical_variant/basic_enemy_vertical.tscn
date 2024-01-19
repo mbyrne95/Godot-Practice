@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bptebg3reglrb"]
+[gd_scene load_steps=13 format=3 uid="uid://bptebg3reglrb"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/vertical_variant/basic_enemy_vertical.gd" id="1_5vyx1"]
 [ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_h7ch0"]
 [ext_resource type="Texture2D" uid="uid://b1mfnb0q0ua6" path="res://Art/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="3_bu5yb"]
+[ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="4_yhw0e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4fc60"]
 resource_local_to_scene = true
@@ -141,3 +142,6 @@ light_mask = 2
 rotation = 1.5708
 occluder = SubResource("OccluderPolygon2D_k47xu")
 occluder_light_mask = 2
+
+[node name="Control" parent="." instance=ExtResource("4_yhw0e")]
+anchors_preset = 0

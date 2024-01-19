@@ -13,9 +13,9 @@ script = ExtResource("3_jnxo0")
 [node name="basic_enemy" parent="." instance=ExtResource("3_v0565")]
 position = Vector2(56, 296)
 scale = Vector2(1, 1)
-HEALTH = 1000
+HEALTH = 10000
 
 [node name="basic_enemy2" parent="." instance=ExtResource("3_v0565")]
 position = Vector2(101, 258)
 scale = Vector2(1, 1)
-HEALTH = 1000
+HEALTH = 10000

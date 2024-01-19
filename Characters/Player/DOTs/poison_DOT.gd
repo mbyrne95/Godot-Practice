@@ -7,17 +7,18 @@ var parent
 @onready var lifespan_timer = $lifespan
 var parent_num_status_effects = 0
 
+var texture_rect
+var parent_debuff_box
+
 func _ready():
+	texture_rect = $TextureRect
 	parent = get_parent()
 	parent_num_status_effects = parent.get_status_effects()
 	lifespan_timer.start()
+	parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
+	texture_rect.reparent(parent_debuff_box)
 	
 func _process(_delta):
-	parent_num_status_effects = parent.get_status_effects()
-	if parent_num_status_effects <= 1 :
-		position.x = 0
-	elif parent_num_status_effects > 1:
-		position.x = 4
 	_poison_dmg()
 
 func _poison_dmg():
@@ -29,11 +30,11 @@ func _poison_dmg():
 		await get_tree().create_timer(tick_cd).timeout
 		
 		poison_on_cd = false
+		
+func restart_timer():
+	lifespan_timer.stop()
+	lifespan_timer.start()
 
 func _on_lifespan_timeout():
-#	if parent.get_node_or_null("Sprite2D") != null:
-#		parent.get_node_or_null("Sprite2D").modulate = Color.WHITE
-#	if parent.get_node_or_null("AnimatedSprite2D") != null:
-#		parent.get_node_or_null("AnimatedSprite2D").modulate = Color.WHITE
-
+	texture_rect.reparent(self)
 	queue_free()

@@ -53,6 +53,7 @@ func _on_body_entered(body):
 		for i in body.get_children():
 			if i.is_in_group("poison_DOT"):
 				poisoned = true
+				i.restart_timer()
 		if !poisoned:
 			var poison = poison_dot.instantiate()
 			body.add_child(poison)

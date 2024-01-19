@@ -32,7 +32,7 @@ func _ready():
 	
 	anim_player.speed_scale = timescale
 
-func _physics_process(_delta):		
+func _process(_delta):		
 	if player == null:
 		return
 		
@@ -46,6 +46,8 @@ func _physics_process(_delta):
 			get_tree().get_first_node_in_group("players").take_damage(damage)
 
 	if !has_started:
+		has_started = true
+		
 		anim_player.play("expanding_wave_2")
 		await get_tree().create_timer(5 / anim_player.speed_scale).timeout
 		anim_player.play("RESET")

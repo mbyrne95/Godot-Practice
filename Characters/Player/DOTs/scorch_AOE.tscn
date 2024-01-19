@@ -1,0 +1,245 @@
+[gd_scene load_steps=10 format=3 uid="uid://dokg8eiuysjq1"]
+
+[ext_resource type="Script" path="res://Characters/Player/DOTs/scorch_AOE.gd" id="1_b1dhp"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice.gdshader" id="2_a4rtl"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice_inner.gdshader" id="3_w478j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgflm"]
+resource_local_to_scene = true
+shader = ExtResource("2_a4rtl")
+shader_parameter/color = Vector4(0.87, 0.44, 0.15, 1)
+shader_parameter/diameter = 0.04
+shader_parameter/thickness = 0.05
+shader_parameter/frequency = 0.0
+shader_parameter/phase = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ea5rk"]
+resource_local_to_scene = true
+shader = ExtResource("3_w478j")
+shader_parameter/color = Vector4(0.85, 0.63, 0.4, 1)
+shader_parameter/diameter = 0.0
+shader_parameter/thickness = 0.4
+shader_parameter/frequency = 0.0
+shader_parameter/phase = 0.0
+
+[sub_resource type="Animation" id="Animation_xpui3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/diameter")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.04]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("outer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("inner:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:material:shader_parameter/thickness")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect2:material:shader_parameter/thickness")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.4]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ColorRect2:material:shader_parameter/diameter")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_wjhxx"]
+resource_name = "expanding wave"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/diameter")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.04, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_krrem"]
+resource_name = "expanding_wave_2"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/diameter")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("outer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(16.08, 0), Vector2(160.1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("inner:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5, 4.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(127.769, 0), Vector2(160.1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:material:shader_parameter/thickness")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(4.5, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.05, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect2:material:shader_parameter/thickness")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 4.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.04, 0.04, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ColorRect2:material:shader_parameter/diameter")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.6, 4.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.09, 0.11, 0.89, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6k47o"]
+_data = {
+"RESET": SubResource("Animation_xpui3"),
+"expanding wave": SubResource("Animation_wjhxx"),
+"expanding_wave_2": SubResource("Animation_krrem")
+}
+
+[node name="aoe_practice" type="Node2D"]
+script = ExtResource("1_b1dhp")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+top_level = true
+material = SubResource("ShaderMaterial_tgflm")
+use_parent_material = true
+anchors_preset = -1
+anchor_left = -0.889
+anchor_top = -0.5
+anchor_right = 0.889
+anchor_bottom = 0.5
+offset_left = 0.0200043
+offset_right = -0.0200043
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(160, 160)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.356863, 1, 1, 0)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+top_level = true
+material = SubResource("ShaderMaterial_ea5rk")
+use_parent_material = true
+anchors_preset = -1
+anchor_left = -0.889
+anchor_top = -0.5
+anchor_right = 0.889
+anchor_bottom = 0.5
+offset_left = 0.0200043
+offset_right = -0.0200043
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(160, 160)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0)
+
+[node name="inner" type="Marker2D" parent="."]
+
+[node name="outer" type="Marker2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6k47o")
+}

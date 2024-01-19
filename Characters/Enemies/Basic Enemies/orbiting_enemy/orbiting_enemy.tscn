@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3ry5b1ya3msm"]
+[gd_scene load_steps=17 format=3 uid="uid://b3ry5b1ya3msm"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Basic Enemies/orbiting_enemy/orbiting_enemy.gd" id="1_volax"]
 [ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_meqrg"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://y3xnli7mgyhq" path="res://Art/My Art/Enemies/spirit_frames/frame3.png" id="6_b1w5f"]
 [ext_resource type="Texture2D" uid="uid://djg2j0qi6jk7d" path="res://Art/My Art/Enemies/spirit_frames/frame6.png" id="7_yfd27"]
 [ext_resource type="Texture2D" uid="uid://byjl6tfw05u0b" path="res://Art/My Art/Enemies/spirit_frames/frame4.png" id="8_xmend"]
+[ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="9_xpvxm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_edt5q"]
 resource_local_to_scene = true
@@ -127,3 +128,6 @@ light_mask = 2
 rotation = 1.5708
 occluder = SubResource("OccluderPolygon2D_k47xu")
 occluder_light_mask = 2
+
+[node name="Control" parent="." instance=ExtResource("9_xpvxm")]
+anchors_preset = 0

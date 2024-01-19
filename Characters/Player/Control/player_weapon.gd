@@ -24,6 +24,7 @@ var size_multiplier = 1.0
 var proptosis = false
 var twentytwenty = false
 var ipecac = false
+var scorch_shot = false
 #var poly_projectile = preload("res://Characters/player/poly_projectile.tscn")
 
 @onready var projectile_container = get_tree().get_first_node_in_group("projectile_container")
@@ -79,6 +80,9 @@ func projectile_init(projectile):
 	projectile.SPEED = projectile_speed
 	projectile.BULLET_RANGE = bullet_range
 	projectile.scale = Vector2(size_multiplier,size_multiplier)
+	
+	if scorch_shot:
+		projectile.scorch_shot = true
 	
 	#handle crit here?
 	var x = randf_range(0, 1)

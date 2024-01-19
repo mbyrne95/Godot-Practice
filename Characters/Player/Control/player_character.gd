@@ -356,6 +356,8 @@ func match_item_upgrade(upgrade):
 			weapon.size_multiplier += 0.4
 			weapon.projectile_damage += 40
 			weapon.shoot_cd += 1.5
+		"scorch_shot":
+			weapon.scorch_shot = true
 			
 
 ###TAKING DAMAGE

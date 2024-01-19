@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c73kq0byemnwn"]
+[gd_scene load_steps=8 format=3 uid="uid://c73kq0byemnwn"]
 
 [ext_resource type="Script" path="res://Characters/Player/DOTs/Jolt_DOT.gd" id="1_vdnfc"]
 [ext_resource type="Texture2D" uid="uid://dqs4nt0131y77" path="res://Art/My Art/Icons/DOT/jolt.png" id="2_l7yk2"]
@@ -15,6 +15,10 @@ radius = 64.0
 atlas = ExtResource("3_unxwy")
 region = Rect2(0, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tr7ix"]
+atlas = ExtResource("2_l7yk2")
+region = Rect2(5, 3, 6, 9)
+
 [node name="Jolt" type="Node2D" groups=["jolt_DOT", "status_effect"]]
 script = ExtResource("1_vdnfc")
 
@@ -23,6 +27,7 @@ wait_time = 6.0
 one_shot = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 texture = SubResource("AtlasTexture_tpy8r")
 offset = Vector2(0, -10)
 
@@ -40,6 +45,12 @@ visible = false
 texture = SubResource("AtlasTexture_ludcj")
 offset = Vector2(32, 0)
 vframes = 8
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(6, 9)
+offset_right = 6.0
+offset_bottom = 9.0
+texture = SubResource("AtlasTexture_tr7ix")
 
 [connection signal="timeout" from="lifespan" to="." method="_on_lifespan_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

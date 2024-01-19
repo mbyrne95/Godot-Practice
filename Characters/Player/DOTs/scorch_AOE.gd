@@ -3,7 +3,7 @@ extends aoe_dmg
 @onready var enemy_container
 var enemies_on_screen = []
 @onready var orbital_container
-@onready var poison_dot = preload("res://Characters/Player/DOTs/poison.tscn")
+@onready var scorch_dot = preload("res://Characters/Player/DOTs/scorch.tscn")
 
 var ri_dist
 var ro_dist 
@@ -32,24 +32,11 @@ func _ready():
 	anim_player.speed_scale = timescale
 
 func _process(_delta):
-
-	#var player_position = player.global_position
-	var player_dist = position.distance_to(player.global_position)
-#	print("player global = ", player.global_position)
-#	print("self global = ", position)
 	
-		#get rings distance at start of frame
+	#get rings distance at start of frame
 	ri_dist = global_position.distance_to(ri.global_position)
 	ro_dist = global_position.distance_to(ro.global_position)
 	
-	#print(ri_dist)
-	
-	#player is in ring
-	if (player_dist < ro_dist && player_dist > ri_dist):
-		#print("player should take damage")
-		if player.is_damageable:
-			player.take_damage(damage)
-
 	#check if any enemies in the enemy container
 	enemy_container = get_tree().get_first_node_in_group("enemy_container")
 	dmg_children(enemy_container)
@@ -70,7 +57,10 @@ func dmg_children(enemy_array):
 	#getting CHILDREN OF THE WAVE
 	for i in enemy_array.get_child(0).get_children():
 		#step through the orbital transform
-		if i.is_in_group("player_orbital_transform"):
+		if i == get_parent(): 
+			return
+		
+		elif i.is_in_group("player_orbital_transform"):
 			if i.get_child_count() != 0:
 				for j in i.get_children():
 					var enemy_position = j.global_position
@@ -80,14 +70,18 @@ func dmg_children(enemy_array):
 						j.take_damage(damage)
 						var poisoned = false
 						for x in j.get_children():
-							if x.is_in_group("poison_DOT"):
+							if x.is_in_group("scorch_DOT"):
 								poisoned = true
+								await get_tree().create_timer(0.05).timeout
+								var current_stacks = x.num_stacks
+								current_stacks += 5
+								x.num_stacks = current_stacks
 								x.restart_timer()
 						if !poisoned:
-							var poison = poison_dot.instantiate()
-							j.add_child(poison)
+							var scorch = scorch_dot.instantiate()
+							j.add_child(scorch)
 						
-		if i.is_in_group("matroyshka_container"):
+		elif i.is_in_group("matroyshka_container"):
 			if i.get_child_count() != 0:
 				for j in i.get_children():
 					var enemy_position = j.global_position
@@ -97,12 +91,16 @@ func dmg_children(enemy_array):
 						j.take_damage(damage)
 						var poisoned = false
 						for x in j.get_children():
-							if x.is_in_group("poison_DOT"):
+							if x.is_in_group("scorch_DOT"):
 								poisoned = true
+								await get_tree().create_timer(0.05).timeout
+								var current_stacks = x.num_stacks
+								current_stacks += 5
+								x.num_stacks = current_stacks
 								x.restart_timer()
 						if !poisoned:
-							var poison = poison_dot.instantiate()
-							j.add_child(poison)
+							var scorch = scorch_dot.instantiate()
+							j.add_child(scorch)
 						
 		#otherwise, just step through normal enemies	
 		elif i.is_in_group("enemies"):
@@ -114,9 +112,13 @@ func dmg_children(enemy_array):
 				i.take_damage(damage)
 				var poisoned = false
 				for x in i.get_children():
-					if x.is_in_group("poison_DOT"):
+					if x.is_in_group("scorch_DOT"):
 						poisoned = true
+						await get_tree().create_timer(0.05).timeout
+						var current_stacks = x.num_stacks
+						current_stacks += 5
+						x.num_stacks = current_stacks
 						x.restart_timer()
 				if !poisoned:
-					var poison = poison_dot.instantiate()
-					i.add_child(poison)
+					var scorch = scorch_dot.instantiate()
+					i.add_child(scorch)

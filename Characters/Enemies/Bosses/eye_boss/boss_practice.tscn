@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cl7scupb4uqak"]
+[gd_scene load_steps=22 format=3 uid="uid://cl7scupb4uqak"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Bosses/eye_boss/boss_practice.gd" id="1_18f3p"]
 [ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_pfnnj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dch03sjtb1b88" path="res://Art/My Art/Enemies/boss practice/eye_white_iris.png" id="5_a5eb5"]
 [ext_resource type="Texture2D" uid="uid://blbl0741h7232" path="res://Art/My Art/Backgrounds/new_bg.png" id="8_35swo"]
 [ext_resource type="PackedScene" uid="uid://bogxv6mbgvwcr" path="res://Characters/Enemies/Bosses/eye_boss/boss_hp.tscn" id="9_lirbu"]
+[ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="10_pc3sf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d048y"]
 shader = ExtResource("2_pfnnj")
@@ -204,3 +205,6 @@ texture_scale = 2.74
 height = 71.0
 
 [node name="boss_hp" parent="." instance=ExtResource("9_lirbu")]
+
+[node name="Control" parent="." instance=ExtResource("10_pc3sf")]
+anchors_preset = 0

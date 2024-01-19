@@ -37,6 +37,7 @@ func tick_rate():
 			for j in i.get_children():
 				if j.is_in_group("jolt_DOT"):
 					i_has_jolt = true
+					j.restart_timer()
 			if !i_has_jolt:
 				var jolt = jolt_dot.instantiate()
 				i.add_child(jolt)
