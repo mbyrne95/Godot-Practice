@@ -1,7 +1,7 @@
 extends player_projectileclass
 
-@onready var ipecac_aoe = preload("res://Characters/Player/Projectiles/ipecac/ipecac_aoe.tscn")
-@onready var poison_dot = preload("res://Characters/Player/DOTs/poison.tscn")
+#@onready var ipecac_aoe = preload("res://Characters/Player/Projectiles/ipecac/ipecac_aoe.tscn")
+#@onready var poison_dot = preload("res://Characters/Player/DOTs/poison.tscn")
 
 func _ready():
 	player = get_tree().get_first_node_in_group("players")
@@ -26,9 +26,9 @@ func _physics_process(delta):
 			
 	else:
 		if !is_dead:
-			call_deferred("start_explo")
+			call_deferred("ipecac_explo")
 			
-func start_explo():
+func ipecac_explo():
 	is_dead = true
 	
 	var projectile = ipecac_aoe.instantiate()
@@ -57,10 +57,10 @@ func _on_body_entered(body):
 		if !poisoned:
 			var poison = poison_dot.instantiate()
 			body.add_child(poison)
-		call_deferred("start_explo")
+		call_deferred("ipecac_explo")
 		
 	elif body.is_in_group("level_bounds"):
-		call_deferred("start_explo")
+		call_deferred("ipecac_explo")
 
 #func _on_area_entered(area):
 #	if area.is_in_group("level_bounds"):

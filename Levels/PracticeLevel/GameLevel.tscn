@@ -46,7 +46,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.0
 shader_parameter/vignette_opacity = 0.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_623e3"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1eyhg"]
 resource_local_to_scene = true
 blend_mode = 1
 
@@ -57,7 +57,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1e4sn"]
 curve = SubResource("Curve_6oof4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_73dno"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ct1rl"]
 resource_local_to_scene = true
 lifetime_randomness = 0.25
 emission_shape = 3
@@ -82,7 +82,7 @@ turbulence_influence_max = 0.15
 offsets = PackedFloat32Array(0, 0.0775316, 0.0996835, 0.802215)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196, 0.299127, 0.299127, 0.299127, 0.146631, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_qvkkm"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bswdp"]
 resource_local_to_scene = true
 gradient = SubResource("Gradient_0ewwu")
 width = 32
@@ -180,10 +180,10 @@ position = Vector2(160, 320)
 [node name="floating_lights" parent="CanvasLayer/particles" instance=ExtResource("6_gymfy")]
 self_modulate = Color(5, 5, 1.11, 1)
 light_mask = 1
-material = SubResource("CanvasItemMaterial_623e3")
+material = SubResource("CanvasItemMaterial_1eyhg")
 position = Vector2(15, 320)
-process_material = SubResource("ParticleProcessMaterial_73dno")
-texture = SubResource("GradientTexture2D_qvkkm")
+process_material = SubResource("ParticleProcessMaterial_ct1rl")
+texture = SubResource("GradientTexture2D_bswdp")
 
 [node name="ProjectileContainer" type="Node2D" parent="." groups=["projectile_container"]]
 

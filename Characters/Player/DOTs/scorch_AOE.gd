@@ -79,6 +79,7 @@ func dmg_children(enemy_array):
 								x.restart_timer()
 						if !poisoned:
 							var scorch = scorch_dot.instantiate()
+							scorch.num_stacks +=4
 							j.add_child(scorch)
 						
 		elif i.is_in_group("matroyshka_container"):
@@ -100,6 +101,7 @@ func dmg_children(enemy_array):
 								x.restart_timer()
 						if !poisoned:
 							var scorch = scorch_dot.instantiate()
+							scorch.num_stacks +=4
 							j.add_child(scorch)
 						
 		#otherwise, just step through normal enemies	
@@ -121,4 +123,5 @@ func dmg_children(enemy_array):
 						x.restart_timer()
 				if !poisoned:
 					var scorch = scorch_dot.instantiate()
+					scorch.num_stacks +=4
 					i.add_child(scorch)

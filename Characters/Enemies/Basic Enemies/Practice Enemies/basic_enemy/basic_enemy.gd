@@ -15,5 +15,5 @@ func _physics_process(_delta):
 		if player != null:
 			horizontal_only_movement()
 			
-		if abs(position.x - player.position.x) < offset:
-			shoot_logic()
+			if abs(position.x - player.position.x) < offset:
+				shoot_logic()

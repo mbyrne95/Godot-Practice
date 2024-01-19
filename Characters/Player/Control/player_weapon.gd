@@ -1,9 +1,6 @@
 extends Node
 
-var basic_projectile = preload("res://Characters/Player/Projectiles/generic_projectile.tscn")
-var proptosis_projectile = preload("res://Characters/Player/Projectiles/Poly/poly_projectile.tscn")
-var ipecac_projectile = preload("res://Characters/Player/Projectiles/ipecac/ipecac.tscn")
-var projectile_scene
+var projectile_scene = preload("res://Characters/Player/Projectiles/generic_projectile.tscn")
 
 @onready var muz_left = $"../muzzle_left"
 @onready var muz_right = $"../muzzle_right"
@@ -39,16 +36,13 @@ func _process(_delta):
 				shoot_on_cd = false
 
 func shoot():
-	var projectile
-	
-	if proptosis:
-		projectile_scene = proptosis_projectile	
-	elif ipecac:
-		projectile_scene = ipecac_projectile
-	else:
-		projectile_scene = basic_projectile
-	
-	projectile = projectile_scene.instantiate()
+	var projectile = projectile_scene.instantiate()
+
+	projectile.scorch_shot = scorch_shot
+
+	projectile.proptosis = proptosis
+
+	projectile.ipecac = ipecac
 		
 	projectile_init(projectile)
 	
@@ -61,6 +55,11 @@ func shoot():
 		projectile_dup.global_position = muz_right.global_position
 		projectile_dup.rotation = muz_right.global_rotation
 		projectile_container.add_child(projectile_dup)
+		projectile_dup.scorch_shot = scorch_shot
+
+		projectile_dup.proptosis = proptosis
+
+		projectile_dup.ipecac = ipecac
 	
 	else:
 		#alternate shot positions
@@ -80,9 +79,6 @@ func projectile_init(projectile):
 	projectile.SPEED = projectile_speed
 	projectile.BULLET_RANGE = bullet_range
 	projectile.scale = Vector2(size_multiplier,size_multiplier)
-	
-	if scorch_shot:
-		projectile.scorch_shot = true
 	
 	#handle crit here?
 	var x = randf_range(0, 1)

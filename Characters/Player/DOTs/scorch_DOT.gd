@@ -23,6 +23,8 @@ func _ready():
 	parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
 	stack_counter = $TextureRect/stacks
 	texture_rect.reparent(parent_debuff_box)
+
+	#stack_counter = 1
 	
 func _process(_delta):
 	stack_counter.text = str(num_stacks)
