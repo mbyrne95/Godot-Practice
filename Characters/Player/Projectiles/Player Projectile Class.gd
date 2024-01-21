@@ -24,6 +24,11 @@ var ipecac = false
 
 var current_scale = Vector2(1,1)
 
+var hatchling_upgrade = false
+var spawn_hatchling = false
+@onready var hatchling_scene = preload("res://Characters/Player/DOTs/hatchling.tscn")
+var apply_unravel = false
+
 func _physics_process(delta):
 	
 	var player_position = get_tree().get_first_node_in_group("players").position
@@ -39,10 +44,13 @@ func _physics_process(delta):
 		position += motion * delta
 	else:
 		if !is_dead:
+			if hatchling_upgrade:
+				Globs.hatchling_target.emit(null)
 			if ipecac:
 				call_deferred("start_explo")
 			else:
 				call_deferred("start_death")
+				
 
 func start_death():
 	is_dead = true
@@ -65,7 +73,6 @@ func start_explo():
 	ipecac_boom.position = global_position
 	get_tree().get_first_node_in_group("projectile_container").add_child(ipecac_boom)
 	
-	
 	collision.disabled = true
 	sprite.visible = false
 	glow.visible = false
@@ -79,7 +86,8 @@ func proptosis_logic(distance_from_player):
 	current_damage = DAMAGE * (current_scale.x * 0.5)
 	#print(current_damage)
 	sprite.scale = current_scale
-	glow.scale = current_scale
+	glow.scale.x = clamp(current_scale.x, 0.0, 1.0)
+	glow.scale.y = clamp(current_scale.y, 0.0, 1.0)
 	collision.scale = current_scale
 	
 func _on_visible_on_screen_notifier_2d_screen_exited():
@@ -89,6 +97,13 @@ func _on_body_entered(body):
 	if body.is_in_group("enemies"):
 
 		body.take_damage(current_damage)
+		
+		if hatchling_upgrade:
+			Globs.hatchling_target.emit(body)
+			
+		if spawn_hatchling:
+			print("should spawn hatchling")
+			call_deferred("spawn_hatch")
 		
 		if ipecac:
 			var poisoned = false
@@ -118,10 +133,22 @@ func _on_body_entered(body):
 			call_deferred("start_death")
 				
 	elif body.is_in_group("level_bounds"):
+		if hatchling_upgrade:
+			Globs.hatchling_target.emit(null)
+			
 		if ipecac:
 			call_deferred("start_explo")
 		else:
 			call_deferred("start_death")
+
+func spawn_hatch():
+	var hatch = hatchling_scene.instantiate()
+	
+	hatch.unravel = apply_unravel
+	
+	hatch.global_position = Vector2(global_position.x + randf_range(4,7), global_position.y + randf_range(4,7))
+	get_tree().get_first_node_in_group("projectile_container").add_child(hatch)
+	Globs.hatchling_spawned.emit()
 
 #func _on_area_entered(area):
 #	if area.is_in_group("level_bounds"):

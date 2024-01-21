@@ -22,9 +22,19 @@ var proptosis = false
 var twentytwenty = false
 var ipecac = false
 var scorch_shot = false
+
+var hatchling_upgrade = false
+var tmp_hatchling_target
+var hatchling_counter = 0
+var spawn_hatchling = false
+var apply_unravel = false
 #var poly_projectile = preload("res://Characters/player/poly_projectile.tscn")
 
 @onready var projectile_container = get_tree().get_first_node_in_group("projectile_container")
+
+func _ready():
+	Globs.hatchling_target.connect(hatchling_tracker)
+	Globs.hatchling_spawned.connect(hatchling_spawned)
 
 func _process(_delta):
 	if get_parent().can_move:
@@ -43,6 +53,10 @@ func shoot():
 	projectile.proptosis = proptosis
 
 	projectile.ipecac = ipecac
+	
+	projectile.hatchling_upgrade = hatchling_upgrade
+	projectile.spawn_hatchling = spawn_hatchling
+	projectile.apply_unravel = apply_unravel
 		
 	projectile_init(projectile)
 	
@@ -85,3 +99,16 @@ func projectile_init(projectile):
 	if x <= crit_chance:
 		projectile.DAMAGE = (crit_multiplier * projectile.DAMAGE) * damage_multiplier
 		projectile.modulate = Color.PALE_GOLDENROD
+
+func hatchling_tracker(target):
+	if tmp_hatchling_target != target:
+		tmp_hatchling_target = target
+	else:
+		#print(hatchling_counter)
+		hatchling_counter += 1
+		if hatchling_counter == 4:
+			spawn_hatchling = true
+			hatchling_counter = 0
+
+func hatchling_spawned():
+	spawn_hatchling = false

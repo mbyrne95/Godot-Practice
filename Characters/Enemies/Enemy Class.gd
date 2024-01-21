@@ -17,6 +17,9 @@ var allowed_to_move = false
 @export var contact_damage = 0
 @export var SPEED = 200
 @export var HEALTH = 100
+@export var projectile_damage = 25
+@export var dmg_output_ratio = 1.0
+@export var dmg_taken_ratio = 1.0
 
 @export var SHOOT_CD = 0.3
 var shoot_on_cd : = false
@@ -40,6 +43,9 @@ func shoot_logic():
 		var projectile = projectile_scene.instantiate()
 		projectile.position = muzzle.global_position
 		projectile.global_rotation = muzzle.global_rotation
+		
+		projectile.damage = projectile_damage * dmg_output_ratio
+		
 		shoot(projectile)
 		await get_tree().create_timer(SHOOT_CD).timeout
 		shoot_on_cd = false
@@ -82,7 +88,7 @@ func vertical_only_movement():
 	
 func take_damage(amount : int):
 	if allowed_to_move:
-		HEALTH -= amount
+		HEALTH -= amount * dmg_taken_ratio
 		sprite.material.set_shader_parameter("enabled", true)
 		if (HEALTH <= 0):
 			Globs.child_of_wave_died.emit()
@@ -109,4 +115,4 @@ func _on_hitbox_area_entered(area):
 	if allowed_to_move:
 		if area.is_in_group("player_hurtbox"):
 			if player.is_damageable:
-				player.take_damage(contact_damage)
+				player.take_damage(contact_damage * dmg_output_ratio)

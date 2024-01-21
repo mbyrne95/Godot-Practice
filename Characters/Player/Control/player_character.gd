@@ -54,6 +54,7 @@ var current_state = State.idle
 @onready var thrust = $"thruster particles/thrust"
 @onready var death_explo_particles = $death_explo
 @onready var hurtbox = $Hurtbox
+@onready var lightoccluder = $LightOccluder2D
 
 #blink initialization stuff
 @onready var blink = $Blink
@@ -358,7 +359,17 @@ func match_item_upgrade(upgrade):
 			weapon.shoot_cd += 1.5
 		"scorch_shot":
 			weapon.scorch_shot = true
-			
+		"hatchling_1":
+			weapon.hatchling_upgrade = true
+		"hatchling_2":
+			weapon.apply_unravel = true
+		"range_up_size_down":
+			ship_sprite.scale = Vector2(ship_sprite.scale.x - 0.2, ship_sprite.scale.y - 0.2)
+			hurtbox.scale = Vector2(hurtbox.scale.x - 0.2, hurtbox.scale.y - 0.2)
+			lightoccluder.scale = Vector2(lightoccluder.scale.x - 0.2, lightoccluder.scale.y - 0.2)
+			collision_shape.scale = Vector2(collision_shape.scale.x - 0.2, collision_shape.scale.y - 0.2)
+			armor_plate.scale = Vector2(armor_plate.scale.x - 0.2, armor_plate.scale.y - 0.2)
+			weapon.bullet_range += 30
 
 ###TAKING DAMAGE
 ################

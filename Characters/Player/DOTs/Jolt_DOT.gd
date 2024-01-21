@@ -21,6 +21,7 @@ var parent_debuff_box
 func _ready():
 	texture_rect = $TextureRect
 	parent = get_parent()
+	parent.dmg_taken_ratio = 1.3
 	parent.enemy_took_damage.connect(_jolt_dmg)
 	lifespan_timer.start()
 	parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
@@ -43,6 +44,7 @@ func _jolt_dmg(amount):
 
 func _on_lifespan_timeout():
 	texture_rect.reparent(self)
+	parent.dmg_taken_ratio = 1.0
 	queue_free()
 
 func _on_area_2d_body_entered(body):

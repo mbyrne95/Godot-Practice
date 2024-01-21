@@ -146,6 +146,30 @@ const UPGRADES = {
 		"rarity": 2,
 		"type": "dmg"
 	},
+	"hatchling_1": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Infestation",
+		"detail": "Sustained damage spawns a damaging threadling",
+		"prerequisite": [],
+		"rarity": 0,
+		"type": "dmg"
+	},
+	"hatchling_2": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Infestation+",
+		"detail": "Threadlings apply unravel, reducing enemy damage output",
+		"prerequisite": ["hatchling_1"],
+		"rarity": 1,
+		"type": "dmg"
+	},
+	"range_up_size_down": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Mini Mush+",
+		"detail": "Range up, size down",
+		"prerequisite": [],
+		"rarity": 0,
+		"type": "dmg"
+	},
 	"broken_game": {
 		"icon": ICON_PATH + "Skillicon1_09.png",
 		"displayname": "Broken game!",

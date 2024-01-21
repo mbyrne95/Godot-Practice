@@ -2,7 +2,7 @@ extends enemy_baseclass
 
 var current_health
 var number_of_splits = 2
-var number_of_offspring= 3
+var number_of_offspring= 2
 var has_split = false
 
 @onready var parent = get_parent()
@@ -30,7 +30,7 @@ func _process(_delta):
 func take_damage(amount : int):
 	if allowed_to_move:
 		sprite.material.set_shader_parameter("enabled", true)
-		current_health -= amount
+		current_health -= amount * dmg_taken_ratio
 		enemy_took_damage.emit(amount)
 		if (current_health <= 0):
 			if(number_of_splits == 0):

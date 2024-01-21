@@ -13,3 +13,6 @@ signal children_allowed_to_move()
 signal child_of_wave_died()
 
 signal parallax_motion_stop()
+
+signal hatchling_target(target)
+signal hatchling_spawned()

@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cp8rkfaj23k5k"]
+
+[ext_resource type="Script" path="res://Characters/Player/DOTs/unravel.gd" id="1_h2l0e"]
+[ext_resource type="Texture2D" uid="uid://cy8u3srbcplc5" path="res://Art/My Art/Icons/DOT/poison.png" id="2_7ry6k"]
+[ext_resource type="Texture2D" uid="uid://cnviu2yeafxn7" path="res://Art/My Art/Icons/DOT/unravel.png" id="3_xb4vo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tx6h"]
+atlas = ExtResource("2_7ry6k")
+region = Rect2(5, 3, 5, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpxq7"]
+atlas = ExtResource("3_xb4vo")
+region = Rect2(4, 4, 8, 7)
+
+[node name="unravel" type="Node2D" groups=["status_effect", "unravel_DOT"]]
+script = ExtResource("1_h2l0e")
+
+[node name="lifespan" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("AtlasTexture_8tx6h")
+offset = Vector2(0, -10)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 8.0
+offset_bottom = 7.0
+texture = SubResource("AtlasTexture_tpxq7")
+
+[connection signal="timeout" from="lifespan" to="." method="_on_lifespan_timeout"]

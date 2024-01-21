@@ -46,7 +46,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.0
 shader_parameter/vignette_opacity = 0.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1eyhg"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bewwg"]
 resource_local_to_scene = true
 blend_mode = 1
 
@@ -57,7 +57,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1e4sn"]
 curve = SubResource("Curve_6oof4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ct1rl"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hyjjc"]
 resource_local_to_scene = true
 lifetime_randomness = 0.25
 emission_shape = 3
@@ -82,7 +82,7 @@ turbulence_influence_max = 0.15
 offsets = PackedFloat32Array(0, 0.0775316, 0.0996835, 0.802215)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196, 0.299127, 0.299127, 0.299127, 0.146631, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bswdp"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4lbow"]
 resource_local_to_scene = true
 gradient = SubResource("Gradient_0ewwu")
 width = 32
@@ -180,10 +180,10 @@ position = Vector2(160, 320)
 [node name="floating_lights" parent="CanvasLayer/particles" instance=ExtResource("6_gymfy")]
 self_modulate = Color(5, 5, 1.11, 1)
 light_mask = 1
-material = SubResource("CanvasItemMaterial_1eyhg")
+material = SubResource("CanvasItemMaterial_bewwg")
 position = Vector2(15, 320)
-process_material = SubResource("ParticleProcessMaterial_ct1rl")
-texture = SubResource("GradientTexture2D_bswdp")
+process_material = SubResource("ParticleProcessMaterial_hyjjc")
+texture = SubResource("GradientTexture2D_4lbow")
 
 [node name="ProjectileContainer" type="Node2D" parent="." groups=["projectile_container"]]
 
@@ -194,19 +194,19 @@ rotation = 1.5708
 [node name="Level Bounds" type="StaticBody2D" parent="." groups=["level_bounds"]]
 collision_mask = 18
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Level Bounds"]
+[node name="top" type="CollisionShape2D" parent="Level Bounds" groups=["bound_top"]]
 position = Vector2(90, -110)
 shape = SubResource("RectangleShape2D_kg1rj")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Level Bounds"]
+[node name="bottom" type="CollisionShape2D" parent="Level Bounds" groups=["bound_bottom"]]
 position = Vector2(90, 430.5)
 shape = SubResource("RectangleShape2D_wme3t")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Level Bounds"]
+[node name="left" type="CollisionShape2D" parent="Level Bounds" groups=["bound_left"]]
 position = Vector2(-60.515, 159)
 shape = SubResource("RectangleShape2D_x3moj")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Level Bounds"]
+[node name="right" type="CollisionShape2D" parent="Level Bounds" groups=["bound_right"]]
 position = Vector2(242, 158)
 shape = SubResource("RectangleShape2D_x3moj")
 
