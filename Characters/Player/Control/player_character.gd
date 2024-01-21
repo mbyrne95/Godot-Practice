@@ -185,7 +185,7 @@ func dash_logic(velSnapshot : Vector2, direction : Vector2):
 	velocity = velSnapshot
 	is_dodging = false
 	is_damageable = true
-	blink.start_cooldown(BLINK_CD)
+	blink.start_cooldown()
 
 #func dodge_logic(total_time : float):
 #	if !blink.is_ready():

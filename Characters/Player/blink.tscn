@@ -10,3 +10,10 @@ unique_name_in_owner = true
 process_callback = 0
 wait_time = 5.0
 one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="blink_timer" to="." method="_on_blink_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
