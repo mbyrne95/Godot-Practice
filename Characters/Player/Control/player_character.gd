@@ -8,8 +8,6 @@ extends CharacterBody2D
 @export var FRICTION = 5
 @export var rotation_speed = 5
 var can_move = false
-@export_subgroup("Blink")
-@export var BLINK_CD = 5
 
 @export_subgroup("Health")
 @export var MAX_HEALTH = 100
@@ -369,7 +367,15 @@ func match_item_upgrade(upgrade):
 			lightoccluder.scale = Vector2(lightoccluder.scale.x - 0.2, lightoccluder.scale.y - 0.2)
 			collision_shape.scale = Vector2(collision_shape.scale.x - 0.2, collision_shape.scale.y - 0.2)
 			armor_plate.scale = Vector2(armor_plate.scale.x - 0.2, armor_plate.scale.y - 0.2)
-			weapon.bullet_range += 30
+			weapon.bullet_range += 35
+		"range_up_speed_up":
+			weapon.bullet_range += 35
+			SPEED += 20
+		"range_up_damage_up":
+			weapon.bullet_range += 35
+			weapon.projectile_damage += 20
+		"dash_cooldown_1":
+			blink._cd = blink._cd * .90
 
 ###TAKING DAMAGE
 ################

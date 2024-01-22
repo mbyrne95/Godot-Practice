@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var cooldown_progress = %CooldownProgress
 @onready var player_health_bar = %PlayerHealthBar
 @onready var lerp_bar = %lerp
+@onready var cooldown_lerp = $Control/CooldownProgress/TextureProgressBar
 
 @onready var player = get_owner()
 
@@ -14,6 +15,8 @@ func _ready():
 func _on_cooldown_progress(progress):
 	#print(progress)
 	cooldown_progress.value = progress
+	var tween = get_tree().create_tween()
+	tween.tween_property(cooldown_lerp, "value", progress, 0.2)
 	
 func _on_cooldown_finished():
 	cooldown_progress.value = 1

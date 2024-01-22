@@ -5,6 +5,10 @@ signal camera_death_zoom(player_position)
 
 signal blinkReady
 signal blinkProgress(progress)
+
+signal abilityReady
+signal abilityProgress(progress)
+
 signal level_player
 signal player_can_move
 

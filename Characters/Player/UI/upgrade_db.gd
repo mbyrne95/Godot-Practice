@@ -170,6 +170,30 @@ const UPGRADES = {
 		"rarity": 0,
 		"type": "dmg"
 	},
+	"range_up_speed_up": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Roid Rage",
+		"detail": "Range up, size speed up",
+		"prerequisite": [],
+		"rarity": 0,
+		"type": "dmg"
+	},
+	"range_up_damage_up": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Synthoil",
+		"detail": "Range up, damage up",
+		"prerequisite": [],
+		"rarity": 0,
+		"type": "dmg"
+	},
+	"dash_cooldown_1": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Dash CD",
+		"detail": "Dash CD reduced by 10%",
+		"prerequisite": [],
+		"rarity": 0,
+		"type": "dmg"
+	},
 	"broken_game": {
 		"icon": ICON_PATH + "Skillicon1_09.png",
 		"displayname": "Broken game!",
