@@ -10,6 +10,7 @@ var projectile_container
 @export var _cd = 15.0
 var ready_to_use : = true
 @onready var cooldown_timer = $Timer
+@onready var inbetween_timer = $inbetween_timer
 
 var max_charges : float = 2.0
 var num_charges : float = 2.0
@@ -33,13 +34,25 @@ func _process(_delta):
 	
 	if get_parent().can_move:
 		if Input.is_action_pressed("ability"):
-			if ready_to_use:
-				ready_to_use = false
-				
+			if is_ready():
 				match ability_state:
 					abilities.shoot_modded_projectile:
 						_shoot_modified_projectile()
-				cooldown_timer.start(_cd)
+						
+				start_cooldown()
+
+func is_ready():
+	if num_charges > 0:
+		return ready_to_use
+	else:
+		return false
+		
+func start_cooldown():
+	num_charges  = clamp((num_charges - 1), 0, max_charges)
+	if cooldown_timer.is_stopped():
+		cooldown_timer_init()
+	ready_to_use = false
+	inbetween_timer.start(0.25)
 
 func _shoot_modified_projectile():
 	var projectile = projectile_scene.instantiate()
@@ -48,8 +61,17 @@ func _shoot_modified_projectile():
 	projectile.rotation = ability_muz.global_rotation	
 	projectile_container.add_child(projectile)
 
+func cooldown_timer_init():
+	cooldown_timer.wait_time = _cd
+	cooldown_timer.start()
+
 func _on_timer_timeout():
-	ready_to_use = true
+	if num_charges < 2:
+		num_charges += 1
+		cooldown_timer_init()
 	
 func projectile_init(projectile):
 	pass
+
+func _on_inbetween_timer_timeout():
+	ready_to_use = true

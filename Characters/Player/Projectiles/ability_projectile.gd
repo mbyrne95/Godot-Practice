@@ -9,4 +9,4 @@ func _ready():
 	glow = $Sprite2D2
 	collision = $CollisionShape2D
 	emitter = $projectile_death
-	
+	current_damage = DAMAGE

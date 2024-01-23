@@ -5,12 +5,16 @@ extends CanvasLayer
 @onready var lerp_bar = %lerp
 @onready var cooldown_lerp = $Control/CooldownProgress/TextureProgressBar
 
+@onready var ability_progress = $Control/TextureProgressBar
+@onready var ability_lerp = $Control/TextureProgressBar/TextureProgressBar
+
 @onready var player = get_owner()
 
 func _ready():
 	Globs.blinkProgress.connect(_on_cooldown_progress)
 	Globs.blinkReady.connect(_on_cooldown_finished)
 	player.healthChanged.connect(_health_logic)
+	Globs.abilityProgress.connect(_ability_cd_progress)
 
 func _on_cooldown_progress(progress):
 	#print(progress)
@@ -30,3 +34,8 @@ func _health_logic(percentHP):
 		
 	var tween = get_tree().create_tween()
 	tween.tween_property(lerp_bar, "value", percentHP, 0.2)
+	
+func _ability_cd_progress(progress):
+	ability_progress.value = progress
+	var tween = get_tree().create_tween()
+	tween.tween_property(ability_lerp, "value", progress, 0.2)

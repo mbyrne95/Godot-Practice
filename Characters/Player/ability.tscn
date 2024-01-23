@@ -9,4 +9,7 @@ script = ExtResource("1_kkmjb")
 wait_time = 15.0
 one_shot = true
 
+[node name="inbetween_timer" type="Timer" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="inbetween_timer" to="." method="_on_inbetween_timer_timeout"]
