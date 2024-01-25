@@ -3,9 +3,12 @@ extends enemy_baseclass
 var MAX_HEALTH
 
 @onready var tentacle_projectile = preload("res://Characters/Enemies/Bosses/eye_boss/tentacle_attack.tscn")
-
+@onready var wavey_bullet = preload("res://Characters/Enemies/Projectiles/wave_bullet.tscn")
+@onready var cease_scene = preload("res://Characters/Enemies/Bosses/eye_boss/cease_anim.tscn")
+@onready var dialogue = preload("res://Characters/dialogue.tscn")
 @onready var eye_follow = $"Eye Follow"
 var eye_follow_speed = 0.2
+var has_ceased = false
 
 @onready var rotate_shoot_timer = $"rotate shoot clock"
 @onready var rotator = %Rotator
@@ -26,13 +29,14 @@ func _ready():
 	self.add_to_group("enemies")
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	#enemy_container.add_child(self)
-	hit_flash_player = $hit_flash_player
-	HEALTH = 10000.0
-	MAX_HEALTH = HEALTH
+	sprite = $"Eye Follow/Sprite2D"
+	MAX_HEALTH = 1000.0
+	HEALTH = MAX_HEALTH
 	SPEED = 20
 	muzzle = %EyeMuzzle
 	SHOOT_CD = 0.1
 	projectile_scene = preload("res://Characters/Enemies/Projectiles/round_enemy_bullet.tscn")
+	
 	#print(MAX_HEALTH)
 	is_attacking = false
 	player = get_tree().get_first_node_in_group("players")
@@ -47,7 +51,7 @@ func _ready():
 		rotator.add_child(spawn_point)
 	
 func _process(delta):
-	print(HEALTH)
+	#print(HEALTH)
 	var new_rotation = rotator.rotation_degrees + rotate_speed * delta
 	rotator.rotation_degrees = fmod(new_rotation, 360)
 	
@@ -57,8 +61,11 @@ func _physics_process(_delta):
 		if(player == null):
 			return
 		else:
+			if !has_ceased:
+				allowed_to_move = false
+				_cease()
 			#top end
-			if (HEALTH/MAX_HEALTH >= 0.66) && !is_attacking:
+			elif (HEALTH/MAX_HEALTH >= 0.66) && !is_attacking:
 				#print("top")
 				var x = randi_range(0,1)
 				#var x = 0
@@ -68,6 +75,9 @@ func _physics_process(_delta):
 					tentacle_attack(2, 2, 2)
 			elif (HEALTH/MAX_HEALTH < 0.66) && (HEALTH/MAX_HEALTH >= 0.33)  && !is_attacking:
 				#print("mid")
+				projectile_scene = wavey_bullet
+				SHOOT_CD = 0.06
+				rotate_speed = 100
 				var x = randi_range(0,1)
 				#var x = 0
 				if x == 0:
@@ -76,6 +86,8 @@ func _physics_process(_delta):
 					tentacle_attack(3, 3, 1)
 			elif (HEALTH/MAX_HEALTH < 0.33)  && !is_attacking:
 				#print("low")
+				SHOOT_CD = 0.04
+				rotate_speed = 120
 				var x = randi_range(0,1)
 				#var x = 0
 				if x == 0:
@@ -111,8 +123,8 @@ func rotate_shoot_init(time, time_between_attacks):
 		
 func tentacle_attack(num_hits_flurry, num_flurry, time_before_next_attack):
 	is_attacking = true
-	var offset_right = 19
-	var offset_left = -12
+	var offset_right = 20
+	var offset_left = -20
 	for i in range(num_flurry):
 		var previous_x= -1000
 		for j in range(num_hits_flurry):
@@ -142,9 +154,35 @@ func rotateToTarget(target, delta):
 	eye_follow.rotate(sign(angleTo) * min(delta * eye_follow_speed, abs(angleTo)))
 
 func take_damage(amount : int):
-	hit_flash_player.play("hit_red")
-	HEALTH -= amount
-	healthChanged.emit(HEALTH / MAX_HEALTH)
-	if (HEALTH <= 0):
-		Globs.child_of_wave_died.emit()
-		queue_free()
+	if allowed_to_move:
+		HEALTH -= amount * dmg_taken_ratio
+		healthChanged.emit(HEALTH/MAX_HEALTH)
+		sprite.material.set_shader_parameter("enabled", true)
+		if (HEALTH <= 0):
+			Globs.child_of_wave_died.emit()
+			queue_free()
+			
+		enemy_took_damage.emit(amount)
+		
+		await get_tree().create_timer(0.1).timeout
+		
+		sprite.material.set_shader_parameter("enabled", false)
+
+func _cease():
+	dmg_taken_ratio = 0.05
+	has_ceased = true
+	var dia = dialogue.instantiate()
+	dia.messages = ["Cease", "So, you have risen again", "I will reward your insolence", "with Death"]
+	add_child(dia)
+	dia.global_position = Vector2(90,220)
+	dia.read_time = 1.75
+	dia.typing_speed = 0.07
+	dia.start_dialogue()
+	await get_tree().create_timer(2.0).timeout
+#	var x = cease_scene.instantiate()
+#	x.position = global_position
+#	get_tree().get_root().add_child(x)
+	var y = cease_scene.instantiate()
+	y.position = global_position
+	get_tree().get_first_node_in_group("parallax_layer").add_child(y)
+	player.can_move = false

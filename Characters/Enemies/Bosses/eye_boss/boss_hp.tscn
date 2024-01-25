@@ -1,16 +1,16 @@
 [gd_scene load_steps=6 format=3 uid="uid://bogxv6mbgvwcr"]
 
 [ext_resource type="Script" path="res://boss_hp_ui.gd" id="1_hngj2"]
-[ext_resource type="Texture2D" uid="uid://bisobnmuora5o" path="res://Art/My Art/Enemies/boss practice/boss_hp_over.png" id="2_fqy1b"]
-[ext_resource type="Texture2D" uid="uid://c0hd585wl0q3w" path="res://Art/My Art/Enemies/boss practice/boss_hp_progress.png" id="3_8svjh"]
+[ext_resource type="Texture2D" uid="uid://b5rp8sgimurcx" path="res://Art/My Art/Enemies/boss practice/boss_hp_over_new.png" id="2_gpvji"]
+[ext_resource type="Texture2D" uid="uid://cb77xaekr4ejm" path="res://Art/My Art/Enemies/boss practice/boss_hp_under_new.png" id="3_ftwxq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h3cim"]
-atlas = ExtResource("2_fqy1b")
-region = Rect2(30, 299, 120, 10)
+atlas = ExtResource("2_gpvji")
+region = Rect2(32, 299, 116, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xugel"]
-atlas = ExtResource("3_8svjh")
-region = Rect2(30, 299, 120, 10)
+atlas = ExtResource("3_ftwxq")
+region = Rect2(32, 299, 116, 8)
 
 [node name="boss_hp" type="CanvasLayer"]
 visible = false
@@ -36,7 +36,7 @@ step = 0.01
 value = 1.0
 texture_over = SubResource("AtlasTexture_h3cim")
 texture_progress = SubResource("AtlasTexture_xugel")
-tint_progress = Color(0.85098, 0.341176, 0.388235, 1)
+tint_progress = Color(0.6, 0.898039, 0.313726, 1)
 
 [node name="lerp" type="TextureProgressBar" parent="Control"]
 z_index = -1

@@ -2,6 +2,7 @@
 
 [node name="Control" type="Control"]
 layout_mode = 3
+anchors_preset = 0
 
 [node name="BoxContainer" type="BoxContainer" parent="."]
 layout_mode = 0

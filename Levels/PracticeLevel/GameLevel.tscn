@@ -22,6 +22,15 @@ glow_levels/6 = 1.0
 glow_blend_mode = 1
 glow_hdr_threshold = 0.8
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kg1rj"]
+size = Vector2(180, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wme3t"]
+size = Vector2(180, 261)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3moj"]
+size = Vector2(135, 512)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4lkkn"]
 shader = ExtResource("2_l7snj")
 shader_parameter/overlay = true
@@ -46,7 +55,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.0
 shader_parameter/vignette_opacity = 0.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ekswa"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jrqnm"]
 resource_local_to_scene = true
 blend_mode = 1
 
@@ -57,7 +66,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1e4sn"]
 curve = SubResource("Curve_6oof4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xdgno"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_byi3w"]
 resource_local_to_scene = true
 lifetime_randomness = 0.25
 emission_shape = 3
@@ -82,7 +91,7 @@ turbulence_influence_max = 0.15
 offsets = PackedFloat32Array(0, 0.0775316, 0.0996835, 0.802215)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196, 0.299127, 0.299127, 0.299127, 0.146631, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_b0v71"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ub1i2"]
 resource_local_to_scene = true
 gradient = SubResource("Gradient_0ewwu")
 width = 32
@@ -91,15 +100,6 @@ use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kg1rj"]
-size = Vector2(180, 240)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wme3t"]
-size = Vector2(180, 261)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3moj"]
-size = Vector2(135, 512)
-
 [node name="GameLevel" type="Node2D"]
 script = ExtResource("1_fx8fp")
 
@@ -107,6 +107,7 @@ script = ExtResource("1_fx8fp")
 environment = SubResource("Environment_dlyc8")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
 z_index = 2
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
@@ -121,73 +122,14 @@ script = ExtResource("2_44j1u")
 unique_name_in_owner = true
 one_shot = true
 
-[node name="foreground" type="ParallaxBackground" parent="."]
-layer = 0
-
-[node name="foreground parallax" type="ParallaxLayer" parent="foreground"]
-z_index = 1
-motion_mirroring = Vector2(0, 640)
-
-[node name="Sprite2D" type="Sprite2D" parent="foreground/foreground parallax"]
-texture = ExtResource("3_abqcd")
-offset = Vector2(72, 320)
-
-[node name="Sprite2D2" type="Sprite2D" parent="foreground/foreground parallax"]
-texture = ExtResource("3_abqcd")
-offset = Vector2(109, 180)
-flip_h = true
-
-[node name="CanvasModulate2" type="CanvasModulate" parent="foreground"]
-z_index = 2
-
-[node name="backgrounds" type="Node2D" parent="."]
-z_index = -2
-
-[node name="background" type="Sprite2D" parent="backgrounds"]
-texture = ExtResource("8_rxs5h")
-offset = Vector2(90, 320)
-
-[node name="eyecandy" type="ParallaxBackground" parent="."]
-layer = 0
-scroll_base_scale = Vector2(0, 0)
-
-[node name="bg_eyecandy" type="ParallaxLayer" parent="eyecandy"]
-z_index = -1
-motion_mirroring = Vector2(0, 640)
-
-[node name="Sprite2D" type="Sprite2D" parent="eyecandy/bg_eyecandy"]
-self_modulate = Color(1, 1, 1, 0.15)
-position = Vector2(90, 320)
-texture = ExtResource("8_haidh")
-
 [node name="EnemyContainer" type="Node2D" parent="." groups=["enemy_container"]]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="CRT Overlay" type="ColorRect" parent="CanvasLayer"]
-modulate = Color(1, 1, 1, 0.00784314)
-material = SubResource("ShaderMaterial_4lkkn")
-offset_right = 180.0
-offset_bottom = 320.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
-
-[node name="particles" type="Node2D" parent="CanvasLayer"]
-
-[node name="basic bubbles" parent="CanvasLayer/particles" instance=ExtResource("12_2nmj3")]
-position = Vector2(160, 320)
-
-[node name="floating_lights" parent="CanvasLayer/particles" instance=ExtResource("6_gymfy")]
-self_modulate = Color(5, 5, 1.11, 1)
-light_mask = 1
-material = SubResource("CanvasItemMaterial_ekswa")
-position = Vector2(15, 320)
-process_material = SubResource("ParticleProcessMaterial_xdgno")
-texture = SubResource("GradientTexture2D_b0v71")
+z_index = 3
 
 [node name="ProjectileContainer" type="Node2D" parent="." groups=["projectile_container"]]
+z_index = 1
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("12_slqvt")]
+z_index = 3
 position = Vector2(90, -9.995)
 rotation = 1.5708
 
@@ -209,5 +151,67 @@ shape = SubResource("RectangleShape2D_x3moj")
 [node name="right" type="CollisionShape2D" parent="Level Bounds" groups=["bound_right"]]
 position = Vector2(242, 158)
 shape = SubResource("RectangleShape2D_x3moj")
+
+[node name="layer 1" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="foreground parallax" type="ParallaxLayer" parent="layer 1" groups=["parallax_layer"]]
+z_index = 1
+motion_mirroring = Vector2(0, 640)
+
+[node name="Sprite2D" type="Sprite2D" parent="layer 1/foreground parallax"]
+texture = ExtResource("3_abqcd")
+offset = Vector2(72, 320)
+
+[node name="Sprite2D2" type="Sprite2D" parent="layer 1/foreground parallax"]
+texture = ExtResource("3_abqcd")
+offset = Vector2(109, 180)
+flip_h = true
+
+[node name="layer 5" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="CRT Overlay" type="ColorRect" parent="layer 5"]
+modulate = Color(1, 1, 1, 0.00784314)
+material = SubResource("ShaderMaterial_4lkkn")
+offset_right = 180.0
+offset_bottom = 320.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="layer 0" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="backgrounds" type="Node2D" parent="layer 0"]
+z_index = -2
+
+[node name="background" type="Sprite2D" parent="layer 0/backgrounds"]
+texture = ExtResource("8_rxs5h")
+offset = Vector2(90, 320)
+
+[node name="particles" type="Node2D" parent="layer 0"]
+
+[node name="basic bubbles" parent="layer 0/particles" instance=ExtResource("12_2nmj3")]
+position = Vector2(160, 320)
+
+[node name="floating_lights" parent="layer 0/particles" instance=ExtResource("6_gymfy")]
+self_modulate = Color(5, 5, 1.11, 1)
+light_mask = 1
+material = SubResource("CanvasItemMaterial_jrqnm")
+position = Vector2(15, 320)
+process_material = SubResource("ParticleProcessMaterial_byi3w")
+texture = SubResource("GradientTexture2D_ub1i2")
+
+[node name="eyecandy" type="ParallaxBackground" parent="layer 0"]
+layer = -1
+scroll_base_scale = Vector2(0, 0)
+
+[node name="bg_eyecandy" type="ParallaxLayer" parent="layer 0/eyecandy"]
+motion_mirroring = Vector2(0, 640)
+
+[node name="Sprite2D" type="Sprite2D" parent="layer 0/eyecandy/bg_eyecandy"]
+self_modulate = Color(1, 1, 1, 0.15)
+position = Vector2(90, 320)
+texture = ExtResource("8_haidh")
 
 [connection signal="timeout" from="Camera2D/ShakeTimer" to="Camera2D" method="_on_timer_timeout"]

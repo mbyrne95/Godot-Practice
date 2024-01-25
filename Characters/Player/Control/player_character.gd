@@ -30,6 +30,8 @@ var collected_upgrades = []
 var upgrade_options = []
 @export_group("")
 
+var dialogue = preload("res://Characters/dialogue.tscn")
+
 #this is the offset OUTSIDE of screen bounds at which point player will wrap
 @export var wrap_offset = 7
 
@@ -92,6 +94,7 @@ func _physics_process(delta):
 		var angle_to = self.transform.x.angle_to(mouse_direction)
 		self.rotate(sign(angle_to) * min(delta * rotation_speed, abs(angle_to)))
 	else:
+		thrust.emitting = false
 		pass
 
 	screen_wrap()

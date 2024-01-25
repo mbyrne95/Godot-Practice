@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://dch3a41ac3yxc"]
+
+[ext_resource type="Script" path="res://Characters/Dialogue.gd" id="1_7h1sd"]
+
+[node name="Dialogue" type="Node2D"]
+script = ExtResource("1_7h1sd")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(40, 40)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -82.5
+offset_top = -20.0
+offset_right = 82.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 20)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="next_char" type="Timer" parent="."]
+
+[node name="next_message" type="Timer" parent="."]
+
+[connection signal="timeout" from="next_char" to="." method="_on_next_char_timeout"]
+[connection signal="timeout" from="next_message" to="." method="_on_next_message_timeout"]
