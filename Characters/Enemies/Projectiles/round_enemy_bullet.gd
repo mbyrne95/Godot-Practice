@@ -2,10 +2,14 @@ extends Area2D
 
 var velocity = 150
 @export var damage = 25
+@onready var color_green = $color_green
+@onready var color_red = $color_red
+var _green = false
 
 func _ready():
-	pass
-	#self.body_entered.connect(_on_body_entered)
+	if _green:
+		color_red.visible = false
+		color_green.visible = true
 
 func _process(delta):
 	var motion = Vector2(cos(self.rotation), sin(self.rotation)) * velocity

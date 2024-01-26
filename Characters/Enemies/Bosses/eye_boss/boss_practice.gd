@@ -6,16 +6,23 @@ var MAX_HEALTH
 @onready var wavey_bullet = preload("res://Characters/Enemies/Projectiles/wave_bullet.tscn")
 @onready var cease_scene = preload("res://Characters/Enemies/Bosses/eye_boss/cease_anim.tscn")
 @onready var dialogue = preload("res://Characters/dialogue.tscn")
+
+@onready var rotator_scene = preload("res://Characters/Enemies/rotator.tscn")
+
+@onready var aoe_scene = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.tscn")
+
 @onready var eye_follow = $"Eye Follow"
 var eye_follow_speed = 0.2
-var has_ceased = false
+var has_ceased = true
 
 @onready var rotate_shoot_timer = $"rotate shoot clock"
-@onready var rotator = %Rotator
+@onready  var rotator = $"Eye Follow/Rotator2"
 @onready var rotate_speed = 75
-@onready var rotate_spawn_count = 4
+@onready var rotate_spawn_count = 6
 @onready var radius = 5
 var is_rotate_shooting = false
+
+var spin = true
 
 var is_attacking
 var attack_list = [
@@ -42,18 +49,28 @@ func _ready():
 	player = get_tree().get_first_node_in_group("players")
 	#height = get_tree().get_first_node_in_group("spawn_points").get_node_or_null("boss_height")
 	
-	var step = 2 * PI / rotate_spawn_count
-	for i in range(rotate_spawn_count):
-		var spawn_point = Node2D.new()
-		var pos = Vector2(radius, 0).rotated(step * i)
-		spawn_point.position = pos
-		spawn_point.rotation = pos.angle()
-		rotator.add_child(spawn_point)
+	rotator.rotate_speed = 75
+	rotator.rotate_spawn_count = 6
+	rotator.radius = 5
 	
-func _process(delta):
+	
+#	var step = 2 * PI / rotate_spawn_count
+#	for i in range(rotate_spawn_count):
+#		var spawn_point = Node2D.new()
+#		var pos = Vector2(radius, 0).rotated(step * i)
+#		spawn_point.position = pos
+#		spawn_point.rotation = pos.angle()
+#		rotator.add_child(spawn_point)
+	
+func _process(_delta):
+	rotator.global_position = muzzle.global_position
 	#print(HEALTH)
-	var new_rotation = rotator.rotation_degrees + rotate_speed * delta
-	rotator.rotation_degrees = fmod(new_rotation, 360)
+#	if spin:
+#		var new_rotation = rotator.rotation_degrees + rotate_speed * delta
+#		rotator.rotation_degrees = fmod(new_rotation, 360)
+	if(player == null):
+		return
+	muzzle.look_at(player.global_position)
 	
 func _physics_process(_delta):
 	#print(HEALTH / MAX_HEALTH)
@@ -78,6 +95,7 @@ func _physics_process(_delta):
 				projectile_scene = wavey_bullet
 				SHOOT_CD = 0.06
 				rotate_speed = 100
+				rotator.rotate_speed = rotate_speed
 				var x = randi_range(0,1)
 				#var x = 0
 				if x == 0:
@@ -87,7 +105,7 @@ func _physics_process(_delta):
 			elif (HEALTH/MAX_HEALTH < 0.33)  && !is_attacking:
 				#print("low")
 				SHOOT_CD = 0.04
-				rotate_speed = 120
+				rotator.rotate_speed = rotate_speed
 				var x = randi_range(0,1)
 				#var x = 0
 				if x == 0:
@@ -103,22 +121,31 @@ func rotate_shoot():
 		for s in rotator.get_children():
 			var projectile = projectile_scene.instantiate()
 			projectile.velocity = 300
+			projectile.damage = projectile_damage
+			projectile._green = true
 			projectile_container.add_child(projectile)
 			projectile.position = s.global_position
 			projectile.rotation = s.global_rotation
 			
+			
 		await get_tree().create_timer(SHOOT_CD).timeout
 		shoot_on_cd = false
 		
-func rotate_shoot_init(time, time_between_attacks):
+func rotate_shoot_init(time, time_before_next_attack):
+#	var rotator = rotator_scene.instantiate()
+#	rotator.rotate_speed = rotate_speed
+#	rotator.rotate_spawn_count = rotate_spawn_count
+#	rotator.position = muzzle.global_position
+#	add_child(rotator)
 	is_rotate_shooting = true
 	is_attacking = true
 	#time of rotate shoot
 	await get_tree().create_timer(time).timeout
 	is_rotate_shooting = false
+	#rotator.queue_free()
 	
 	#time between being able to attack again
-	await get_tree().create_timer(time_between_attacks).timeout
+	await get_tree().create_timer(time_before_next_attack).timeout
 	is_attacking = false
 		
 func tentacle_attack(num_hits_flurry, num_flurry, time_before_next_attack):
@@ -169,7 +196,7 @@ func take_damage(amount : int):
 		sprite.material.set_shader_parameter("enabled", false)
 
 func _cease():
-	dmg_taken_ratio = 0.05
+	dmg_taken_ratio = 0.15
 	has_ceased = true
 	var dia = dialogue.instantiate()
 	dia.messages = ["Cease", "So, you have risen again", "I will reward your insolence", "with Death"]
@@ -183,6 +210,26 @@ func _cease():
 #	x.position = global_position
 #	get_tree().get_root().add_child(x)
 	var y = cease_scene.instantiate()
-	y.position = global_position
 	get_tree().get_first_node_in_group("parallax_layer").add_child(y)
+	y.position = global_position
 	player.can_move = false
+	await get_tree().create_timer(12.0).timeout
+	var z = projectile_scene.instantiate()
+	z.position = muzzle.global_position
+	z.global_rotation = muzzle.global_rotation
+	z._green = true
+	z.velocity = 75
+	z.damage = 999999
+	shoot(z)
+
+func _aoe_blast(time_before_next_attack):
+	is_attacking = true
+	var aoe = aoe_scene.instantiate()
+	aoe.global_position = global_position
+	aoe.scale = Vector2(2,2)
+	aoe.damage = projectile_damage
+	projectile_container.add_child(aoe)
+	
+	await get_tree().create_timer(time_before_next_attack).timeout
+	is_attacking = false
+

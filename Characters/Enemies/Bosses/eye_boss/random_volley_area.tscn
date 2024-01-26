@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctp531jcg5nro"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/Bosses/eye_boss/random_volley.gd" id="1_heuw2"]
+
+[node name="random_volley_area" type="Node2D"]
+script = ExtResource("1_heuw2")

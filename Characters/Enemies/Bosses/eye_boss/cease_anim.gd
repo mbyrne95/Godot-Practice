@@ -4,7 +4,7 @@ extends Node2D
 
 func _ready():
 	var tween = create_tween()
-	tween.tween_method(set_shader_value, 0.0, 1.5, 0.5)
+	tween.tween_method(set_shader_value, 0.0, 1.5, 0.8)
 	
 func set_shader_value(value):
 	color_rect.material.set_shader_parameter("diameter", value)

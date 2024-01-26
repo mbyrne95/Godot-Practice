@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c03r3yqogfy8t"]
+[gd_scene load_steps=13 format=3 uid="uid://c03r3yqogfy8t"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Projectiles/round_enemy_bullet.gd" id="1_tqvxx"]
 [ext_resource type="Texture2D" uid="uid://bvr4muynvepme" path="res://Art/My Art/Player/generic_player_projectile.png" id="2_7n7bh"]
@@ -38,6 +38,16 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
 
+[sub_resource type="Gradient" id="Gradient_fb1we"]
+offsets = PackedFloat32Array(0, 0.351504)
+colors = PackedColorArray(0.6, 0.898039, 0.313726, 0.337255, 0.6, 0.898039, 0.313726, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0u3x7"]
+gradient = SubResource("Gradient_fb1we")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
 [node name="round_enemy_bullet" type="Area2D"]
 collision_layer = 256
 collision_mask = 8
@@ -70,8 +80,12 @@ shadow_enabled = true
 shadow_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_4dwbn")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="color_red" type="Sprite2D" parent="."]
 texture = SubResource("GradientTexture2D_cmyqg")
+
+[node name="color_green" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("GradientTexture2D_0u3x7")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

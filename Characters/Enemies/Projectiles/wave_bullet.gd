@@ -5,6 +5,15 @@ var velocity = 50
 var time = 0
 var frequency = 20
 var amplitude = 150
+var _green = false
+
+@onready var color_green = $color_green
+@onready var color_red = $color_red
+
+func _ready():
+	if _green:
+		color_red.visible = false
+		color_green.visible = true
 
 func _process(delta):
 	time += delta

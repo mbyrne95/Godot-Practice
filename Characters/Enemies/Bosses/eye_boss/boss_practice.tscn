@@ -1,12 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://cl7scupb4uqak"]
+[gd_scene load_steps=20 format=3 uid="uid://cl7scupb4uqak"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Bosses/eye_boss/boss_practice.gd" id="1_18f3p"]
 [ext_resource type="Shader" uid="uid://ce166qi2u7sa2" path="res://Characters/Enemies/basic_enemy_hitflash.tres" id="2_pfnnj"]
-[ext_resource type="Texture2D" uid="uid://b7adxkua38lyt" path="res://Art/My Art/Enemies/boss practice/lich.png" id="3_oahyc"]
+[ext_resource type="Texture2D" uid="uid://hnpse8d2s1sl" path="res://Art/My Art/Enemies/boss practice/lich_1.png" id="3_y3qqy"]
 [ext_resource type="Shader" path="res://Characters/Enemies/static.gdshader" id="4_at560"]
 [ext_resource type="Texture2D" uid="uid://ds60hgk1aq0wn" path="res://Art/My Art/Enemies/boss practice/generic_ground_bg.png" id="4_yjbxt"]
 [ext_resource type="Texture2D" uid="uid://btpk36bysofxi" path="res://Art/My Art/Enemies/boss practice/generic_ground_fg.png" id="5_2rrkd"]
 [ext_resource type="Texture2D" uid="uid://dch03sjtb1b88" path="res://Art/My Art/Enemies/boss practice/eye_white_iris.png" id="5_a5eb5"]
+[ext_resource type="PackedScene" uid="uid://cur1m64lxl62f" path="res://Characters/Enemies/rotator.tscn" id="6_hdpv4"]
 [ext_resource type="Texture2D" uid="uid://blbl0741h7232" path="res://Art/My Art/Backgrounds/new_bg.png" id="8_35swo"]
 [ext_resource type="PackedScene" uid="uid://bogxv6mbgvwcr" path="res://Characters/Enemies/Bosses/eye_boss/boss_hp.tscn" id="9_lirbu"]
 [ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="10_pc3sf"]
@@ -19,7 +20,7 @@ shader_parameter/white_color = Color(1, 1, 1, 1)
 shader_parameter/tint = Color(1, 0, 0, 0.498039)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rtui0"]
-atlas = ExtResource("3_oahyc")
+atlas = ExtResource("3_y3qqy")
 region = Rect2(0, 9, 64, 39)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pl7d8"]
@@ -72,19 +73,14 @@ texture = SubResource("AtlasTexture_wq4hy")
 
 [node name="EyeMuzzle" type="Marker2D" parent="Eye Follow"]
 unique_name_in_owner = true
-visible = false
-position = Vector2(0, -182)
+position = Vector2(0, -171.555)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Eye Follow"]
 visible = false
 position = Vector2(0, -157)
 occluder = SubResource("OccluderPolygon2D_rfrc6")
 
-[node name="Rotator" type="Node2D" parent="Eye Follow"]
-unique_name_in_owner = true
-visible = false
-z_index = 1
-position = Vector2(0, -184)
+[node name="Rotator2" parent="Eye Follow" instance=ExtResource("6_hdpv4")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.61, 0)
