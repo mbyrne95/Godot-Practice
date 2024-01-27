@@ -87,7 +87,12 @@ position = Vector2(2.61, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_1aagu")
 
-[node name="rotate shoot clock" type="Timer" parent="."]
+[node name="ability timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="attack timer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [node name="GenericGroundBg" type="Sprite2D" parent="."]
@@ -145,3 +150,6 @@ height = 71.0
 [node name="Control" parent="." instance=ExtResource("10_pc3sf")]
 offset_top = -23.755
 offset_bottom = -23.755
+
+[connection signal="timeout" from="ability timer" to="." method="_on_ability_timer_timeout"]
+[connection signal="timeout" from="attack timer" to="." method="_on_attack_timer_timeout"]

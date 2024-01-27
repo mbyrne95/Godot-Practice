@@ -176,7 +176,6 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Control" parent="." instance=ExtResource("4_y4imo")]
-anchors_preset = 0
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
