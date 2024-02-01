@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://dokg8eiuysjq1"]
 
 [ext_resource type="Script" path="res://Characters/Player/DOTs/scorch_AOE.gd" id="1_b1dhp"]
-[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice.gdshader" id="2_a4rtl"]
-[ext_resource type="Shader" path="res://Characters/Enemies/Bosses/eye_boss/aoe_practice_inner.gdshader" id="3_w478j"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Projectiles/aoe_practice.gdshader" id="2_a4rtl"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Projectiles/aoe_practice_inner.gdshader" id="3_w478j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tgflm"]
 resource_local_to_scene = true
@@ -243,3 +243,8 @@ color = Color(1, 1, 1, 0)
 libraries = {
 "": SubResource("AnimationLibrary_6k47o")
 }
+
+[node name="lifespan" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="lifespan" to="." method="_on_lifespan_timeout"]

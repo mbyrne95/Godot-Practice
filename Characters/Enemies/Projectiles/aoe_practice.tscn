@@ -1,33 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://64rdr3s0efjp"]
+[gd_scene load_steps=10 format=3 uid="uid://i4lfr1lyrvrv"]
 
-[ext_resource type="Script" path="res://Characters/Player/Projectiles/ipecac/ipecac_aoe.gd" id="1_dvcti"]
-[ext_resource type="Shader" path="res://Characters/Enemies/Projectiles/aoe_practice.gdshader" id="2_l55qb"]
-[ext_resource type="Shader" path="res://Characters/Enemies/Projectiles/aoe_practice_inner.gdshader" id="3_uwqnx"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgflm"]
-resource_local_to_scene = true
-shader = ExtResource("2_l55qb")
-shader_parameter/color = Vector4(0.22, 0.58, 0.43, 1)
-shader_parameter/diameter = 0.04
-shader_parameter/thickness = 0.05
-shader_parameter/frequency = 0.0
-shader_parameter/phase = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ea5rk"]
-resource_local_to_scene = true
-shader = ExtResource("3_uwqnx")
-shader_parameter/color = Vector4(0.6, 0.9, 0.31, 1)
-shader_parameter/diameter = 0.0
-shader_parameter/thickness = 0.4
-shader_parameter/frequency = 0.0
-shader_parameter/phase = 0.0
+[ext_resource type="Script" path="res://Characters/Enemies/Projectiles/aoe_practice.gd" id="1_xlon5"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Projectiles/aoe_practice.gdshader" id="2_f8533"]
+[ext_resource type="Shader" path="res://Characters/Enemies/Projectiles/aoe_practice_inner.gdshader" id="3_nifkq"]
 
 [sub_resource type="Animation" id="Animation_xpui3"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:material:shader_parameter/diameter")
+tracks/0/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/diameter")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -63,7 +45,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ColorRect:material:shader_parameter/thickness")
+tracks/3/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/thickness")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -75,7 +57,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("ColorRect2:material:shader_parameter/thickness")
+tracks/4/path = NodePath("CanvasLayer/ColorRect2:material:shader_parameter/thickness")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -87,7 +69,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("ColorRect2:material:shader_parameter/diameter")
+tracks/5/path = NodePath("CanvasLayer/ColorRect2:material:shader_parameter/diameter")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -103,7 +85,7 @@ length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:material:shader_parameter/diameter")
+tracks/0/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/diameter")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -119,7 +101,7 @@ length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:material:shader_parameter/diameter")
+tracks/0/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/diameter")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -155,7 +137,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ColorRect:material:shader_parameter/thickness")
+tracks/3/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/thickness")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -167,7 +149,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("ColorRect2:material:shader_parameter/thickness")
+tracks/4/path = NodePath("CanvasLayer/ColorRect2:material:shader_parameter/thickness")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -179,7 +161,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("ColorRect2:material:shader_parameter/diameter")
+tracks/5/path = NodePath("CanvasLayer/ColorRect2:material:shader_parameter/diameter")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -196,11 +178,42 @@ _data = {
 "expanding_wave_2": SubResource("Animation_krrem")
 }
 
-[node name="aoe_practice" type="Node2D"]
-script = ExtResource("1_dvcti")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgflm"]
+resource_local_to_scene = true
+shader = ExtResource("2_f8533")
+shader_parameter/color = Vector4(1, 0, 0, 1)
+shader_parameter/diameter = 0.04
+shader_parameter/thickness = 0.05
+shader_parameter/frequency = 0.0
+shader_parameter/phase = 0.0
 
-[node name="ColorRect" type="ColorRect" parent="."]
-modulate = Color(0.215686, 0.580392, 0.431373, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ea5rk"]
+resource_local_to_scene = true
+shader = ExtResource("3_nifkq")
+shader_parameter/color = Vector4(0.9, 0.7, 0.9, 1)
+shader_parameter/diameter = 0.0
+shader_parameter/thickness = 0.4
+shader_parameter/frequency = 0.0
+shader_parameter/phase = 0.0
+
+[node name="aoe_practice" type="Node2D"]
+script = ExtResource("1_xlon5")
+
+[node name="inner" type="Marker2D" parent="."]
+
+[node name="outer" type="Marker2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 1
+libraries = {
+"": SubResource("AnimationLibrary_6k47o")
+}
+
+[node name="lifespan" type="Timer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 top_level = true
 material = SubResource("ShaderMaterial_tgflm")
 use_parent_material = true
@@ -218,7 +231,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.356863, 1, 1, 0)
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
 top_level = true
 material = SubResource("ShaderMaterial_ea5rk")
 use_parent_material = true
@@ -236,11 +249,4 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 1, 1, 0)
 
-[node name="inner" type="Marker2D" parent="."]
-
-[node name="outer" type="Marker2D" parent="."]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_6k47o")
-}
+[connection signal="timeout" from="lifespan" to="." method="_on_lifespan_timeout"]

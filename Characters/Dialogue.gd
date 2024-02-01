@@ -13,8 +13,8 @@ var current_char = 0
 @onready var next_message = $next_message
 @onready var label = $Label
 
-func _process(_delta):
-	print(global_position)
+#func _process(_delta):
+#	print(global_position)
 	
 func start_dialogue():
 	current_message = 0

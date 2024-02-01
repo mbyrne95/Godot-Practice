@@ -11,4 +11,4 @@ script = ExtResource("1_8eyft")
 script = ExtResource("3_jnxo0")
 
 [node name="Boss Practice" parent="." instance=ExtResource("3_xorm0")]
-position = Vector2(90, 286)
+position = Vector2(90, 277)

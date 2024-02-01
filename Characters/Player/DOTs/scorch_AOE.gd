@@ -15,6 +15,7 @@ func _ready():
 	has_started = false
 	outer = $ColorRect
 	inner = $ColorRect2
+	lifespan = $lifespan
 	#print("ring started")
 	#ring_scale = scale 
 	outer_color = Vector4(1,0,0,1)
@@ -42,10 +43,10 @@ func _process(_delta):
 	dmg_children(enemy_container)
 	
 	if !has_started:
+		has_started = true
 		anim_player.play("expanding_wave_2")
-		await get_tree().create_timer(5 / anim_player.speed_scale).timeout
-		anim_player.play("RESET")
-		queue_free()
+		lifespan.wait_time = float(5.0 / timescale)
+		lifespan.start()
 		
 func dmg_children(enemy_array):
 	if enemy_array.get_child_count() == 0 || enemy_array.get_child(0) == null:
@@ -125,3 +126,7 @@ func dmg_children(enemy_array):
 					var scorch = scorch_dot.instantiate()
 					scorch.num_stacks +=4
 					i.add_child(scorch)
+
+func _on_lifespan_timeout():
+	anim_player.play("RESET")
+	queue_free()

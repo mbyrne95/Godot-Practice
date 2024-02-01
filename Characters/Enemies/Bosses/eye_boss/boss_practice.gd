@@ -9,7 +9,7 @@ var MAX_HEALTH
 
 @onready var rotator_scene = preload("res://Characters/Enemies/rotator.tscn")
 
-@onready var aoe_scene = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.tscn")
+@onready var aoe_scene = preload("res://Characters/Enemies/Bosses/eye_boss/boss_aoe.tscn")
 
 @onready var sliding_point_scene = preload("res://Characters/Enemies/Bosses/eye_boss/sliding_point.tscn")
 @onready var volley_container = $volley_container
@@ -75,7 +75,7 @@ func _ready():
 	Globs.children_allowed_to_move.connect(_connect_allowed_to_move)
 	#enemy_container.add_child(self)
 	sprite = $"Eye Follow/Sprite2D"
-	MAX_HEALTH = 1000.0
+	MAX_HEALTH = 50000.0
 	HEALTH = MAX_HEALTH
 	SPEED = 20
 	muzzle = %EyeMuzzle
@@ -123,6 +123,10 @@ func _process(_delta):
 				_cease_light()
 				_ability_timer_init(0.8)
 			attack_list.rotate_shoot:
+				if hp_state == hp_state_list.mid:
+					_aoe_blast(rotate_shoot_time / 2.0)
+				elif hp_state == hp_state_list.low:
+					_aoe_blast(rotate_shoot_time / 4.0)
 				rotate_shoot()
 				_ability_timer_init(rotate_shoot_time)
 			attack_list.column_attack:
@@ -130,6 +134,10 @@ func _process(_delta):
 				tentacle_attack(hits_in_flurry,total_flurries,time_between_hits,time_between_flurries)
 				_ability_timer_init((hits_in_flurry * time_between_hits) + (total_flurries * time_between_flurries))
 			attack_list.volley_attack:
+				if hp_state == hp_state_list.mid:
+					_aoe_blast(volley_shoot_time / 2.0)
+				elif hp_state == hp_state_list.low:
+					_aoe_blast(volley_shoot_time / 4.0)
 				_random_volley()
 				_ability_timer_init(volley_shoot_time)
 
@@ -156,11 +164,14 @@ func tentacle_attack(num_hits_flurry, num_flurry, time_bw_hits, time_bw_flurries
 	for i in range(num_flurry):
 		var previous_x= -1000
 		for j in range(num_hits_flurry):
+
 			var t = tentacle_projectile.instantiate()
 			projectile_container.add_child(t)
 			var new_position = randf_range(10,170)
+
 			while(new_position < previous_x+offset && new_position > previous_x-offset):
 				new_position = randf_range(10,170)
+
 			previous_x = new_position
 			t.global_position = Vector2(new_position, 320)
 			#print(t.global_position)
@@ -273,19 +284,18 @@ func _cease_light():
 	y.position = global_position
 	await get_tree().create_timer(1).timeout
 	dmg_taken_ratio = temp
-	
 
-func _aoe_blast():
+func _aoe_blast(value):
 	if !aoe_on_cd:
 		aoe_on_cd = true
 		var aoe = aoe_scene.instantiate()
 		aoe.global_position = global_position
-		aoe.scale = Vector2(1,1)
-		aoe.damage = projectile_damage
+		aoe.scale = Vector2(2,2)
+		#aoe.damage = projectile_damage
 		projectile_container.add_child(aoe)
 	
-		await get_tree().create_timer(AOE_CD).timeout
-		shoot_on_cd = false
+		await get_tree().create_timer(value).timeout
+		aoe_on_cd = false
 
 func _random_volley():
 	if !volley_shoot_on_cd:
@@ -293,7 +303,7 @@ func _random_volley():
 		for i in volley_container.get_children():
 			var projectile = volley_projectile_scene.instantiate()
 			projectile.damage = projectile_damage
-			projectile.velocity = volley_projectile_vel + randf_range(-50, 50)
+			projectile.velocity = volley_projectile_vel + randf_range(-20, 20)
 			projectile._green = true
 			projectile_container.add_child(projectile)
 			projectile.position = i.global_position
@@ -320,10 +330,10 @@ func _ability_timer_init(ability_time):
 		ability_duration_timer.wait_time = ability_time
 		ability_duration_timer.start()
 		
-func _attack_timer_init(attack_time):
+func _attack_timer_init(time_bw_attacks):
 	if !attack_timer_initialized:
 		attack_timer_initialized = true
-		attack_cd_timer.wait_time = attack_time
+		attack_cd_timer.wait_time = time_bw_attacks
 		attack_cd_timer.start()
 
 func _on_ability_timer_timeout():
@@ -331,7 +341,7 @@ func _on_ability_timer_timeout():
 	ability_timer_initialized = false
 
 func _on_attack_timer_timeout():
-	#start at 4, because 0, 1, 2, and 3 are attacks that shouldn't be in rotation
+	#start at 4, because 0, 1, 2, and 3 are reserved and shouldn't be in rotation
 	#five is in development
 	#attack_state = attack_list.volley_attack
 	attack_state = attack_list.values()[randi_range(4,attack_list.size() - 1)]

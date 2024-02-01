@@ -120,7 +120,7 @@ height = 12.0
 
 [node name="dashing_enemy" type="CharacterBody2D" groups=["enemies"]]
 visibility_layer = 3
-collision_layer = 80
+collision_layer = 16
 collision_mask = 0
 script = ExtResource("1_t7mhi")
 time_between_dashes = 2
@@ -164,7 +164,7 @@ shape = SubResource("CapsuleShape2D_qsyij")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 visible = false
-collision_layer = 0
+collision_layer = 64
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(-3, 0)

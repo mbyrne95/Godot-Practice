@@ -10,7 +10,7 @@ var has_entered_arena = false
 var direction
 #@onready var rigid_body = $RigidBody2D
 var target_acquired = false
-var shockwave = preload("res://Characters/Enemies/Bosses/eye_boss/aoe_practice.tscn")
+var shockwave = preload("res://Characters/Enemies/Projectiles/aoe_practice.tscn")
 var shockwave_timeout = 0.05
 var shockwave_ready = true
 

@@ -55,7 +55,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.0
 shader_parameter/vignette_opacity = 0.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6l68g"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uu4cr"]
 resource_local_to_scene = true
 blend_mode = 1
 
@@ -66,7 +66,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1e4sn"]
 curve = SubResource("Curve_6oof4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xt7ye"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cqys1"]
 resource_local_to_scene = true
 lifetime_randomness = 0.25
 emission_shape = 3
@@ -91,7 +91,7 @@ turbulence_influence_max = 0.15
 offsets = PackedFloat32Array(0, 0.0775316, 0.0996835, 0.802215)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196, 0.299127, 0.299127, 0.299127, 0.146631, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_8s0n5"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fmnt0"]
 resource_local_to_scene = true
 gradient = SubResource("Gradient_0ewwu")
 width = 32
@@ -134,7 +134,9 @@ position = Vector2(90, -9.995)
 rotation = 1.5708
 
 [node name="Level Bounds" type="StaticBody2D" parent="." groups=["level_bounds"]]
+visible = false
 collision_mask = 18
+collision_priority = 10.0
 
 [node name="top" type="CollisionShape2D" parent="Level Bounds" groups=["bound_top"]]
 position = Vector2(90, -110)
@@ -197,10 +199,10 @@ position = Vector2(160, 320)
 [node name="floating_lights" parent="layer 0/particles" instance=ExtResource("6_gymfy")]
 self_modulate = Color(5, 5, 1.11, 1)
 light_mask = 1
-material = SubResource("CanvasItemMaterial_6l68g")
+material = SubResource("CanvasItemMaterial_uu4cr")
 position = Vector2(15, 320)
-process_material = SubResource("ParticleProcessMaterial_xt7ye")
-texture = SubResource("GradientTexture2D_8s0n5")
+process_material = SubResource("ParticleProcessMaterial_cqys1")
+texture = SubResource("GradientTexture2D_fmnt0")
 
 [node name="eyecandy" type="ParallaxBackground" parent="layer 0"]
 layer = -1
