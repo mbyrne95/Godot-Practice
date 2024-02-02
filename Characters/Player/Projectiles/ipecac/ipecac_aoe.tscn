@@ -244,3 +244,5 @@ color = Color(1, 1, 1, 0)
 libraries = {
 "": SubResource("AnimationLibrary_6k47o")
 }
+
+[node name="Timer" type="Timer" parent="."]

@@ -22,12 +22,14 @@ var dmg_ratio = 1
 
 signal healthChanged(percentHP)
 
-@export_subgroup("Leveling")
+@export_subgroup("UI")
 @onready var level_panel = %level_panel
 @onready var upgrade_options_container = %upgrade_options
 @onready var item_options = preload("res://Characters/Player/UI/item_option.tscn")
 var collected_upgrades = []
 var upgrade_options = []
+@onready var pause_menu = $CanvasLayer/PauseMenu
+var paused = false
 @export_group("")
 
 var dialogue = preload("res://Characters/dialogue.tscn")
@@ -73,15 +75,20 @@ var input = Vector2.ZERO
 var mouse_direction
 
 func _ready():
+	pause_menu.pause_signal.connect(pauseMenu)
 	Globs.player_can_move.connect(_can_move)
 	Globs.level_player.connect(level_up)
 	mouse_direction = (get_global_mouse_position() - global_position)
 
 func _process(_delta):
 	#shooting and ui is handled in respective nodes
+	if Input.is_action_just_pressed("pause"):
+		pauseMenu()
+
 	if can_move:
 		if Input.is_action_just_pressed("debug"):
 			level_up()
+		
 
 func _physics_process(delta):
 	#print(get_global_mouse_position())
@@ -217,7 +224,7 @@ func screen_wrap():
 	if position.x >= get_viewport_rect().size.x + wrap_offset:
 		position.x = 0
 
-###LEVELING
+### UI ####
 ###########
 
 #this is adding the options to the panel, and making panel visible
@@ -379,6 +386,16 @@ func match_item_upgrade(upgrade):
 			weapon.projectile_damage += 20
 		"dash_cooldown_1":
 			blink._cd = blink._cd * .90
+
+func pauseMenu():
+	if paused:
+		print("unpause")
+		get_tree().paused = false
+		pause_menu.hide()
+	else:
+		get_tree().paused = true
+		pause_menu.show()
+	paused = !paused
 
 ###TAKING DAMAGE
 ################

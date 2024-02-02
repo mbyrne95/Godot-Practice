@@ -163,5 +163,13 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_rsb3r")
 debug_color = Color(0.992157, 0.0784314, 0, 0.419608)
 
+[node name="column_bw_hit_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="column_bw_flurry_timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="ability timer" to="." method="_on_ability_timer_timeout"]
 [connection signal="timeout" from="attack timer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="column_bw_hit_timer" to="." method="_on_column_bw_hit_timer_timeout"]
+[connection signal="timeout" from="column_bw_flurry_timer" to="." method="_on_column_bw_flurry_timer_timeout"]

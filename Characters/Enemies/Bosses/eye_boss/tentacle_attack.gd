@@ -8,16 +8,13 @@ var has_started = false
 @onready var collision = $CollisionShape2D
 @onready var laser = $Sprite2D
 @onready var warning = $AnimatedSprite2D
+@onready var warning_timer = $Timer
 
 func _ready():
 	warning.visible = true
 	warning.play("default")
-	await get_tree().create_timer(1.0).timeout
-	warning.visible = false
-	collision.disabled = false
-	laser.visible = true
-	laser.play("default")
-	
+	warning_timer.wait_time = 1.0
+	warning_timer.start()
 
 #func _on_body_entered(body):
 #	if body.is_in_group("players"):
@@ -31,3 +28,10 @@ func _on_area_entered(area):
 
 func _on_sprite_2d_animation_finished():
 	queue_free()
+
+
+func _on_timer_timeout():
+	warning.visible = false
+	collision.disabled = false
+	laser.visible = true
+	laser.play("default")

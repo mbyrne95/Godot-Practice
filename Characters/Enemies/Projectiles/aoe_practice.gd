@@ -14,7 +14,7 @@ var outer
 var inner
 var timescale = 1
 var player
-@onready var lifespan = $lifespan
+var lifespan
 
 func _ready():
 	player = get_tree().get_first_node_in_group("players")
@@ -30,6 +30,8 @@ func _ready():
 	inner.material.set_shader_parameter("Color",inner_color)
 	inner.position = global_position - Vector2(160,160)
 	inner.scale = scale
+	
+	lifespan = $lifespan
 	
 	anim_player.speed_scale = timescale
 	

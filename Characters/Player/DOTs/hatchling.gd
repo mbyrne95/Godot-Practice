@@ -33,7 +33,7 @@ var new_target_pos = false
 @onready var timer = $Timer
 
 func _ready():
-	print("hatchling alive")
+	#print("hatchling alive")
 	timer.start()
 	viewport_size_x = get_viewport_rect().size.x
 	viewport_size_y = get_viewport_rect().size.y

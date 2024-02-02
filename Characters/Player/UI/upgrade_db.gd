@@ -164,7 +164,7 @@ const UPGRADES = {
 	},
 	"range_up_size_down": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
-		"displayname": "Mini Mush+",
+		"displayname": "Mini Mush",
 		"detail": "Range up, size down",
 		"prerequisite": [],
 		"rarity": 0,
@@ -173,9 +173,9 @@ const UPGRADES = {
 	"range_up_speed_up": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
 		"displayname": "Roid Rage",
-		"detail": "Range up, size speed up",
+		"detail": "Range up, speed up",
 		"prerequisite": [],
-		"rarity": 0,
+		"rarity": 1,
 		"type": "dmg"
 	},
 	"range_up_damage_up": {
@@ -183,7 +183,7 @@ const UPGRADES = {
 		"displayname": "Synthoil",
 		"detail": "Range up, damage up",
 		"prerequisite": [],
-		"rarity": 0,
+		"rarity": 1,
 		"type": "dmg"
 	},
 	"dash_cooldown_1": {

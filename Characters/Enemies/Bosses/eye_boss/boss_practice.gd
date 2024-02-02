@@ -49,6 +49,11 @@ var hits_in_flurry = 2
 var total_flurries = 2
 var time_between_hits = 0.15
 var time_between_flurries = 1.5
+var current_hit = 0
+var current_flurry = 0
+var previous_hit_loc = -1000
+@onready var column_bw_hit_timer = $column_bw_hit_timer
+@onready var column_bw_flurry_timer = $column_bw_flurry_timer
 
 @onready var rotate_speed = 75
 var rotate_shoot_projectile_vel = 150
@@ -131,7 +136,8 @@ func _process(_delta):
 				_ability_timer_init(rotate_shoot_time)
 			attack_list.column_attack:
 				attack_state = attack_list.one_shot
-				tentacle_attack(hits_in_flurry,total_flurries,time_between_hits,time_between_flurries)
+				column_attack()
+				#tentacle_attack(hits_in_flurry,total_flurries,time_between_hits,time_between_flurries)
 				_ability_timer_init((hits_in_flurry * time_between_hits) + (total_flurries * time_between_flurries))
 			attack_list.volley_attack:
 				if hp_state == hp_state_list.mid:
@@ -140,7 +146,6 @@ func _process(_delta):
 					_aoe_blast(volley_shoot_time / 4.0)
 				_random_volley()
 				_ability_timer_init(volley_shoot_time)
-
 
 func rotate_shoot():
 	if !shoot_on_cd:
@@ -158,28 +163,53 @@ func rotate_shoot():
 		await get_tree().create_timer(SHOOT_CD).timeout
 		shoot_on_cd = false
 		
-func tentacle_attack(num_hits_flurry, num_flurry, time_bw_hits, time_bw_flurries):
-#	is_attacking = true
+#func tentacle_attack(num_hits_flurry, num_flurry, time_bw_hits, time_bw_flurries):
+##	is_attacking = true
+#	var offset = 12
+#	for i in range(num_flurry):
+#		var previous_x= -1000
+#		for j in range(num_hits_flurry):
+#
+#			var t = tentacle_projectile.instantiate()
+#			projectile_container.add_child(t)
+#			var new_position = randf_range(10,170)
+#
+#			while(new_position < previous_x+offset && new_position > previous_x-offset):
+#				new_position = randf_range(10,170)
+#
+#			previous_x = new_position
+#			t.global_position = Vector2(new_position, 320)
+#			#print(t.global_position)
+#
+#			#time between attacks in a flurry
+#			await get_tree().create_timer(time_bw_hits).timeout
+#		#time between flurries
+#		await get_tree().create_timer(time_bw_flurries).timeout
+		
+func column_attack():
 	var offset = 12
-	for i in range(num_flurry):
-		var previous_x= -1000
-		for j in range(num_hits_flurry):
-
+	if current_flurry < total_flurries:
+		if current_hit < hits_in_flurry:
 			var t = tentacle_projectile.instantiate()
 			projectile_container.add_child(t)
 			var new_position = randf_range(10,170)
 
-			while(new_position < previous_x+offset && new_position > previous_x-offset):
+			while(new_position < previous_hit_loc+offset && new_position > previous_hit_loc-offset):
 				new_position = randf_range(10,170)
 
-			previous_x = new_position
+			previous_hit_loc = new_position
 			t.global_position = Vector2(new_position, 320)
-			#print(t.global_position)
-
-			#time between attacks in a flurry
-			await get_tree().create_timer(time_bw_hits).timeout
-		#time between flurries
-		await get_tree().create_timer(time_bw_flurries).timeout
+			column_bw_hit_timer.wait_time = time_between_hits
+			current_hit += 1
+			column_bw_hit_timer.start()
+		else:
+			current_hit = 0
+			current_flurry += 1
+			column_bw_flurry_timer.wait_time = time_between_flurries
+			column_bw_flurry_timer.start()
+	else:
+		current_hit = 0
+		current_flurry = 0
 
 func rotateToTarget(target, delta):
 	var direction = (target.global_position - eye_follow.global_position)
@@ -343,6 +373,13 @@ func _on_ability_timer_timeout():
 func _on_attack_timer_timeout():
 	#start at 4, because 0, 1, 2, and 3 are reserved and shouldn't be in rotation
 	#five is in development
-	#attack_state = attack_list.volley_attack
-	attack_state = attack_list.values()[randi_range(4,attack_list.size() - 1)]
+	attack_state = attack_list.column_attack
+	#attack_state = attack_list.values()[randi_range(4,attack_list.size() - 1)]
 	attack_timer_initialized = false
+
+func _on_column_bw_hit_timer_timeout():
+	column_attack()
+
+
+func _on_column_bw_flurry_timer_timeout():
+	column_attack()

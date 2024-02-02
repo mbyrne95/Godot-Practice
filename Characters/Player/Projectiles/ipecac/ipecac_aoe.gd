@@ -26,13 +26,14 @@ func _ready():
 	#inner.material.set_shader_param("Color",inner_color)
 	inner.position = global_position - Vector2(160,160)
 	inner.scale = scale
-	
+	lifespan = $Timer
 	#print(inner.position)
 	
 	anim_player.speed_scale = timescale
 
 func _process(_delta):
-
+	if player == null:
+		return
 	#var player_position = player.global_position
 	var player_dist = position.distance_to(player.global_position)
 #	print("player global = ", player.global_position)
@@ -55,10 +56,10 @@ func _process(_delta):
 	dmg_children(enemy_container)
 	
 	if !has_started:
+		has_started = true
 		anim_player.play("expanding_wave_2")
-		await get_tree().create_timer(5 / anim_player.speed_scale).timeout
-		anim_player.play("RESET")
-		queue_free()
+		lifespan.wait_time = 5 / anim_player.speed_scale
+		lifespan.start()
 		
 func dmg_children(enemy_array):
 	if enemy_array.get_child_count() == 0 || enemy_array.get_child(0) == null:
