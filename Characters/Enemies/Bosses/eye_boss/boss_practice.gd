@@ -96,7 +96,10 @@ func _ready():
 	
 	hp_ratio = HEALTH / MAX_HEALTH
 	hp_state = hp_state_list.high
-	attack_state = attack_list.cease_light
+	if player.player_dies_to_lich == true:
+		attack_state = attack_list.stop_player_movement
+	else:
+		attack_state = attack_list.cease_light
 	
 	for i in num_points_in_volley:
 		var point = sliding_point_scene.instantiate()
@@ -373,13 +376,12 @@ func _on_ability_timer_timeout():
 func _on_attack_timer_timeout():
 	#start at 4, because 0, 1, 2, and 3 are reserved and shouldn't be in rotation
 	#five is in development
-	attack_state = attack_list.column_attack
-	#attack_state = attack_list.values()[randi_range(4,attack_list.size() - 1)]
+	#attack_state = attack_list.column_attack
+	attack_state = attack_list.values()[randi_range(4,attack_list.size() - 1)]
 	attack_timer_initialized = false
 
 func _on_column_bw_hit_timer_timeout():
 	column_attack()
-
 
 func _on_column_bw_flurry_timer_timeout():
 	column_attack()

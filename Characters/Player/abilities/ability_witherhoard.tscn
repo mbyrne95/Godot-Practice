@@ -13,7 +13,7 @@ size = Vector2(2, 2)
 
 [sub_resource type="Gradient" id="Gradient_pudhs"]
 offsets = PackedFloat32Array(0, 0.370301)
-colors = PackedColorArray(0.368627, 0.831373, 0.847059, 0.278431, 0, 0, 0, 0)
+colors = PackedColorArray(0.498039, 0.498039, 0.498039, 0.341176, 0.498039, 0.498039, 0.498039, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ilygs"]
 gradient = SubResource("Gradient_pudhs")

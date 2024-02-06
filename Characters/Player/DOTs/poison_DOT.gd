@@ -23,7 +23,7 @@ func _process(_delta):
 
 func _poison_dmg():
 	if !poison_on_cd:
-		print("poison dmg")
+		#print("poison dmg")
 		poison_on_cd = true
 		parent.take_damage(poison_dmg)
 		

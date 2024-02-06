@@ -1,11 +1,14 @@
 extends Node2D
 
-@onready var player = $PlayerCharacter
+#@onready var player = $PlayerCharacter
+var player_scene = preload("res://Characters/Player/PlayerCharacter.tscn")
 @onready var enemy_container = $EnemyContainer
 @onready var foreground_parallax = $"layer 1/foreground parallax"
 @onready var background = $"layer 0/backgrounds/background"
 @onready var bg_eyecandy = $"layer 0/eyecandy/bg_eyecandy"
+@onready var player_spawn_location = $player_spawn_point
 var player_ready = false
+var player_character
 
 @export var mid_speed = 3
 @export var low_speed = 1.5
@@ -18,6 +21,7 @@ var current_wave
 var wave_array
 
 var first_wave = preload("res://Levels/PracticeLevel/Practice Enemy Wave/practice_wave.tscn")
+var easy_wave = preload("res://Levels/PracticeLevel/easy waves/three wall guys.tscn")
 
 var can_spawn_new_wave = true
 
@@ -30,10 +34,19 @@ var b2 = 1
 
 signal wave_complete_signal()
 
+func _ready():
+	player_character = player_scene.instantiate()
+	player_character.global_position = player_spawn_location.global_position
+	add_child(player_character)
+	Globs.parallax_motion_stop.connect(stop_foreground_motion)
+	Globs.wave_complete.connect(wave_is_complete)
+	wave_array = [first_wave, first_wave]
+	current_wave = 0
+
 func _process(delta):	
 	if !player_ready:
-		player.position.y += 25*delta
-		if player.position.y > 30:
+		player_character.global_position.y += 25*delta
+		if player_character.global_position.y > 30:
 			Globs.player_can_move.emit()
 			player_ready = true
 			parallax_motion = true
@@ -57,11 +70,7 @@ func _process(delta):
 		wave_spawner()
 		can_spawn_new_wave = false
 	
-func _ready():
-	Globs.parallax_motion_stop.connect(stop_foreground_motion)
-	Globs.wave_complete.connect(wave_is_complete)
-	wave_array = [first_wave, first_wave]
-	current_wave = 0
+
 	
 func wave_spawner():
 	var new_wave = wave_array[current_wave].instantiate()
@@ -80,13 +89,13 @@ func wave_is_complete():
 	#end of stage process		
 	else:
 		can_spawn_new_wave = false
-		end_of_stage()
+		#end_of_stage()
 
 func stop_foreground_motion():
 	parallax_motion = false
 
-func end_of_stage():
-	var tween_rot = create_tween()
-	tween_rot.tween_property(player, "rotation", 90, 0.2)
-	var tween_pos = create_tween()
-	tween_pos.tween_property(player, "position", Vector2(90,300), 0.5)
+#func end_of_stage():
+#	var tween_rot = create_tween()
+#	tween_rot.tween_property(player, "rotation", 90, 0.2)
+#	var tween_pos = create_tween()
+#	tween_pos.tween_property(player, "position", Vector2(90,300), 0.5)

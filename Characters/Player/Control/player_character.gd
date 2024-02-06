@@ -74,6 +74,8 @@ var input = Vector2.ZERO
 
 var mouse_direction
 
+var player_dies_to_lich = false
+
 func _ready():
 	pause_menu.pause_signal.connect(pauseMenu)
 	Globs.player_can_move.connect(_can_move)
@@ -81,9 +83,10 @@ func _ready():
 	mouse_direction = (get_global_mouse_position() - global_position)
 
 func _process(_delta):
+	#print(global_position)
 	#shooting and ui is handled in respective nodes
 	if Input.is_action_just_pressed("pause"):
-		pauseMenu()
+		pauseMenu(false)
 
 	if can_move:
 		if Input.is_action_just_pressed("debug"):
@@ -387,15 +390,21 @@ func match_item_upgrade(upgrade):
 		"dash_cooldown_1":
 			blink._cd = blink._cd * .90
 
-func pauseMenu():
-	if paused:
-		print("unpause")
-		get_tree().paused = false
-		pause_menu.hide()
+func pauseMenu(deathPause):
+	if !deathPause:
+		if paused:
+			#print("unpause")
+			get_tree().paused = false
+			pause_menu.hide()
+		else:
+			get_tree().paused = true
+			pause_menu.show()
+		paused = !paused
 	else:
 		get_tree().paused = true
 		pause_menu.show()
-	paused = !paused
+		pause_menu.show_resume = false
+		paused = !paused
 
 ###TAKING DAMAGE
 ################
@@ -461,7 +470,7 @@ func death():
 	$PlayerUI.visible = false
 	#$LightOccluder2D.visible = false
 	await get_tree().create_timer(1).timeout
-	queue_free()
+	pauseMenu(true)
 
 func _can_move():
 	can_move = true

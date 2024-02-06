@@ -31,6 +31,10 @@ texture = SubResource("GradientTexture2D_fimvc")
 
 [node name="Timer" type="Timer" parent="."]
 
+[node name="ticket_timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="witherhoard_hitbox" to="." method="_on_witherhoard_hitbox_body_entered"]
 [connection signal="body_exited" from="witherhoard_hitbox" to="." method="_on_witherhoard_hitbox_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="ticket_timer" to="." method="_on_ticket_timer_timeout"]

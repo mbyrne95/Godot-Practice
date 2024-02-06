@@ -1,7 +1,7 @@
 extends player_projectileclass
 
 func _ready():
-	SPEED = 700
+	SPEED = 200
 	DAMAGE = 100
 	sprite = $Sprite2D
 	BULLET_RANGE = 150

@@ -68,7 +68,7 @@ func _shoot_witherhoard_projectile():
 	var projectile = witherhoard_scene.instantiate()
 	#projectile_init(projectile)
 	projectile.global_position = ability_muz.global_position
-	projectile.rotation = ability_muz.global_rotation	
+	projectile.rotation = ability_muz.global_rotation
 	projectile_container.add_child(projectile)
 
 func cooldown_timer_init():

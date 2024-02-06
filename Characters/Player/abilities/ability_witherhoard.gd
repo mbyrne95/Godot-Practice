@@ -3,8 +3,8 @@ extends player_projectileclass
 var witherhoard_aoe = preload("res://Characters/Player/abilities/withhoard_aoe.tscn")
 
 func _ready():
-	SPEED = 250
-	DAMAGE = 100
+	SPEED = 75
+	DAMAGE = 25
 	sprite = $Sprite2D
 	BULLET_RANGE = 150
 	player = get_tree().get_first_node_in_group("players")

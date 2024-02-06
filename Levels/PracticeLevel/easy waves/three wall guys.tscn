@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1ihrmowy8joy"]
+
+[ext_resource type="Script" path="res://Levels/PracticeLevel/Practice Enemy Wave/wave_logic.gd" id="1_4u4aq"]
+[ext_resource type="Script" path="res://Characters/Player/PlayerOrbitalTransform.gd" id="2_wxkfg"]
+[ext_resource type="PackedScene" uid="uid://dgcer7ec27djg" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/basic_enemy.tscn" id="3_kefpd"]
+[ext_resource type="PackedScene" uid="uid://bptebg3reglrb" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/vertical_variant/basic_enemy_vertical.tscn" id="4_x8hcu"]
+
+[node name="practice_wave" type="Node2D"]
+script = ExtResource("1_4u4aq")
+
+[node name="PlayerOrbitalTransform" type="Node2D" parent="." groups=["player_orbital_transform"]]
+script = ExtResource("2_wxkfg")
+
+[node name="basic_enemy" parent="." instance=ExtResource("3_kefpd")]
+position = Vector2(85, 292)
+
+[node name="basic_enemy_left_wall" parent="." instance=ExtResource("4_x8hcu")]
+position = Vector2(15, 230)
+
+[node name="basic_enemy_left_wall2" parent="." instance=ExtResource("4_x8hcu")]
+position = Vector2(165, 230)
+rotation = 3.14159
