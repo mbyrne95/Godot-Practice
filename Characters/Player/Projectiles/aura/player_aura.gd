@@ -15,11 +15,13 @@ var apply_jolt = false
 @onready var collision = $Area2D
 
 var jolt_dot = preload("res://Characters/Player/DOTs/jolt.tscn")
+var jolt_trace = false
 
 func _ready():
 	parent = get_parent()
 	parent.aura_upgrade.connect(increase_size)
 	parent.aura_jolt.connect(apply_jolt_init)
+	parent.aura_ionic_trace.connect(spawn_traces)
 
 func _process(_delta):
 	if !has_ticked:
@@ -40,6 +42,7 @@ func tick_rate():
 					j.restart_timer()
 			if !i_has_jolt:
 				var jolt = jolt_dot.instantiate()
+				jolt.spawn_traces = jolt_trace
 				i.add_child(jolt)
 	await get_tree().create_timer(tick_cd).timeout
 	has_ticked = false
@@ -61,3 +64,6 @@ func increase_size():
 
 func apply_jolt_init():
 	apply_jolt = true
+	
+func spawn_traces():
+	jolt_trace = true

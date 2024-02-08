@@ -130,6 +130,14 @@ const UPGRADES = {
 		"rarity": 2,
 		"type": "dmg"
 	},
+	"aura_armor_combo": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Spark of Ions",
+		"detail": "Jolted targets periodically spawn an ionic trace that heals the player",
+		"prerequisite": ["aura_3", "armor_plate_3"],
+		"rarity": 3,
+		"type": "dmg"
+	},
 	"ipecac": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
 		"displayname": "Ipecac",

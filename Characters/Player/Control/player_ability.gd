@@ -19,10 +19,13 @@ var num_charges : float = 2.0
 enum abilities {
 	shoot_modded_projectile,
 	shoot_witherhoard,
+	flat_heal
 }
-var ability_state = abilities.shoot_witherhoard
+var ability_state = abilities.flat_heal
+var player
 
 func _ready():
+	player = get_parent()
 	projectile_container = get_tree().get_first_node_in_group("projectile_container")
 
 func _process(_delta):
@@ -42,6 +45,8 @@ func _process(_delta):
 						_shoot_modified_projectile()
 					abilities.shoot_witherhoard:
 						_shoot_witherhoard_projectile()
+					abilities.flat_heal:
+						_flat_heal()
 				start_cooldown()
 
 func is_ready():
@@ -70,6 +75,14 @@ func _shoot_witherhoard_projectile():
 	projectile.global_position = ability_muz.global_position
 	projectile.rotation = ability_muz.global_rotation
 	projectile_container.add_child(projectile)
+	
+func _flat_heal():
+	var player_max_health = player.MAX_HEALTH
+	#var player_current_health = player.current_health
+	#print(player_current_health)
+	player.current_health += clamp((0.2 * player_max_health), 0, player_max_health)
+	player.healthChanged.emit(player.current_health / player_max_health)
+	#print(player_current_health)
 
 func cooldown_timer_init():
 	cooldown_timer.wait_time = _cd

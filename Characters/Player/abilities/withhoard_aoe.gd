@@ -29,11 +29,11 @@ func _ready():
 	apply_unravel = player_weapon.apply_unravel
 	apply_scorch = player_weapon.scorch_shot
 	apply_poison = player_weapon.ipecac
-	if (player.find_child("player_aura") != null):
-		apply_jolt = player.find_child("player_aura").apply_jolt
+	if (get_tree().get_first_node_in_group("player_jolt_aura") != null):
+		apply_jolt = get_tree().get_first_node_in_group("player_jolt_aura").apply_jolt
 		
-	print(player.find_child("player_aura"))
-	
+	print(get_tree().get_first_node_in_group("player_jolt_aura"))
+
 	lifetime.wait_time = witherhoard_time
 	lifetime.start()
 	
@@ -81,7 +81,7 @@ func tick_rate():
 		if apply_scorch && !has_scorch:
 			var x = scorch_scene.instantiate()
 			in_range.add_child(x)
-		if apply_poison&& !poisoned:
+		if apply_poison && !poisoned:
 			var poison = poison_scene.instantiate()
 			in_range.add_child(poison)
 

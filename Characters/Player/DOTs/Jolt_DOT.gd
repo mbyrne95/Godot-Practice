@@ -13,6 +13,11 @@ var enemies_in_range = []
 @onready var pivot = $Node2D
 var icon 
 
+@onready var ionic_trace_gen_timer = $ionic_trace_gen
+var ionic_trace_scene = preload("res://Characters/Player/DOTs/ionic_trace.tscn")
+var spawn_traces = false
+var can_spawn_new_trace = true
+
 var parent_num_status_effects
 
 var texture_rect
@@ -28,7 +33,13 @@ func _ready():
 	texture_rect.reparent(parent_debuff_box)
 
 func _process(_delta):
-	pass
+	if spawn_traces:
+		if can_spawn_new_trace:
+			can_spawn_new_trace = false
+			ionic_trace_gen_timer.start()
+			var trace = ionic_trace_scene.instantiate()
+			trace.global_position = global_position
+			get_tree().get_first_node_in_group("projectile_container").add_child(trace)
 
 func _jolt_dmg(amount):
 	if can_do_volt_dmg:
@@ -90,3 +101,7 @@ func draw_lightning(x):
 func restart_timer():
 	lifespan_timer.stop()
 	lifespan_timer.start()
+
+
+func _on_ionic_trace_gen_timeout():
+	can_spawn_new_trace = true

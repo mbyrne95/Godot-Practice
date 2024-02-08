@@ -102,7 +102,7 @@ func _on_body_entered(body):
 			Globs.hatchling_target.emit(body)
 			
 		if spawn_hatchling:
-			print("should spawn hatchling")
+			#print("should spawn hatchling")
 			call_deferred("spawn_hatch")
 		
 		if ipecac:

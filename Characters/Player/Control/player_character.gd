@@ -66,6 +66,7 @@ var current_state = State.idle
 var aura = preload("res://Characters/Player/Projectiles/aura/player_aura.tscn")
 signal aura_upgrade()
 signal aura_jolt()
+signal aura_ionic_trace()
 
 var is_damageable = true
 
@@ -247,18 +248,28 @@ func level_up():
 		var r = randf_range(0,1)
 		var rarity
 		#common
-		if r < 0.4:
+		if r < 0.51:
 			rarity = 0
-		elif r >= 0.4 && r < 0.7:
+			option_choice.color = Color("3d3d3d")
+		elif r >= 0.51 && r < 0.81:
 			rarity = 1
 			option_choice.color = Color("3f3f74")
-		else:
+		elif r >= 0.81 && r < 0.96:
 			rarity = 2
 			option_choice.color = Color("76428a")
+		else:
+			rarity = 3
+			option_choice.color = Color("d95763")
 			
-		option_choice.item = get_random_item(rarity)
-		
+		print("rarity initially rolled for: ",rarity)
+		var chosen_item = get_random_item(rarity, option_choice)
+		while rarity > 0 && chosen_item == null:
+			rarity -= 1
+			chosen_item = get_random_item(rarity, option_choice)
+		option_choice.item = chosen_item
+		print("chosen item: ", chosen_item)
 		await get_tree().create_timer(0.4).timeout
+		
 		upgrade_options_container.add_child(option_choice)
 		
 		var x = randi_range(0,2)
@@ -286,7 +297,8 @@ func upgrade_character(upgrade):
 	
 	get_tree().paused = false
 	
-func get_random_item(rarity):
+func get_random_item(rarity, option_choice):
+	print("finding random item")
 	var db_list = []
 	for i in UPGRADE_DB.UPGRADES:
 		#check if we've already collected
@@ -305,20 +317,39 @@ func get_random_item(rarity):
 			pass
 		#check for prerequisites
 		elif UPGRADE_DB.UPGRADES[i]["prerequisite"].size() > 0:
+			var has_prereqs = true
 			for j in UPGRADE_DB.UPGRADES[i]["prerequisite"]:
 				if not j in collected_upgrades:
-					pass
-				else:
-					db_list.append(i)
+					has_prereqs = false
+			if has_prereqs:
+				db_list.append(i)
 		else:
 			db_list.append(i)
+			
 	#found compatible+available items
 	if db_list.size() > 0:
 		var random_item = db_list.pick_random()
 		upgrade_options.append(random_item)
+		print(db_list)
+		print("rarity item is selected at: ",rarity)
+		print(random_item)
 		return random_item
 	#didn't find items
 	else:
+#		if rarity>0:
+#			rarity = rarity - 1
+#			if rarity == 0:
+#				option_choice.color = Color("3d3d3d")
+#			elif rarity == 1:
+#				option_choice.color = Color("3f3f74")
+#			elif rarity == 2:
+#				option_choice.color = Color("76428a")
+#
+#			get_random_item(rarity, option_choice)
+
+
+		print("no compatible items")
+		option_choice.color = Color("3d3d3d")
 		return null
 	
 func match_item_upgrade(upgrade):
@@ -363,6 +394,8 @@ func match_item_upgrade(upgrade):
 			aura_upgrade.emit()
 		"aura_3":
 			aura_jolt.emit()
+		"aura_armor_combo":
+			aura_ionic_trace.emit()
 		"ipecac":
 			weapon.ipecac = true
 			weapon.size_multiplier += 0.4

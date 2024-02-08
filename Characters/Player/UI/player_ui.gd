@@ -27,9 +27,11 @@ func _on_cooldown_finished():
 
 func _health_logic(percentHP):
 	player_health_bar.value = percentHP
-	if player_health_bar.value <= 0.66 && player_health_bar.value > 0.33:
+	if player_health_bar.value > 0.66:
+		player_health_bar.tint_progress = Color("5b6ee1")
+	elif player_health_bar.value <= 0.66 && player_health_bar.value > 0.33:
 		player_health_bar.tint_progress = Color(0.98,0.95,0.21,1)
-	elif player_health_bar.value <= 0.33:
+	else:
 		player_health_bar.tint_progress = Color(0.85,0.34,0.39,1)
 		
 	var tween = get_tree().create_tween()

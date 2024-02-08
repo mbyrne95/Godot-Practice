@@ -14,7 +14,7 @@ gradient = SubResource("Gradient_nfo8o")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="player_aura" type="Node2D"]
+[node name="player_aura" type="Node2D" groups=["player_jolt_aura"]]
 script = ExtResource("1_x6k55")
 
 [node name="Area2D" type="Area2D" parent="."]
