@@ -250,22 +250,29 @@ func level_up():
 		#common
 		if r < 0.51:
 			rarity = 0
-			option_choice.color = Color("3d3d3d")
 		elif r >= 0.51 && r < 0.81:
 			rarity = 1
-			option_choice.color = Color("3f3f74")
 		elif r >= 0.81 && r < 0.96:
 			rarity = 2
-			option_choice.color = Color("76428a")
 		else:
 			rarity = 3
-			option_choice.color = Color("d95763")
-			
-		print("rarity initially rolled for: ",rarity)
-		var chosen_item = get_random_item(rarity, option_choice)
+
+		var chosen_item = get_random_item(rarity)
 		while rarity > 0 && chosen_item == null:
 			rarity -= 1
-			chosen_item = get_random_item(rarity, option_choice)
+			chosen_item = get_random_item(rarity)
+			
+		if rarity>0:
+			if rarity == 0:
+				option_choice.color = Color("3d3d3d")
+			elif rarity == 1:
+				option_choice.color = Color("3f3f74")
+			elif rarity == 2:
+				option_choice.color = Color("76428a")
+			else:
+				option_choice.color = Color("d95763")
+			
+			
 		option_choice.item = chosen_item
 		print("chosen item: ", chosen_item)
 		await get_tree().create_timer(0.4).timeout
@@ -297,8 +304,7 @@ func upgrade_character(upgrade):
 	
 	get_tree().paused = false
 	
-func get_random_item(rarity, option_choice):
-	print("finding random item")
+func get_random_item(rarity):
 	var db_list = []
 	for i in UPGRADE_DB.UPGRADES:
 		#check if we've already collected
@@ -330,26 +336,9 @@ func get_random_item(rarity, option_choice):
 	if db_list.size() > 0:
 		var random_item = db_list.pick_random()
 		upgrade_options.append(random_item)
-		print(db_list)
-		print("rarity item is selected at: ",rarity)
-		print(random_item)
 		return random_item
 	#didn't find items
 	else:
-#		if rarity>0:
-#			rarity = rarity - 1
-#			if rarity == 0:
-#				option_choice.color = Color("3d3d3d")
-#			elif rarity == 1:
-#				option_choice.color = Color("3f3f74")
-#			elif rarity == 2:
-#				option_choice.color = Color("76428a")
-#
-#			get_random_item(rarity, option_choice)
-
-
-		print("no compatible items")
-		option_choice.color = Color("3d3d3d")
 		return null
 	
 func match_item_upgrade(upgrade):
