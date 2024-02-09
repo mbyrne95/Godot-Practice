@@ -2,6 +2,7 @@ extends Node2D
 
 var player
 var SPEED
+var amplify_scene = preload("res://Characters/Player/buffs/amplified.tscn")
 
 func _ready():
 	#print("ionic trace spawned")
@@ -20,13 +21,16 @@ func _on_timer_timeout():
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("player_hurtbox"):
 		var player_max_health = player.MAX_HEALTH
-		#var player_current_health = player.current_health
-		#print(player_current_health)
 		player.current_health += clamp((0.08 * player_max_health), 0, player_max_health)
-		#print("trace healed player: ", clamp((0.05 * player_max_health), 0, player_max_health))
-
-		
-		#print(player_current_health)
-
 		player.healthChanged.emit(player.current_health / player_max_health)
+		
+		var amplified = false
+		for i in player.get_children():
+			if i.is_in_group("amplified_effect"):
+				amplified = true
+				i.restart_timer()
+		if !amplified:
+			var amplify = amplify_scene.instantiate()
+			player.add_child(amplify)
+		
 		queue_free()

@@ -121,4 +121,3 @@ rotation = 1.5708
 position = Vector2(0, 20)
 
 [node name="Control" parent="." instance=ExtResource("4_dj07p")]
-anchors_preset = 0

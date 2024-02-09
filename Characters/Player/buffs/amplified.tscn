@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://xsh5ca16ax8s"]
+
+[ext_resource type="Script" path="res://Characters/Player/buffs/amplified.gd" id="1_66yt8"]
+[ext_resource type="Texture2D" uid="uid://cy8u3srbcplc5" path="res://Art/My Art/Icons/DOT/poison.png" id="2_xm5up"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tx6h"]
+atlas = ExtResource("2_xm5up")
+region = Rect2(5, 3, 5, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdvcn"]
+atlas = ExtResource("2_xm5up")
+region = Rect2(5, 3, 5, 9)
+
+[node name="amplified" type="Node2D" groups=["amplified_effect", "status_effect"]]
+script = ExtResource("1_66yt8")
+
+[node name="lifespan" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("AtlasTexture_8tx6h")
+offset = Vector2(0, -10)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 5.0
+offset_bottom = 9.0
+texture = SubResource("AtlasTexture_xdvcn")
+
+[connection signal="timeout" from="lifespan" to="." method="_on_lifespan_timeout"]

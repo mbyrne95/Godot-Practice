@@ -314,7 +314,7 @@ func _cease_light():
 	var y = cease_scene.instantiate()
 	await get_tree().create_timer(0.3).timeout
 	get_tree().get_first_node_in_group("parallax_layer").add_child(y)
-	y.position = global_position
+	y.global_position = global_position
 	await get_tree().create_timer(1).timeout
 	dmg_taken_ratio = temp
 

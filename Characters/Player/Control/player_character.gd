@@ -231,6 +231,14 @@ func screen_wrap():
 ### UI ####
 ###########
 
+func _get_buffs():
+	var num_status_effects = 0
+	if get_child_count() != 0:
+		for i in get_children():
+			if i.is_in_group("status_effect"):
+				num_status_effects += 1
+	return num_status_effects
+
 #this is adding the options to the panel, and making panel visible
 func level_up():
 	level_panel.visible = true

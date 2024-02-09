@@ -40,7 +40,7 @@ func _ready():
 	add_child(player_character)
 	Globs.parallax_motion_stop.connect(stop_foreground_motion)
 	Globs.wave_complete.connect(wave_is_complete)
-	wave_array = [first_wave, first_wave]
+	wave_array = [first_wave]
 	current_wave = 0
 
 func _process(delta):	

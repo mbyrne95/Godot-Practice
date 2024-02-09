@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c14bi82jh5jwg"]
+[gd_scene load_steps=25 format=3 uid="uid://c14bi82jh5jwg"]
 
 [ext_resource type="Script" path="res://Characters/Player/Control/player_character.gd" id="1_hehd3"]
 [ext_resource type="Shader" uid="uid://6opn2jo0vkd4" path="res://Characters/Player/Effects/hit_flash_red.tres" id="2_ydp14"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bmsgqp56n3fgp" path="res://Characters/Player/Effects/thrust_particles.tscn" id="9_hl57w"]
 [ext_resource type="PackedScene" uid="uid://gl73cm2ehqw1" path="res://Characters/Player/Effects/death_explo_particles.tscn" id="10_lvy28"]
 [ext_resource type="PackedScene" uid="uid://c4nw02vnns5m2" path="res://Characters/Player/UI/pause_menu.tscn" id="13_r62bs"]
+[ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="14_8dcj1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pjd5y"]
 shader = ExtResource("2_ydp14")
@@ -275,5 +276,7 @@ offset_bottom = 100.0
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("13_r62bs")]
 visible = false
+
+[node name="Control" parent="." instance=ExtResource("14_8dcj1")]
 
 [editable path="Blink"]

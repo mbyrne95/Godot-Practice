@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1ihrmowy8joy"]
+[gd_scene load_steps=6 format=3 uid="uid://c1ihrmowy8joy"]
 
 [ext_resource type="Script" path="res://Levels/PracticeLevel/Practice Enemy Wave/wave_logic.gd" id="1_4u4aq"]
 [ext_resource type="Script" path="res://Characters/Player/PlayerOrbitalTransform.gd" id="2_wxkfg"]
 [ext_resource type="PackedScene" uid="uid://dgcer7ec27djg" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/basic_enemy.tscn" id="3_kefpd"]
 [ext_resource type="PackedScene" uid="uid://bptebg3reglrb" path="res://Characters/Enemies/Basic Enemies/Practice Enemies/basic_enemy/vertical_variant/basic_enemy_vertical.tscn" id="4_x8hcu"]
+[ext_resource type="PackedScene" uid="uid://djiyxdqs12xfj" path="res://Characters/Enemies/Basic Enemies/roaming_archer/roaming_archer.tscn" id="5_cwh6f"]
 
 [node name="practice_wave" type="Node2D"]
 script = ExtResource("1_4u4aq")
@@ -20,3 +21,6 @@ position = Vector2(15, 230)
 [node name="basic_enemy_left_wall2" parent="." instance=ExtResource("4_x8hcu")]
 position = Vector2(165, 230)
 rotation = 3.14159
+
+[node name="roaming_archer" parent="." instance=ExtResource("5_cwh6f")]
+position = Vector2(132, 272)
