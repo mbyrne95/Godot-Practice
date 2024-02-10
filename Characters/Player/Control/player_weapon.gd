@@ -4,6 +4,7 @@ var projectile_scene = preload("res://Characters/Player/Projectiles/generic_proj
 
 @onready var muz_left = $"../muzzle_left"
 @onready var muz_right = $"../muzzle_right"
+@onready var shoot_cd_timer = $Timer
 
 var shot_position = 0
 
@@ -12,6 +13,7 @@ var shot_position = 0
 @onready var projectile_speed = 200
 var shoot_on_cd : = false
 
+var shoot_cd_multiplier = 1.0
 var crit_chance = 0
 var crit_multiplier = 1.75
 var damage_multiplier = 1.0
@@ -37,13 +39,15 @@ func _ready():
 	Globs.hatchling_spawned.connect(hatchling_spawned)
 
 func _process(_delta):
+	print(shoot_cd_multiplier)
+	
 	if get_parent().can_move:
 		if Input.is_action_pressed("shoot"):
 			if !shoot_on_cd:
 				shoot_on_cd = true
 				shoot()
-				await get_tree().create_timer(shoot_cd).timeout
-				shoot_on_cd = false
+				shoot_cd_timer.wait_time = shoot_cd * shoot_cd_multiplier
+				shoot_cd_timer.start()
 
 func shoot():
 	var projectile = projectile_scene.instantiate()
@@ -106,9 +110,13 @@ func hatchling_tracker(target):
 	else:
 		#print(hatchling_counter)
 		hatchling_counter += 1
-		if hatchling_counter == 4:
+		if hatchling_counter == 5:
 			spawn_hatchling = true
 			hatchling_counter = 0
 
 func hatchling_spawned():
 	spawn_hatchling = false
+
+
+func _on_timer_timeout():
+	shoot_on_cd = false

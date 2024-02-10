@@ -57,6 +57,10 @@ var current_state = State.idle
 @onready var death_explo_particles = $death_explo
 @onready var hurtbox = $Hurtbox
 @onready var lightoccluder = $LightOccluder2D
+@onready var amplified_sprite = $amplify_sprite
+
+@onready var health_regen_timer = $"health regen"
+@export var health_regen_percent = 0.08
 
 #blink initialization stuff
 @onready var blink = $Blink
@@ -282,7 +286,7 @@ func level_up():
 			
 			
 		option_choice.item = chosen_item
-		print("chosen item: ", chosen_item)
+		#print("chosen item: ", chosen_item)
 		await get_tree().create_timer(0.4).timeout
 		
 		upgrade_options_container.add_child(option_choice)
@@ -351,12 +355,27 @@ func get_random_item(rarity):
 	
 func match_item_upgrade(upgrade):
 	match upgrade:
-		"test_dmg":
-			weapon.projectile_damage += 10
+		"dmg_1":
+			weapon.projectile_damage += 5
+		"dmg_2":
+			weapon.projectile_damage += 8
+		"dmg_3":
+			weapon.projectile_damage += 12
 		"test_movement":
 			SPEED += 10
 		"test_health":
 			MAX_HEALTH += 20
+			healthChanged.emit(float(current_health / MAX_HEALTH))
+		"health_regen_1":
+			health_regen_timer.wait_time = 8
+			health_regen_percent = 0.008
+			health_regen_timer.start()
+		"health_regen_2":
+			health_regen_timer.wait_time = 7
+			health_regen_percent = 0.01
+		"health_regen_2":
+			health_regen_timer.wait_time = 5
+			health_regen_percent = 0.014
 		"armor_plate_1":
 			dmg_ratio -= 0.08
 			armor_plate.visible = true
@@ -378,12 +397,12 @@ func match_item_upgrade(upgrade):
 			weapon.size_multiplier += 2
 		"twentytwenty":
 			weapon.twentytwenty = true
-			if (weapon.damage_multiplier > 0.8):
-				weapon.damage_multiplier = 0.8
+			#if (weapon.damage_multiplier > 0.8):
+			weapon.damage_multiplier = clamp(weapon.damage_multiplier - 0.2, 0.8, 1000)
 		"soymilk":
-			if (weapon.damage_multiplier > 0.25):
-				weapon.damage_multiplier = 0.25
-			weapon.shoot_cd -= 0.2
+			#if (weapon.damage_multiplier > 0.25):
+			weapon.damage_multiplier = clamp(weapon.damage_multiplier - 0.75, 0.25, 1000)
+			weapon.shoot_cd_multiplier = clamp(weapon.shoot_cd_multiplier - 0.8, 0.2, 1000)
 		"aura_1":
 			var new_aura = aura.instantiate()
 			add_child(new_aura)
@@ -397,7 +416,7 @@ func match_item_upgrade(upgrade):
 			weapon.ipecac = true
 			weapon.size_multiplier += 0.4
 			weapon.projectile_damage += 40
-			weapon.shoot_cd += 1.5
+			weapon.shoot_cd += 1.2
 		"scorch_shot":
 			weapon.scorch_shot = true
 		"hatchling_1":
@@ -410,6 +429,7 @@ func match_item_upgrade(upgrade):
 			lightoccluder.scale = Vector2(lightoccluder.scale.x - 0.2, lightoccluder.scale.y - 0.2)
 			collision_shape.scale = Vector2(collision_shape.scale.x - 0.2, collision_shape.scale.y - 0.2)
 			armor_plate.scale = Vector2(armor_plate.scale.x - 0.2, armor_plate.scale.y - 0.2)
+			amplified_sprite.scale = Vector2(amplified_sprite.scale.x - 0.2, amplified_sprite.scale.y - 0.2)
 			weapon.bullet_range += 35
 		"range_up_speed_up":
 			weapon.bullet_range += 35
@@ -507,3 +527,9 @@ func _can_move():
 
 func material_size(size : float):
 	shockwave.material.set_shader_parameter("size", size)
+
+
+func _on_health_regen_timeout():
+	current_health = clamp(current_health + (MAX_HEALTH * health_regen_percent), 0 , MAX_HEALTH)
+	healthChanged.emit(float(current_health / MAX_HEALTH))
+	health_regen_timer.start()

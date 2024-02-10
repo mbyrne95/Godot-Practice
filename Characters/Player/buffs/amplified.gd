@@ -11,9 +11,11 @@ func _ready():
 	parent = get_parent()
 	parent_num_status_effects = parent._get_buffs()
 	lifespan_timer.start()
-	parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
-	texture_rect.reparent(parent_debuff_box)
+	parent.get_node_or_null("amplify_sprite").visible = true
+	#parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
+	#texture_rect.reparent(parent_debuff_box)
 	parent.SPEED += 20
+	parent.get_node_or_null("Weapon").shoot_cd_multiplier -= 0.1
 		
 func restart_timer():
 	lifespan_timer.stop()
@@ -21,5 +23,7 @@ func restart_timer():
 
 func _on_lifespan_timeout():
 	parent.SPEED -= 20
-	texture_rect.reparent(self)
+	parent.get_node_or_null("Weapon").shoot_cd_multiplier += 0.1
+	parent.get_node_or_null("amplify_sprite").visible = false
+	#texture_rect.reparent(self)
 	queue_free()

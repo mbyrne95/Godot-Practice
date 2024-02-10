@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c14bi82jh5jwg"]
+[gd_scene load_steps=39 format=3 uid="uid://c14bi82jh5jwg"]
 
 [ext_resource type="Script" path="res://Characters/Player/Control/player_character.gd" id="1_hehd3"]
 [ext_resource type="Shader" uid="uid://6opn2jo0vkd4" path="res://Characters/Player/Effects/hit_flash_red.tres" id="2_ydp14"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://gl73cm2ehqw1" path="res://Characters/Player/Effects/death_explo_particles.tscn" id="10_lvy28"]
 [ext_resource type="PackedScene" uid="uid://c4nw02vnns5m2" path="res://Characters/Player/UI/pause_menu.tscn" id="13_r62bs"]
 [ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="14_8dcj1"]
+[ext_resource type="Texture2D" uid="uid://yc5n2ix1viyl" path="res://Art/My Art/Player/amplified_ship_overlay.png" id="15_fdqnq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pjd5y"]
 shader = ExtResource("2_ydp14")
@@ -157,6 +158,98 @@ _data = {
 "shockwave": SubResource("Animation_j0r0u")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_noqib"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkpyc"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oj74m"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7w6b"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yo8i0"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ix1vs"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60m10"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ly8v"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgh48"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1c4yh"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prdau"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mly3"]
+atlas = ExtResource("15_fdqnq")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eeetx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_noqib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkpyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj74m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7w6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yo8i0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ix1vs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60m10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ly8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgh48")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1c4yh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prdau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mly3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
 [node name="PlayerCharacter" type="CharacterBody2D" groups=["players"]]
 collision_layer = 2
 script = ExtResource("1_hehd3")
@@ -278,5 +371,18 @@ offset_bottom = 100.0
 visible = false
 
 [node name="Control" parent="." instance=ExtResource("14_8dcj1")]
+
+[node name="amplify_sprite" type="AnimatedSprite2D" parent="."]
+visible = false
+light_mask = 2
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_eeetx")
+frame_progress = 0.557881
+
+[node name="health regen" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
+[connection signal="timeout" from="health regen" to="." method="_on_health_regen_timeout"]
 
 [editable path="Blink"]

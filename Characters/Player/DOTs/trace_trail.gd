@@ -14,7 +14,7 @@ func _process(_delta):
 	#global_position = $"..".global_position
 
 	var pos = get_parent().global_position
-	print(pos)
+	#print(pos)
 	
 	queue.push_front(pos)
 	

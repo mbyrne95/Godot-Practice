@@ -2,12 +2,28 @@ extends Node
 
 const ICON_PATH = "res://Art/Free-Skill-32x32-Icons-for-Cyberpunk-Game/1 Icons/1/"
 const UPGRADES = {
-	"test_dmg": {
+	"dmg_1": {
 		"icon": ICON_PATH + "Skillicon1_01.png",
-		"displayname": "displayname dmg",
-		"detail": "this is a test asdrasdfasdfkjhl",
+		"displayname": "Power Module",
+		"detail": "Projectile damage up",
 		"prerequisite": [],
 		"rarity": 0,
+		"type": "dmg"
+	},
+	"dmg_2": {
+		"icon": ICON_PATH + "Skillicon1_01.png",
+		"displayname": "Power Module+",
+		"detail": "Greater projectile damage up",
+		"prerequisite": ["dmg_1"],
+		"rarity": 1,
+		"type": "dmg"
+	},
+	"dmg_3": {
+		"icon": ICON_PATH + "Skillicon1_01.png",
+		"displayname": "Power Module++",
+		"detail": "Significant projectile damage up",
+		"prerequisite": ["dmg_3"],
+		"rarity": 2,
 		"type": "dmg"
 	},
 	"test_health": {
@@ -25,6 +41,30 @@ const UPGRADES = {
 		"prerequisite": [],
 		"rarity": 0,
 		"type": "movement"
+	},
+	"health_regen_1": {
+		"icon": ICON_PATH + "Skillicon1_03.png",
+		"displayname": "Self Repair Module",
+		"detail": "Passively regenerates health over time",
+		"prerequisite": [],
+		"rarity": 0,
+		"type": "defense"
+	},
+	"health_regen_2": {
+		"icon": ICON_PATH + "Skillicon1_03.png",
+		"displayname": "Self Repair Module+",
+		"detail": "Passively regenerates greater health over time",
+		"prerequisite": ["health_regen_2"],
+		"rarity": 1,
+		"type": "defense"
+	},
+	"health_regen_3": {
+		"icon": ICON_PATH + "Skillicon1_03.png",
+		"displayname": "Self Repair Module+",
+		"detail": "Passively regenerates significant health over time",
+		"prerequisite": ["health_regen_3"],
+		"rarity": 2,
+		"type": "defense"
 	},
 	"test_consumable": {
 		"icon": ICON_PATH + "Skillicon1_04.png",
