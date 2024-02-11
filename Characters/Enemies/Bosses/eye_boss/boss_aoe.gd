@@ -13,6 +13,9 @@ func _ready():
 	outer.position = global_position - Vector2(160,160)
 	outer.scale = scale
 	
+	anim_player = $AnimationPlayer
+	lifespan = $lifespan
+	
 	inner_color = Vector4(0.9,0.7,0.9,1)
 	inner.material.set_shader_parameter("Color",inner_color)
 	inner.position = global_position - Vector2(160,160)

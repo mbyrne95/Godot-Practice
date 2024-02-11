@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://c14bi82jh5jwg"]
+[gd_scene load_steps=52 format=3 uid="uid://c14bi82jh5jwg"]
 
 [ext_resource type="Script" path="res://Characters/Player/Control/player_character.gd" id="1_hehd3"]
 [ext_resource type="Shader" uid="uid://6opn2jo0vkd4" path="res://Characters/Player/Effects/hit_flash_red.tres" id="2_ydp14"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c4nw02vnns5m2" path="res://Characters/Player/UI/pause_menu.tscn" id="13_r62bs"]
 [ext_resource type="PackedScene" uid="uid://c6udjf8y22j12" path="res://Characters/Enemies/enemy_debuff_ui.tscn" id="14_8dcj1"]
 [ext_resource type="Texture2D" uid="uid://yc5n2ix1viyl" path="res://Art/My Art/Player/amplified_ship_overlay.png" id="15_fdqnq"]
+[ext_resource type="Texture2D" uid="uid://v7fe6jrmwkml" path="res://Art/My Art/Player/radiant_ship_overlay.png" id="16_vs3bx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pjd5y"]
 shader = ExtResource("2_ydp14")
@@ -250,6 +251,91 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdi8w"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4hbw"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ydsl"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nmoc"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_317eb"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mauvn"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyf0u"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0fxb"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dq74a"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1e0r"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajss7"]
+atlas = ExtResource("16_vs3bx")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m03be"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vdi8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4hbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ydsl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nmoc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_317eb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mauvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyf0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0fxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dq74a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1e0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajss7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 11.0
+}]
+
 [node name="PlayerCharacter" type="CharacterBody2D" groups=["players"]]
 collision_layer = 2
 script = ExtResource("1_hehd3")
@@ -328,7 +414,6 @@ z_index = -2
 occluder = ExtResource("8_3haxs")
 
 [node name="armor_plate" type="Sprite2D" parent="."]
-visible = false
 rotation = -1.5708
 texture = SubResource("AtlasTexture_ntm6h")
 hframes = 3
@@ -377,11 +462,19 @@ visible = false
 light_mask = 2
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_eeetx")
-frame_progress = 0.557881
+autoplay = "default"
+frame_progress = 0.849317
 
 [node name="health regen" type="Timer" parent="."]
 wait_time = 8.0
 one_shot = true
+
+[node name="radiant_sprite" type="AnimatedSprite2D" parent="."]
+visible = false
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_m03be")
+autoplay = "default"
+frame_progress = 0.697796
 
 [connection signal="timeout" from="health regen" to="." method="_on_health_regen_timeout"]
 

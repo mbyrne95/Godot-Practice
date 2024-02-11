@@ -54,7 +54,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.0
 shader_parameter/vignette_opacity = 0.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b1i4g"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pbguq"]
 resource_local_to_scene = true
 blend_mode = 1
 
@@ -65,7 +65,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1e4sn"]
 curve = SubResource("Curve_6oof4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g44v2"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kcgwa"]
 resource_local_to_scene = true
 lifetime_randomness = 0.25
 emission_shape = 3
@@ -90,7 +90,7 @@ turbulence_influence_max = 0.15
 offsets = PackedFloat32Array(0, 0.0775316, 0.0996835, 0.802215)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196, 0.299127, 0.299127, 0.299127, 0.146631, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0u384"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aakan"]
 resource_local_to_scene = true
 gradient = SubResource("Gradient_0ewwu")
 width = 32
@@ -186,7 +186,7 @@ texture = ExtResource("8_rxs5h")
 offset = Vector2(90, 320)
 
 [node name="particles" type="Node2D" parent="layer 0"]
-z_index = -1
+z_index = -2
 
 [node name="basic bubbles" parent="layer 0/particles" instance=ExtResource("12_2nmj3")]
 position = Vector2(160, 320)
@@ -194,10 +194,10 @@ position = Vector2(160, 320)
 [node name="floating_lights" parent="layer 0/particles" instance=ExtResource("6_gymfy")]
 self_modulate = Color(5, 5, 1.11, 1)
 light_mask = 1
-material = SubResource("CanvasItemMaterial_b1i4g")
+material = SubResource("CanvasItemMaterial_pbguq")
 position = Vector2(15, 320)
-process_material = SubResource("ParticleProcessMaterial_g44v2")
-texture = SubResource("GradientTexture2D_0u384")
+process_material = SubResource("ParticleProcessMaterial_kcgwa")
+texture = SubResource("GradientTexture2D_aakan")
 
 [node name="eyecandy" type="ParallaxBackground" parent="layer 0"]
 layer = -1

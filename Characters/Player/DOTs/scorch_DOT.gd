@@ -18,6 +18,7 @@ var parent_debuff_box
 var stack_counter
 
 var projectile_container
+var player
 
 func _ready():
 	projectile_container = get_tree().get_first_node_in_group("projectile_container")
@@ -28,7 +29,7 @@ func _ready():
 	parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
 	stack_counter = $TextureRect/stacks
 	texture_rect.reparent(parent_debuff_box)
-
+	player = get_tree().get_first_node_in_group("players")
 	#stack_counter = 1
 	
 func _process(_delta):
@@ -43,10 +44,15 @@ func _process(_delta):
 			projectile_container.add_child(x)
 			num_stacks = 1
 			
-			if apply_radiant && get_tree().get_first_node_in_group("players") != null:
-				var radiant = radiant_scene.instantiate()
-				get_tree().get_first_node_in_group("players").add_child(radiant)
-				print("applied radiant to player")
+			if apply_radiant && player != null:
+				var player_has_radiant = false
+				for i in player.get_children():
+					if i.is_in_group("radiant_effect"):
+						player_has_radiant = true
+						i.restart_timer()
+				if !player_has_radiant:
+					var r = radiant_scene.instantiate()
+					player.add_child(r)
 	_scorch_dmg()
 
 func _scorch_dmg():

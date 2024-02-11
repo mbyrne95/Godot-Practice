@@ -57,7 +57,9 @@ var current_state = State.idle
 @onready var death_explo_particles = $death_explo
 @onready var hurtbox = $Hurtbox
 @onready var lightoccluder = $LightOccluder2D
+
 @onready var amplified_sprite = $amplify_sprite
+@onready var radiant_sprite = $radiant_sprite
 
 @onready var health_regen_timer = $"health regen"
 @export var health_regen_percent = 0.08
@@ -357,13 +359,13 @@ func match_item_upgrade(upgrade):
 	match upgrade:
 		"dmg_1":
 			weapon.projectile_damage += 5
-			weapon.size_multiplier += 0.2
+			weapon.size_multiplier += 0.1
 		"dmg_2":
 			weapon.projectile_damage += 8
-			weapon.size_multiplier += 0.3
+			weapon.size_multiplier += 0.2
 		"dmg_3":
 			weapon.projectile_damage += 12
-			weapon.size_multiplier += 0.5
+			weapon.size_multiplier += 0.3
 		"dmg_scorch_combo":
 			weapon.scorch_applies_radiant = true
 		"test_movement":
@@ -419,7 +421,7 @@ func match_item_upgrade(upgrade):
 			aura_ionic_trace.emit()
 		"ipecac":
 			weapon.ipecac = true
-			weapon.size_multiplier += 0.4
+			weapon.size_multiplier += 0.5
 			weapon.projectile_damage += 40
 			weapon.shoot_cd += 1.2
 		"scorch_shot":
@@ -435,6 +437,7 @@ func match_item_upgrade(upgrade):
 			collision_shape.scale = Vector2(collision_shape.scale.x - 0.2, collision_shape.scale.y - 0.2)
 			armor_plate.scale = Vector2(armor_plate.scale.x - 0.2, armor_plate.scale.y - 0.2)
 			amplified_sprite.scale = Vector2(amplified_sprite.scale.x - 0.2, amplified_sprite.scale.y - 0.2)
+			radiant_sprite.scale = Vector2(radiant_sprite.scale.x - 0.2, radiant_sprite.scale.y - 0.2)
 			weapon.bullet_range += 35
 		"range_up_speed_up":
 			weapon.bullet_range += 35

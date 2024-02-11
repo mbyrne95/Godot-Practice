@@ -12,6 +12,7 @@ func _ready():
 	parent_num_status_effects = parent._get_buffs()
 	lifespan_timer.start()
 	parent.get_node_or_null("amplify_sprite").visible = true
+	parent.get_node("amplify_sprite").play("default")
 	#parent_debuff_box = parent.get_node_or_null("Control").get_child(0).get_node_or_null("debuff_container")
 	#texture_rect.reparent(parent_debuff_box)
 	parent.SPEED += 20

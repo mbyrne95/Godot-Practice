@@ -123,7 +123,7 @@ func dmg_children(enemy_array):
 				if i not in enemies_that_have_been_damaged:
 					enemies_that_have_been_damaged.append(i)
 					i.take_damage(damage)
-					print(i, "took damage: ", damage)
+					#print(i, "took damage: ", damage)
 					var poisoned = false
 					for x in i.get_children():
 						if x.is_in_group("scorch_DOT"):

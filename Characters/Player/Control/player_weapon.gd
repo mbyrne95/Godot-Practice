@@ -51,19 +51,7 @@ func _process(_delta):
 				shoot_cd_timer.start()
 
 func shoot():
-	var projectile = projectile_scene.instantiate()
-
-	projectile.scorch_shot = scorch_shot
-	projectile.scorch_applies_radiant = scorch_applies_radiant
-
-	projectile.proptosis = proptosis
-
-	projectile.ipecac = ipecac
-	
-	projectile.hatchling_upgrade = hatchling_upgrade
-	projectile.spawn_hatchling = spawn_hatchling
-	projectile.apply_unravel = apply_unravel
-		
+	var projectile = projectile_scene.instantiate()	
 	projectile_init(projectile)
 	
 	if (twentytwenty):
@@ -75,11 +63,6 @@ func shoot():
 		projectile_dup.global_position = muz_right.global_position
 		projectile_dup.rotation = muz_right.global_rotation
 		projectile_container.add_child(projectile_dup)
-		projectile_dup.scorch_shot = scorch_shot
-
-		projectile_dup.proptosis = proptosis
-
-		projectile_dup.ipecac = ipecac
 	
 	else:
 		#alternate shot positions
@@ -95,6 +78,17 @@ func shoot():
 		projectile_container.add_child(projectile)
 
 func projectile_init(projectile):
+	projectile.scorch_shot = scorch_shot
+	projectile.scorch_applies_radiant = scorch_applies_radiant
+
+	projectile.proptosis = proptosis
+
+	projectile.ipecac = ipecac
+	
+	projectile.hatchling_upgrade = hatchling_upgrade
+	projectile.spawn_hatchling = spawn_hatchling
+	projectile.apply_unravel = apply_unravel
+	
 	projectile.DAMAGE = projectile_damage * damage_multiplier
 	projectile.SPEED = projectile_speed
 	projectile.BULLET_RANGE = bullet_range

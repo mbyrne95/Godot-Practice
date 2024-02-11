@@ -54,7 +54,7 @@ func _process(_delta):
 		has_started = true
 
 		anim_player.play("expanding_wave_2")
-		lifespan.wait_time = 5 / anim_player.speed_scale
+		lifespan.wait_time = 5.0 / anim_player.speed_scale
 		lifespan.start()
 
 		

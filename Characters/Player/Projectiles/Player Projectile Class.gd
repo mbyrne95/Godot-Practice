@@ -30,6 +30,47 @@ var spawn_hatchling = false
 @onready var hatchling_scene = preload("res://Characters/Player/DOTs/hatchling.tscn")
 var apply_unravel = false
 
+enum bullet_color_states{
+	default,
+	scorch,
+	poison
+}
+var bullet_color_array = []
+
+var bullet_color = bullet_color_states.default
+
+var color_array_index = 0
+
+func _ready():
+	if scorch_shot:
+		#bullet_color = bullet_color_states.scorch
+		bullet_color_array.append(bullet_color_states.scorch)
+	if ipecac:
+		#bullet_color = bullet_color_states.poison
+		bullet_color_array.append(bullet_color_states.poison)
+	
+	if bullet_color_array.size() < 1:
+		print("default color")
+		glow.modulate = Color("5fcde4")
+	elif bullet_color_array.size() == 1:
+		print("one color")
+		if bullet_color_array[0] == bullet_color_states.scorch:
+			glow.modulate = Color("df7126")
+		elif bullet_color_array[0] == bullet_color_states.poison:
+			glow.modulate = Color("99e550")
+	elif bullet_color_array.size() > 1:
+		print("cycling")
+		cycle_colors()
+	
+	
+#	match bullet_color:
+#		bullet_color_states.default:
+#			glow.modulate = Color("5fcde4")
+#		bullet_color_states.scorch:
+#			glow.modulate = Color("df7126")
+#		bullet_color_states.poison:
+#			glow.modulate = Color("99e550")
+
 func _physics_process(delta):
 	
 	var player_position = get_tree().get_first_node_in_group("players").position
@@ -52,7 +93,6 @@ func _physics_process(delta):
 			else:
 				call_deferred("start_death")
 				
-
 func start_death():
 	is_dead = true
 	emitter.emitting = true
@@ -122,6 +162,7 @@ func _on_body_entered(body):
 			for i in body.get_children():
 				if i.is_in_group("scorch_DOT"):
 					has_scorch = true
+					i.apply_radiant = scorch_applies_radiant
 					i.num_stacks += 1
 					i.restart_timer()
 			if !has_scorch:
@@ -152,6 +193,28 @@ func spawn_hatch():
 	get_tree().get_first_node_in_group("projectile_container").add_child(hatch)
 	Globs.hatchling_spawned.emit()
 
+func cycle_colors():
+	var time_to_trans = 0.5 / bullet_color_array.size()
+	var color
+	if bullet_color_array[color_array_index] == bullet_color_states.scorch:
+		color = Color("df7126")
+	elif bullet_color_array[color_array_index] == bullet_color_states.poison:
+		color = Color("99e550")
+		
+		
+	print("tweening color")
+	
+	var tween = create_tween()
+	tween.tween_property(glow, "modulate", color, time_to_trans)
+	
+	color_array_index += 1
+	
+	if color_array_index == bullet_color_array.size():
+		color_array_index = 0
+		
+	await tween.finished
+	cycle_colors()
+		
 #func _on_area_entered(area):
 #	if area.is_in_group("level_bounds"):
 #		call_deferred("start_death")
