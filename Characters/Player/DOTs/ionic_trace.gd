@@ -20,9 +20,9 @@ func _on_timer_timeout():
 
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("player_hurtbox"):
-		var player_max_health = player.MAX_HEALTH
-		player.current_health += clamp((0.08 * player_max_health), 0, player_max_health)
-		player.healthChanged.emit(player.current_health / player_max_health)
+		#var player_max_health = player.MAX_HEALTH
+		#player.current_health += clamp((0.08 * player_max_health), 0, player_max_health)
+		#player.healthChanged.emit(player.current_health / player_max_health)
 		
 		var amplified = false
 		for i in player.get_children():

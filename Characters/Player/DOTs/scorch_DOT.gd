@@ -8,6 +8,8 @@ var parent
 var parent_num_status_effects = 0
 
 var scorch_aoe = preload("res://Characters/Player/DOTs/scorch_AOE.tscn")
+var apply_radiant = false
+var radiant_scene = preload("res://Characters/Player/buffs/radiant.tscn")
 
 var num_stacks = 1
 
@@ -15,7 +17,10 @@ var texture_rect
 var parent_debuff_box
 var stack_counter
 
+var projectile_container
+
 func _ready():
+	projectile_container = get_tree().get_first_node_in_group("projectile_container")
 	parent = get_parent()
 	parent_num_status_effects = parent.get_status_effects()
 	lifespan_timer.start()
@@ -31,12 +36,17 @@ func _process(_delta):
 	if num_stacks >= 20:
 		if parent != null:
 			var x = scorch_aoe.instantiate()
-			x.damage = scorch_dmg * 20
+			x.damage = scorch_dmg * 20 * 2.5
 			x.scale = Vector2(0.25,0.25)
 			x.timescale = 12
-			parent.add_child(x)
 			x.position = global_position
+			projectile_container.add_child(x)
 			num_stacks = 1
+			
+			if apply_radiant && get_tree().get_first_node_in_group("players") != null:
+				var radiant = radiant_scene.instantiate()
+				get_tree().get_first_node_in_group("players").add_child(radiant)
+				print("applied radiant to player")
 	_scorch_dmg()
 
 func _scorch_dmg():

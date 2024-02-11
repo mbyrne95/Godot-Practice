@@ -22,8 +22,16 @@ const UPGRADES = {
 		"icon": ICON_PATH + "Skillicon1_01.png",
 		"displayname": "Power Module++",
 		"detail": "Significant projectile damage up",
-		"prerequisite": ["dmg_3"],
+		"prerequisite": ["dmg_2"],
 		"rarity": 2,
+		"type": "dmg"
+	},
+	"dmg_scorch_combo": {
+		"icon": ICON_PATH + "Skillicon1_01.png",
+		"displayname": "Ember of Empyrean",
+		"detail": "Scorch ignitions make you radiant, regenerating a small amount of health and temporarily increasing damage.",
+		"prerequisite": ["dmg_3", "scorch_shot"],
+		"rarity": 3,
 		"type": "dmg"
 	},
 	"test_health": {
@@ -44,7 +52,7 @@ const UPGRADES = {
 	},
 	"health_regen_1": {
 		"icon": ICON_PATH + "Skillicon1_03.png",
-		"displayname": "Self Repair Module",
+		"displayname": "Self Repair Unit",
 		"detail": "Passively regenerates health over time",
 		"prerequisite": [],
 		"rarity": 0,
@@ -52,17 +60,17 @@ const UPGRADES = {
 	},
 	"health_regen_2": {
 		"icon": ICON_PATH + "Skillicon1_03.png",
-		"displayname": "Self Repair Module+",
+		"displayname": "Self Repair Unit+",
 		"detail": "Passively regenerates greater health over time",
-		"prerequisite": ["health_regen_2"],
+		"prerequisite": ["health_regen_1"],
 		"rarity": 1,
 		"type": "defense"
 	},
 	"health_regen_3": {
 		"icon": ICON_PATH + "Skillicon1_03.png",
-		"displayname": "Self Repair Module+",
+		"displayname": "Self Repair Unit++",
 		"detail": "Passively regenerates significant health over time",
-		"prerequisite": ["health_regen_3"],
+		"prerequisite": ["health_regen_2"],
 		"rarity": 2,
 		"type": "defense"
 	},
@@ -173,7 +181,7 @@ const UPGRADES = {
 	"aura_armor_combo": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
 		"displayname": "Spark of Ions",
-		"detail": "Jolted targets periodically spawn an ionic trace that heals the player",
+		"detail": "Jolted targets periodically spawn an ionic trace. Ionic traces temporarily increase movespeed and attack speed.",
 		"prerequisite": ["aura_3", "armor_plate_3"],
 		"rarity": 3,
 		"type": "dmg"
@@ -189,7 +197,7 @@ const UPGRADES = {
 	"scorch_shot": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
 		"displayname": "Firemind",
-		"detail": "Bullets apply scorch",
+		"detail": "Bullets apply scorch. Scorch deals increasing damage per stack, and ignites at 20 stacks.",
 		"prerequisite": [],
 		"rarity": 2,
 		"type": "dmg"

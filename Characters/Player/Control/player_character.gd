@@ -10,7 +10,7 @@ extends CharacterBody2D
 var can_move = false
 
 @export_subgroup("Health")
-@export var MAX_HEALTH = 100
+@export var MAX_HEALTH = 100.0
 var current_health = MAX_HEALTH
 @export var iframes = 2
 var is_recently_dmg = false
@@ -357,22 +357,27 @@ func match_item_upgrade(upgrade):
 	match upgrade:
 		"dmg_1":
 			weapon.projectile_damage += 5
+			weapon.size_multiplier += 0.2
 		"dmg_2":
 			weapon.projectile_damage += 8
+			weapon.size_multiplier += 0.3
 		"dmg_3":
 			weapon.projectile_damage += 12
+			weapon.size_multiplier += 0.5
+		"dmg_scorch_combo":
+			weapon.scorch_applies_radiant = true
 		"test_movement":
 			SPEED += 10
 		"test_health":
 			MAX_HEALTH += 20
-			healthChanged.emit(float(current_health / MAX_HEALTH))
+			healthChanged.emit(float(current_health) / float(MAX_HEALTH))
 		"health_regen_1":
 			health_regen_timer.wait_time = 8
-			health_regen_percent = 0.008
+			health_regen_percent = 0.01
 			health_regen_timer.start()
 		"health_regen_2":
 			health_regen_timer.wait_time = 7
-			health_regen_percent = 0.01
+			health_regen_percent = 0.012
 		"health_regen_2":
 			health_regen_timer.wait_time = 5
 			health_regen_percent = 0.014

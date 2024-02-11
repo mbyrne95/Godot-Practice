@@ -24,6 +24,7 @@ var proptosis = false
 var twentytwenty = false
 var ipecac = false
 var scorch_shot = false
+var scorch_applies_radiant = false
 
 var hatchling_upgrade = false
 var tmp_hatchling_target
@@ -39,7 +40,7 @@ func _ready():
 	Globs.hatchling_spawned.connect(hatchling_spawned)
 
 func _process(_delta):
-	print(shoot_cd_multiplier)
+	#print(shoot_cd_multiplier)
 	
 	if get_parent().can_move:
 		if Input.is_action_pressed("shoot"):
@@ -53,6 +54,7 @@ func shoot():
 	var projectile = projectile_scene.instantiate()
 
 	projectile.scorch_shot = scorch_shot
+	projectile.scorch_applies_radiant = scorch_applies_radiant
 
 	projectile.proptosis = proptosis
 

@@ -15,6 +15,7 @@ var player
 
 var scorch_shot = false
 var scorch_dot = preload("res://Characters/Player/DOTs/scorch.tscn")
+var scorch_applies_radiant = false
 
 var proptosis = false
 
@@ -125,6 +126,7 @@ func _on_body_entered(body):
 					i.restart_timer()
 			if !has_scorch:
 				var x = scorch_dot.instantiate()
+				x.apply_radiant = scorch_applies_radiant
 				body.add_child(x)
 		
 		if ipecac:
