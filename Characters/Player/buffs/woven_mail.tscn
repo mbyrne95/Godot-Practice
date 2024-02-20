@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh21an1h3pcpv"]
+
+[ext_resource type="Script" path="res://Characters/Player/buffs/woven_mail.gd" id="1_kak2y"]
+[ext_resource type="Texture2D" uid="uid://cy8u3srbcplc5" path="res://Art/My Art/Icons/DOT/poison.png" id="2_f5ltt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tx6h"]
+atlas = ExtResource("2_f5ltt")
+region = Rect2(5, 3, 5, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdvcn"]
+atlas = ExtResource("2_f5ltt")
+region = Rect2(5, 3, 5, 9)
+
+[node name="woven mail" type="Node2D" groups=["status_effect", "woven_mail_effect"]]
+script = ExtResource("1_kak2y")
+
+[node name="lifespan" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("AtlasTexture_8tx6h")
+offset = Vector2(0, -10)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_right = 5.0
+offset_bottom = 9.0
+texture = SubResource("AtlasTexture_xdvcn")
+
+[connection signal="timeout" from="lifespan" to="." method="_on_lifespan_timeout"]

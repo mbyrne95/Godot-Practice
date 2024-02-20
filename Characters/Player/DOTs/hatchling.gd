@@ -17,6 +17,8 @@ var target_destination
 @onready var walk_destination = $anchor/walk_destination
 
 @onready var unravel_scene = preload("res://Characters/Player/DOTs/unravel.tscn")
+@onready var woven_mail_scene = preload("res://Characters/Player/buffs/woven_mail.tscn")
+var hatchling_applies_woven_mail
 
 var searching = false
 
@@ -34,6 +36,8 @@ var new_target_pos = false
 
 func _ready():
 	#print("hatchling alive")
+	if get_tree().get_first_node_in_group("players") != null:
+		hatchling_applies_woven_mail = get_tree().get_first_node_in_group("players").hatchling_applies_woven_mail
 	timer.start()
 	viewport_size_x = get_viewport_rect().size.x
 	viewport_size_y = get_viewport_rect().size.y
@@ -96,6 +100,17 @@ func position_approx():
 func _on_hurtbox_body_entered(body):
 	if first_walk && body.is_in_group("enemies"):
 		body.take_damage(DAMAGE)
+		
+		if hatchling_applies_woven_mail:
+			if get_tree().get_first_node_in_group("players") != null:
+				var has_woven_mail = false
+				for j in get_tree().get_first_node_in_group("players").get_children():
+					if j.is_in_group("woven_mail_effect"):
+						has_woven_mail = true
+						j.restart_timer()
+				if !has_woven_mail:
+					var wm = woven_mail_scene.instantiate()
+					get_tree().get_first_node_in_group("players").add_child(wm)
 		
 		if unravel:
 			var has_unravel = false

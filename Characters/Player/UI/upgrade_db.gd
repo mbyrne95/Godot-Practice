@@ -26,11 +26,35 @@ const UPGRADES = {
 		"rarity": 2,
 		"type": "dmg"
 	},
-	"dmg_scorch_combo": {
+	"as_1": {
+		"icon": ICON_PATH + "Skillicon1_01.png",
+		"displayname": "Onslaught",
+		"detail": "Fire rate up",
+		"prerequisite": [],
+		"rarity": 0,
+		"type": "dmg"
+	},
+	"as_2": {
+		"icon": ICON_PATH + "Skillicon1_01.png",
+		"displayname": "Onslaught+",
+		"detail": "Greater fire rate up",
+		"prerequisite": ["as_1"],
+		"rarity": 1,
+		"type": "dmg"
+	},
+	"as_3": {
+		"icon": ICON_PATH + "Skillicon1_01.png",
+		"displayname": "Onslaught++",
+		"detail": "Significant fire rate up",
+		"prerequisite": ["as_2"],
+		"rarity": 2,
+		"type": "dmg"
+	},
+	"health_scorch_combo": {
 		"icon": ICON_PATH + "Skillicon1_01.png",
 		"displayname": "Ember of Empyrean",
-		"detail": "Scorch ignitions make you radiant, regenerating a small amount of health and temporarily increasing damage.",
-		"prerequisite": ["dmg_3", "scorch_shot"],
+		"detail": "Scorch ignitions make you radiant, temporarily increasing damage & healing.",
+		"prerequisite": ["health_regen_3", "scorch_shot"],
 		"rarity": 3,
 		"type": "dmg"
 	},
@@ -173,16 +197,16 @@ const UPGRADES = {
 	"aura_3": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
 		"displayname": "Shock Plating++",
-		"detail": "Aura applies jolt, damaging affected enemies over time",
+		"detail": "Aura applies jolt, increasing enemy's damage taken. Jolted enemies occassionally chain damage to other enemies.",
 		"prerequisite": ["aura_2"],
 		"rarity": 2,
 		"type": "dmg"
 	},
-	"aura_armor_combo": {
+	"aura_as_combo": {
 		"icon": ICON_PATH + "Skillicon1_12.png",
 		"displayname": "Spark of Ions",
 		"detail": "Jolted targets periodically spawn an ionic trace. Ionic traces temporarily increase movespeed and attack speed.",
-		"prerequisite": ["aura_3", "armor_plate_3"],
+		"prerequisite": ["aura_3", "as_3"],
 		"rarity": 3,
 		"type": "dmg"
 	},
@@ -216,6 +240,14 @@ const UPGRADES = {
 		"detail": "Threadlings apply unravel, reducing enemy damage output",
 		"prerequisite": ["hatchling_1"],
 		"rarity": 1,
+		"type": "dmg"
+	},
+	"woven_mail": {
+		"icon": ICON_PATH + "Skillicon1_12.png",
+		"displayname": "Thread of Warding",
+		"detail": "Applying unravel grants you woven mail. Woven mail temporarily reduces damage taken by a significant amount.",
+		"prerequisite": ["hatchling_2", "armor_plate_3"],
+		"rarity": 3,
 		"type": "dmg"
 	},
 	"range_up_size_down": {

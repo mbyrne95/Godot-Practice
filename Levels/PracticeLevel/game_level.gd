@@ -21,7 +21,7 @@ var current_wave
 var wave_array
 
 var first_wave = preload("res://Levels/PracticeLevel/Practice Enemy Wave/practice_wave.tscn")
-var easy_wave = preload("res://Levels/PracticeLevel/easy waves/three wall guys.tscn")
+var easy_wave = preload("res://Levels/PracticeLevel/easy waves/two wall guys.tscn")
 
 var can_spawn_new_wave = true
 

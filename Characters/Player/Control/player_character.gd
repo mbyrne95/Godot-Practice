@@ -63,6 +63,7 @@ var current_state = State.idle
 
 @onready var health_regen_timer = $"health regen"
 @export var health_regen_percent = 0.08
+@export var health_regen_multiplier = 1.0
 
 #blink initialization stuff
 @onready var blink = $Blink
@@ -82,6 +83,7 @@ var input = Vector2.ZERO
 var mouse_direction
 
 var player_dies_to_lich = false
+var hatchling_applies_woven_mail = false
 
 func _ready():
 	pause_menu.pause_signal.connect(pauseMenu)
@@ -366,7 +368,13 @@ func match_item_upgrade(upgrade):
 		"dmg_3":
 			weapon.projectile_damage += 12
 			weapon.size_multiplier += 0.3
-		"dmg_scorch_combo":
+		"as_1":
+			weapon.shoot_cd -= 0.02
+		"as_2":
+			weapon.shoot_cd -= 0.03
+		"as_3":
+			weapon.shoot_cd -= 0.05
+		"health_scorch_combo":
 			weapon.scorch_applies_radiant = true
 		"test_movement":
 			SPEED += 10
@@ -417,7 +425,7 @@ func match_item_upgrade(upgrade):
 			aura_upgrade.emit()
 		"aura_3":
 			aura_jolt.emit()
-		"aura_armor_combo":
+		"aura_as_combo":
 			aura_ionic_trace.emit()
 		"ipecac":
 			weapon.ipecac = true
@@ -430,6 +438,8 @@ func match_item_upgrade(upgrade):
 			weapon.hatchling_upgrade = true
 		"hatchling_2":
 			weapon.apply_unravel = true
+		"woven_mail":
+			hatchling_applies_woven_mail = true
 		"range_up_size_down":
 			ship_sprite.scale = Vector2(ship_sprite.scale.x - 0.2, ship_sprite.scale.y - 0.2)
 			hurtbox.scale = Vector2(hurtbox.scale.x - 0.2, hurtbox.scale.y - 0.2)
@@ -524,6 +534,8 @@ func death():
 	death_explo_particles.emitting = true
 	collision_shape.disabled = true
 	ship_sprite.visible = false
+	amplified_sprite.visible = false
+	radiant_sprite.visible = false
 	armor_plate.visible = false
 	$PlayerUI.visible = false
 	#$LightOccluder2D.visible = false
@@ -538,6 +550,6 @@ func material_size(size : float):
 
 
 func _on_health_regen_timeout():
-	current_health = clamp(current_health + (MAX_HEALTH * health_regen_percent), 0 , MAX_HEALTH)
+	current_health = clamp(current_health + (MAX_HEALTH * (health_regen_percent * health_regen_multiplier)), 0 , MAX_HEALTH)
 	healthChanged.emit(float(current_health / MAX_HEALTH))
 	health_regen_timer.start()

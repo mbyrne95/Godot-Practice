@@ -5,6 +5,7 @@ var parent
 var parent_num_status_effects = 0
 var texture_rect
 var parent_debuff_box
+var dmg_reduction
 
 func _ready():
 	texture_rect = $TextureRect
@@ -17,17 +18,16 @@ func _ready():
 	#var player_max_health = parent.MAX_HEALTH
 	#parent.current_health += clamp((0.01 * player_max_health), 0, player_max_health)
 	#parent.healthChanged.emit(parent.current_health / player_max_health)
-	parent.get_node_or_null("Weapon").damage_multiplier += 0.15
-	parent.health_regen_multiplier += 0.5
-		
+	dmg_reduction = clamp(parent.dmg_ratio - 0.3, 0.1, 100.0)
+	parent.dmg_ratio -= dmg_reduction
+
 func restart_timer():
 	lifespan_timer.stop()
 	lifespan_timer.start()
 
 func _on_lifespan_timeout():
 	#parent.SPEED -= 20
-	parent.get_node_or_null("Weapon").damage_multiplier -= 0.15
-	parent.health_regen_multiplier -= 0.5
+	parent.dmg_ratio += dmg_reduction
 	parent.get_node("radiant_sprite").visible = false
 	#texture_rect.reparent(self)
 	queue_free()
